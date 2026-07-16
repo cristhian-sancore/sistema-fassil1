@@ -1,0 +1,78 @@
+.box_cupom{
+	float: left;
+	margin-left: 100px;
+}
+
+.cupom_left{
+	float: left;
+	width: 80px;
+	height: 140px;
+}
+
+.cupom_left img{
+	float: left;
+	margin: 12px 15px 0 15px;
+}
+
+.cupom_left .codigo{
+	display: none;
+}
+
+.cupom_right{
+	float: left;
+	width: 380px;
+	height: 140px;
+	border: 1px dashed #ccc;
+}
+
+.cupom_content{
+	position: relative;
+	font-size: 0.75em;
+	margin: 10px;
+	padding: 5px;
+	height: 132px;
+	color: #666;
+}
+
+.cupom_content p{
+	text-align: inherit;
+	color: #292D31;
+	margin: 0px;
+	padding: 0px;
+}
+
+.cupom_content img{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 45px;
+}
+
+.cupom_content .dados{
+	clear: both;
+	margin-top: 10px;
+}
+
+.cupom_content .dados label{
+	float: left;
+	text-align: center;
+	margin-bottom: 5px;
+}
+
+.cupom_content .dados label p{
+	font-size: 1.5em;
+}
+
+.cupom_content .dados .box6{
+	width: 35%;
+}
+
+.cupom_content .dados .box3{
+	width: 65%;
+}
+
+.cupom_content .codigo{
+	clear: both;
+	text-align: center;
+	font-size: 2em;
+}

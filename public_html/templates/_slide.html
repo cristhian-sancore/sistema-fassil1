@@ -1,0 +1,29 @@
+{if $dBanner.slide}
+<div class="container box_banner">
+                <section class="slide container">
+                    <h1 class="fontzero">Banner Promocional</h1>
+
+                    {if count($dBanner.slide) > 1}
+                    <div class="slide_controll">
+                        <div class="slide_nav back trans"><</div>
+                        <div class="slide_nav go trans">></div>
+                    </div>
+                    {/if}
+
+                    {section name=i loop=$dBanner.slide}
+                    <article class="slide_item {if $smarty.section.i.iteration == 1}first{/if}">
+                        <h1 class="fontzero">{$dBanner.slide[i].Midia_Legenda}</h1>
+                        <a href="{if $dBanner.slide[i].Midia_Link}http://{$dBanner.slide[i].Midia_Link}{else}javascript: void(0);{/if}" target="_blank">
+                            <img src="{$urlBase}tim.php?src=gerenciar/midias/{$dBanner.slide[i].Midia_Caminho}&w=1500&h=450">
+                        </a>
+                        <!--<div class="slide_item_desc">
+                            <h1><a href="#">Titulo</a></h1>
+                            <p class="tagline">descrição</p>
+                        </div>-->
+                    </article>
+                    {/section}
+                </section>
+
+                <div class="clear"></div>
+            </div>
+{/if}

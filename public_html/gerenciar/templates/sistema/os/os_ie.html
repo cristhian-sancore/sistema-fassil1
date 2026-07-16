@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" name="subcidade" value="{$dados.Cidade_ID}" id="subcidade">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/os_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Data Início</label>
+                                            <input type="text" class="form-control datepicker" name="data_inicio"
+                                                   placeholder="00/00/0000"
+                                                   data-inputmask='"mask": "99/99/9999"' data-mask
+                                                   value="{if $dados.OS_DataInicio}{$dados.OS_DataInicio}{else}{$data}{/if}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-2">
+                                        <div class="form-group">
+                                            <label>Horário Início</label>
+                                            <input type="text" class="form-control" name="horas_inicio"
+                                                   placeholder="00:00"
+                                                   data-inputmask='"mask": "99:99"' data-mask
+                                                   value="{if $dados.OS_HorasInicio}{$dados.OS_HorasInicio}{else}{$horas}{/if}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4 pull-right">
+                                        <div class="form-group">
+                                            <label>Protocolo</label>
+                                            <input type="text" class="form-control" name="protocolo"
+                                                   placeholder="Protocolo"
+                                                   value="{if $dados.OS_Protocolo}{$dados.OS_Protocolo}{else}{$protocolo}{/if}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Prioridade</label>
+                                            <select name="prioridade" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$prioridades}
+                                                <option value="{$prioridades[i].Prioridade_ID}"
+                                                        style="background: {$prioridades[i].Prioridade_Background}; color: {$prioridades[i].Prioridade_Color};"
+                                                        {if
+                                                        $prioridades[i].Prioridade_ID==$dados.Prioridade_ID}selected{/if}>
+                                                    {$prioridades[i].Prioridade_Titulo}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Grupo</label>
+                                            <select name="grupo" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$grupos}
+                                                <option value="{$grupos[i].Grupo_ID}" {if $grupos[i].Grupo_ID==$dados.Grupo_ID}selected{/if}>
+                                                    {$grupos[i].Grupo_Nome}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Tipo</label>
+                                            <select name="tipo" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$tipos}
+                                                <option value="{$tipos[i].Tipo_ID}" {if $tipos[i].Tipo_ID==$dados.Tipo_ID}selected{/if}>
+                                                    {$tipos[i].Tipo_Nome}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Cliente</label>
+                                            <input type="text" class="form-control" name="cliente" placeholder="Nome do cliente" id="cliente" value="{$dados.Cliente_Nome}">
+                                            <input type="hidden" name="cliente_id" id="cliente_id" value="{$dados.Cliente_ID}">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Responsável</label>
+                                            <input type="text" class="form-control" name="responsavel"
+                                                   placeholder="Usuário responsável" id="usuario"
+                                                   value="{if $dados.Usuario_Nome}{$dados.Usuario_Nome}{else}{$smarty.session._user.Usuario_Nome}{/if}">
+                                            <input type="hidden" name="usuario_id" id="usuario_id"
+                                                   value="{if $dados.Usuario_Nome}{$dados.Usuario_ID}{else}{$smarty.session._user.Usuario_ID}{/if}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row info">
+                                    <div class="col-sm-6 info_cliente">
+                                        {if $dados.Cliente_ID}
+                                        <address>
+                                            <b>Login:</b> {$dados.Cliente_Login}<br>
+                                            <b>Departamento:</b> {$dados.Cliente_Departamento}<br>
+                                            <b>Empresa/Orgão:</b> {$dados.CE_Nome}<br>
+                                            {$dados.Cidade_Nome} - {$dados.Estado_UF}<br>
+                                            <b>Contato:</b> {$dados.Cliente_Contato1}
+                                            {if $dados.Cliente_Contato2}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$dados.Cliente_Contato2}{/if}<br>
+                                            {if $dados.Cliente_Contato3}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$dados.Cliente_Contato3}{/if}
+                                            {if $dados.Cliente_Email}<br><b>E-mail:</b> {$dados.Cliente_Email}{/if}
+                                        </address>
+                                        {/if}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Descrição/Observação</label>
+                                            <textarea name="descricao" placeholder="Descrição/Observação"
+                                                      style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{$dados.OS_Descricao}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-right">
+                                {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                <button type="submit" class="btn btn-danger" id="finalizar" name="finalizar"><i class="fa fa-ticket"></i> Prosseguir com ticket</button>
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                {/if}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/os_ie.js"></script>
+</body>
+</html>

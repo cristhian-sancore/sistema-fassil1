@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>{$Info['title']} - Cursos</title>
+    {include file="_head.html"}
+    <style>
+    @media (max-width:3500px) {
+  html {
+    font-size: small;
+  }
+}
+@media (max-width:321px) {
+  html {
+    font-size: x-small;
+  }
+}
+
+html, body, .content_cert {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  color: #606c76;
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 200px;
+  letter-spacing: .01em;
+  line-height: 1.6;
+}
+
+.content {
+  
+  justify-content: center;
+  align-items: center;
+}
+
+.certificate-wrapper {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.certificate {
+  padding: 1rem;
+  text-align: center;
+  background-color: #ffffff;
+}
+.certificate__body {
+  padding: 1rem 0;
+}
+.certificate__title {
+  font-family: Palatino;
+  font-size: 4rem;
+}
+.certificate__recipient-name {
+  font-family: cursive;
+  font-size: 4rem;
+}
+.certificate__content {
+  font-size: 2rem;
+  white-space: normal;
+}
+.certificate__description {
+  font-size: 1rem;
+  margin: 0 auto;
+  max-width: 70%;
+}
+.certificate__date {
+  font-size: 1.5rem;
+}
+.certificate__signature {
+  font-size: 1.5rem;
+}
+.certificate__footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.entry-column {
+  display: flex;
+  flex-direction: column;
+}
+.entry-column__input {
+  font-size: 1.5rem;
+  font-family: cursive;
+}
+.entry-column__label {
+  border-top: 1px solid;
+  font-size: 1rem;
+}
+.certificate__signature .entry-column__input {
+  color: #5DADE2;
+}
+
+.title-decoration {
+  display: flex;
+  flex-direction: column;
+}
+.title-decoration__main {
+  line-height: 1em;
+}
+.title-decoration__sub {
+  font-size: 0.25em;
+}
+
+.ribbon {
+  display: inline-block;
+  position: relative;
+  height: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  padding: 0 2em;
+  background: #5DADE2;
+  color: #FFF;
+  box-sizing: border-box;
+}
+.ribbon:before, .ribbon:after {
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0px;
+  z-index: 1;
+}
+.ribbon:before {
+  top: 0;
+  left: 0;
+  border-width: 0.75em 0 0.75em 0.5em;
+  border-color: transparent transparent transparent #fff;
+  border-style: solid;
+}
+.ribbon:after {
+  top: 0;
+  right: 0;
+  border-width: 0.75em 0.5em 0.75em 0;
+  border-color: transparent #fff transparent transparent;
+  border-style: solid;
+}
+.frame {
+  position: relative;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at top left, transparent 1.25rem, #ca4 1.25rem, #ca4 1.5rem, transparent 1.5rem) left top / 1.5rem 1.5rem no-repeat,
+    radial-gradient(circle at top right, transparent 1.25rem, #ca4 1.25rem, #ca4 1.5rem, transparent 1.5rem) right top / 1.5rem 1.5rem no-repeat,
+    radial-gradient(circle at bottom left, transparent 1.25rem, #ca4 1.25rem, #ca4 1.5rem, transparent 1.5rem) left bottom / 1.5rem 1.5rem no-repeat,
+    radial-gradient(circle at bottom right, transparent 1.25rem, #ca4 1.25rem, #ca4 1.5rem, transparent 1.5rem) right bottom / 1.5rem 1.5rem no-repeat,
+    linear-gradient(90deg, transparent 1.25rem, #ca4 1.5rem) left top / 51% 0.25rem no-repeat,
+    linear-gradient(-90deg, transparent 1.25rem, #ca4 1.5rem) right top / 51% 0.25rem no-repeat,
+    linear-gradient(90deg, transparent 1.25rem, #ca4 1.5rem) left bottom / 51% 0.25rem no-repeat,
+    linear-gradient(-90deg, transparent 1.25rem, #ca4 1.5rem) right bottom / 51% 0.25rem no-repeat,
+    linear-gradient(180deg, transparent 1.25rem, #ca4 1.5rem) left top / 0.25rem 51% no-repeat,
+    linear-gradient(0deg, transparent 1.25rem, #ca4 1.5rem) left bottom / 0.25rem 51% no-repeat,
+    linear-gradient(180deg, transparent 1.25rem, #ca4 1.5rem) right top / 0.25rem 51% no-repeat,
+    linear-gradient(0deg, transparent 1.25rem, #ca4 1.5rem) right bottom / 0.25rem 51% no-repeat;
+}
+.frame:before {
+    position: absolute;
+    content: "";
+    border: 0.25rem double #ca4;
+    margin: 0.5rem;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* bug fix */
+@media print {
+  .ribbon:before {
+    left: -0.25px;
+  }
+  .ribbon:after {
+    right: -0.25px;
+  }
+  .certificate__description {
+    max-width: 90%;
+  }
+}
+    </style>
+</head>
+
+<body>
+    {include file="_topo.html"}
+    
+    <section class="card-list bg_main">
+        
+    </section>
+    <div class="container bg_main">
+                <div class="content main">
+    <!--Campo pesquisa-->
+    <form action="" method="get" class="pesquisa">
+        <div class="container">
+            <div class="box">
+                <div class="box6">
+                    <input type="text" name="b" class="form-control" 
+                placeholder="DIGITE O CÓDIGO DE AUTENTICIDADE..." value="{if $Busca}{$Busca}{/if}"/>
+                </div>
+                <spam style="color: white"> * </spam>
+                <button type="submit" class="btn btn-blue btn-sm"><i class="fa fa-check"></i> Verificar Autenticidade</button>
+            </div>
+        </div>
+            {if !$Busca == $dados.Inscricao_CodAutenticacao}
+            {section name=i loop=$dados}
+        <div class="content">
+            <div class="certificate-wrapper frame">
+                <div class="certificate">
+                    <div class="certificate__header">
+                        <div class="certificate__title title-decoration"=>
+                            <span class="title-decoration__main">Certificado Válido</span>
+                            <span class="title-decoration__sub"></span>
+                        </div>
+                    </div>
+                    <div class="certificate__body">
+                        <div class="certificate__description">Certifico que</div>
+                        <div class="certificate__recipient-name">{$dados[i].Inscricao_Nome}</div>
+                        <div class="certificate__description">concluiu com sucesso <b></b></div>
+                        <div class="ribbon certificate__content">{$dados[i].Curso_Nome}</div>
+                        <div class="certificate__description">{$dados[i].Curso_Detalhe}</div>
+                    </div>
+                    <div class="certificate__footer">
+                        <div class="certificate__date entry-column"><span class="entry-column__input"><time datetime="1970-01-01">{$dados[i].Curso_DataFinal}</time>.</span><span class="entry-column__label"> Término em</span></div>
+                        <div class="certificate__signature entry-column"><span class="entry-column__input">Giovani Mendes da Silva</span><span class="entry-column__label">Assinatura do Responsável </span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Campo pesquisa-->
+        <div class="container">
+            <div class="box">
+                <spam style="color: white"> * </spam>
+                <a type="button" href="https://www.grupofassil.com.br/gerenciar/midias/certificados/{$dados[i].Inscricao_CodAutenticacao}.pdf" class="btn btn-blue btn-sm" target="_blank"><i class="fa fa-print"></i> Imprimir Certificado</a>
+            </div>
+        </div>
+        <!-- partial -->
+             {/section}
+             {/if}
+             
+    </form>
+    </div>
+    </div>
+    <!-- partial -->
+    {include file="_footer.html"}
+</body>
+
+</html>

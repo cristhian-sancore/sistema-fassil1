@@ -1,0 +1,91 @@
+.mapa{
+	position: relative;
+}
+
+.campos {
+	width: 740px; 
+	margin: 0 auto 15px; 
+	overflow: hidden; 
+}
+
+.campos label {
+	background: #333; 
+	border-radius: 6px 0 0 6px; 
+	color: #f0f0f0; 
+	cursor: pointer; 
+	display: block; 
+	height: 20px; 
+	float: left; 
+	font: 15px 'Open Sans',Arial;
+	padding: 7px 13px;
+	width: 70px;
+}
+
+.campos input[type="button"] {
+	background: #2679A5; 
+	border-radius: 0 6px 6px 0;
+    color: #FFF;
+    cursor: pointer;
+    height: 34px;
+    font: 15px 'Open Sans',Arial;
+    padding: 2px 13px 6px;
+    width: 150px;
+
+    -webkit-transition: background .2s ease-in;
+    -moz-transition: background .2s ease-in;
+    -ms-transition: background .2s ease-in;
+    -o-transition: background .2s ease-in;
+    transition: background .2s ease-in;
+}
+
+.campos input[type="button"]:hover { background: #12587C }
+
+#mapa {
+	width: 100%;
+	height: 300px;
+	border: 10px dashed #cccccc;
+	margin-bottom: 20px;
+}
+
+.mapa input[type="submit"] {
+	background: #2679A5;
+	border-radius: 6px;
+    color: #FFF;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    font: 20px 'Open Sans',Arial;
+    padding: 7.5px 15px;
+    width: 250px;
+
+    -webkit-transition: background .2s ease-in;
+    -moz-transition: background .2s ease-in;
+    -ms-transition: background .2s ease-in;
+    -o-transition: background .2s ease-in;
+    transition: background .2s ease-in;
+}
+
+.mapa input[type="submit"]:hover { background: #12587C }
+
+/* =============== Estilos do autocomplete =============== */
+.ui-autocomplete {
+	background: #fff; 
+	border-top: 1px solid #ccc;
+	cursor: pointer; 
+	font: 15px 'Open Sans',Arial;
+	margin-left: 3px;
+	width: 75% !important;
+	position: absolute;
+}
+
+.ui-autocomplete .ui-menu-item { 
+	list-style: none outside none;
+	padding: 7px 0 9px 10px;
+}
+
+.ui-autocomplete .ui-menu-item:hover { background: #eee }
+
+.ui-autocomplete .ui-corner-all { 
+	color: #666 !important;
+	display: block;
+}

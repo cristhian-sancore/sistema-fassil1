@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Equipe</title>
+
+        {include file="_head.html"}
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Equipe</div>
+
+                    <div class="equipe">
+                        {if $dados}
+                        <p>{$dados.Conteudo_Texto}</p>
+
+                        <div class="box_equipe animaze aniimated-thumbnials">
+                            {section name=i loop=$dados.m}
+                            <a href="gerenciar/midias/{$dados.m[i].Midia_Caminho}">
+                                <img src="{$urlBase}tim.php?src=gerenciar/midias/{$dados.m[i].Midia_Caminho}&w=150&h=150&zc=1">
+                                <p>{$dados.m[i].Midia_Legenda}</p>
+                            </a>
+                            {/section}
+
+                            <div class="clear"></div>
+                        </div>
+                        {else}
+                        <p>Nada cadastrado!</p>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+    </body>
+</html>

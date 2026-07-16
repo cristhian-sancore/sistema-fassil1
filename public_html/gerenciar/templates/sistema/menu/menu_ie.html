@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+    {include file="_head.html"}
+    <style>
+
+        #tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 0%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        #tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="skin-blue">
+    <div class="wrapper">
+
+        {include file="_header.html"}
+
+        {include file="_menu.html"}
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    {ucfirst($Mod[1])}
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">{ucfirst($Mod[0])}</li>
+                    <li class="active">{ucfirst($Mod[1])}</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <input type="hidden" id="urlBase" value="{$urlBase}">
+
+                {include file="{$Mod[0]}/{$Mod[1]}/menu_guia.html"}
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                            <div class="box-header">
+                                <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                            </div>
+
+                            <form role="form" method="post" enctype="multipart/form-data" action="">
+                                <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <div class="form-group">
+                                                <label>Menu Pai</label>
+                                                <select name="menu_pai" class="form-control">
+                                                    <option value="0">SELECIONE</option>
+                                                    {section name=i loop=$menu_ie}
+                                                    <option value="{$menu_ie[i].Menu_ID}" {if
+                                                        $menu_ie[i].Menu_ID==$dados.Menu_Pai_ID}selected{/if}>{if
+                                                        $menu_ie[i].Menu_TituloPai} {$menu_ie[i].Menu_TituloPai} /
+                                                        {/if}{$menu_ie[i].Menu_Titulo} ({$menu_ie[i].Menu_Qtd})
+                                                    </option>
+                                                    {/section}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <label>&nbsp;</label>
+                                            <div class="form-group" id="tooltip">
+                                                <label>
+                                                    <input type="checkbox" name="status" {if
+                                                        $dados.Menu_Status==1}checked{/if}> Ativo
+                                                </label>
+                                                <span class="tooltiptext">Caso essa opção esteja parcada <i class="fa fa-check"></i>, será habilitado as opções dentro das permissões de usuários!</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <label>&nbsp;</label>
+                                            <div class="form-group" id="tooltip">
+                                                <label>
+                                                    <input type="checkbox" name="desenvolvimento" {if
+                                                        $dados.Menu_Desenvolvimento==1}checked{/if}> Desenvolvimento
+                                                </label>
+                                                    <span class="tooltiptext">(Opção de Desenvolvimento!)<br>Caso essa opção esteja marcada <i class="fa fa-check"></i>, a pagina será direcionada para desenvolvimento.php.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Título</label>
+                                        <input type="text" class="form-control" name="titulo" placeholder="Título"
+                                            value="{$dados.Menu_Titulo}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link</label>
+                                        <input type="text" class="form-control" name="link" placeholder="Link"
+                                            value="{$dados.Menu_Link}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Icon</label>
+                                        <input type="text" class="form-control" name="icon" placeholder="Icon"
+                                            value="{$dados.Menu_Icon}">
+                                    </div>
+                                </div>
+
+                                <div class="box-footer text-right">
+                                    <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i>
+                                        Gravar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    {include file="_footer.html"}
+    <script src="{$diretorio}js/modulos/menu_ie.js"></script>
+</body>
+
+</html>

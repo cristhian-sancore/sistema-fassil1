@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Inscrição</title>
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main> 
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Formulário de Inscrição</div>
+                    <form role="form" name="dados" id= "form" enctype="multipart/form-data" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+                        <div class="container">
+                           <div class="row">
+                                <label class="box4 left">
+                                    <span>Nome Completo</span>
+                                    <input type="text" name="firstname" id="firstname" placeholder="Ex: Seu nome da Silva">
+                                </label>
+                                <label class="box4 left">
+                                    <span>E-mail</span>
+                                    <input type="email" name="email" id="email" placeholder="seuemail@email.com">
+                                </label>
+                                <label class="box2 right">
+                                    <span>Celular</span>
+                                    <input type="text" name="phone" id="phone" class="cel" placeholder="(65) 0 0000-000">
+                                </label>
+                           </div> 
+                           <div class="row">
+                                <label class="box4 left">
+                                    <span>Cidade</span>
+                                    <select name="city" id="city">
+                                        <option value="0">Selecione</option>
+                                    {section name=i loop=$cidades}
+                                        <option value="{$cidades[i].Cidade_ID}">{$cidades[i].Cidade_Nome} - {$cidades[i].Cidade_UF}</option>
+                                    {/section}
+                                    </select>
+                                </label>
+                                <label class="box4 left">
+                                    <span>Entidade</span>
+                                    <select name="entity" id="entity" placeholder="Prefeitura, Câmara, Consorcio...">
+                                        <optgroup label="Municipal">
+                                            <option value="Prefeitura Municipal">Prefeitura Municipal</option>
+                                            <option value="Câmara Municipal">Câmara Municipal</option>
+                                            <option value="Previdência Municipal">Previdência Municipal</option>
+                                        </optgroup>
+                                        <optgroup label="Outros">
+                                            <option value="Fundação, Consórcio e demais entidades">Fundação, Consórcio e demais entidades</option>
+                                        </optgroup>
+                                    </select>
+                                </label> 
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <label class="box4 left">
+                                    <span>Setor</span>
+                                    <input type="text" name="setor" id="setor" placeholder="...">
+                                </label>
+                                <label class="box4 left">
+                                    <span>Cargo</span>
+                                    <input type="text" name="cargo" id="cargo" placeholder="...">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+
+                        <button type="submit" class="btn btn-green right" name="gravar" id="gravar">ENVIAR <i class="fa fa-send"></i></button>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/fale_conosco.js"></script>
+    </body>
+</html>

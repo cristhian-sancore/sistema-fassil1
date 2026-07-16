@@ -1,0 +1,136 @@
+.img_active{
+    border: 5px solid #F39C12;
+}
+
+.upper input,
+.upper textarea{
+    text-transform: uppercase !important;
+}
+
+.login_logo{
+    text-align: center;
+}
+
+.login_logo img{
+    max-width: 360px;
+    margin-bottom: 10px;
+}
+
+.logo img{
+    width: 150px;
+
+    border-radius: 15%;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+
+    box-shadow: 0 0 10px 0 #1b1e26;
+    -webkit-box-shadow: 0 0 10px 0 #1b1e26;
+    -moz-box-shadow: 0 0 10px 0 #1b1e26;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    display: none;
+    min-width: 160px;
+    _width: 160px;
+    padding: 4px 5px;
+    margin: 0;
+    list-style: none;
+    background-color: #ffffff;
+    border-color: #ccc;
+    border-color: rgba(0, 0, 0, 0.2);
+    border-style: solid;
+    border-width: 1px;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    cursor: pointer;
+}
+
+.ui-menu-item > a{
+    display: block;
+    padding: 3px 10px;
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: #000000;
+    white-space: nowrap;
+}
+
+.ui-menu-item:hover > a{
+    background: #f2f2f2 !important;
+}
+
+.print_assinatura{
+    width: 300px;
+    margin: 60px auto 0 auto;
+    border-top: 1px solid #000000;
+}
+
+.none{
+    display: none;
+}
+
+.enviando{
+    display: none;
+}
+
+.entidade img {
+    border-radius: 50%;
+    border: 6px solid #000031;
+    width: 200px;
+    height: 200px;
+}
+
+.linha{
+    clear: both;
+    display: block;
+}
+.linha_msg1 {
+    width: 80%;
+    float: left !important;
+    background: #f2f2f2;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 3px;
+    font-size: 12px;
+}
+.linha_msg2 {
+    width: 80%;
+    float: right !important;
+    background: #d3d3d3;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 3px;
+    font-size: 12px;
+}
+.linha_data1{
+    font-size: 12px;
+    margin-top: 5px;
+}
+.linha_data2{
+    text-align: right;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.linha_anexo{
+    margin-top: 5px;
+}
+
+.linha_anexo span{
+    margin: 0 20px;
+    font-size: 12px;
+    text-decoration: underline;
+}

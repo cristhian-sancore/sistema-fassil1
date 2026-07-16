@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+    <link rel="stylesheet" href="{$diretorio}css/desenvolvimento1.css">
+    {include file="_head.html"}
+</head>
+
+<body class="skin-blue">
+    <div class="wrapper">
+        {include file="_header.html"}
+
+        {include file="_menu.html"}
+        
+        <!-- PAGINA DE DESENVOLVIMENTO -->
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    {ucfirst($Mod[1])}
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">{ucfirst($Mod[0])}</li>
+                    <li class="active">{ucfirst($Mod[1])}</li>
+                </ol>
+            </section>
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="paper">
+                            <div class="paper-content">
+                                <textarea autofocus>"OLÁ MUNDO!" 😅
+                    &#10;
+                    &#10;
+                    &#10;
+                    ESTA PARTE DO SITE, AINDA ESTÁ EM DESENVOLVIMENTO!
+                                           Por favor aguarde...</textarea>
+                            </div>
+                        </div>
+                        <div class="loading">
+                            <div class="loading-bar"></div>
+                            <div class="loading-bar"></div>
+                            <div class="loading-bar"></div>
+                            <div class="loading-bar"></div>
+                        </div>
+                        <div class="footer">
+
+                            Inspired by a <a href="#" target="_blank" style="color: blue;">App</a> by
+                            DasAllan.Chr1t
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- /DESENVOLVIMENTO -->
+    {include file="_footer.html"}
+</body>
+
+</html>

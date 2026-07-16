@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Fale Conosco</title>
+
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            {include file="_fale-conosco.html"}
+
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Formulário de contato</div>
+
+                    <form name="orcamento" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+
+                        <label class="box">
+                            <span>Seu nome</span>
+                            <input type="text" name="nome" placeholder="Ex: Paulo da Silva">
+                        </label>
+
+                        <label class="box">
+                            <span>E-mail</span>
+                            <input type="text" name="email" placeholder="seuemail@gmail.com">
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Celular</span>
+                            <input type="text" name="celular" class="cel" placeholder="(65) 0 0000-000">
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Telefone</span>
+                            <input type="text" name="telefone" class="fone" placeholder="(65) 0000-000">
+                        </label>
+
+                        <div class="clear"></div>
+
+                        <label class="box4 left">
+                            <span>Setor</span>
+                            <select name="setor">
+                                <option value="0">Selecione</option>
+                                <optgroup label="Faspel Informática">
+                                    <option value="faspel@faspelinformatica.com.br">Administrativo</option>
+                                    <option value="financeiro@faspelinformatica.com.br">Financeiro</option>
+                                    <option value="suporte@faspelinformatica.com.br">Suporte</option>
+                                </optgroup>
+                                <optgroup label="Fassil Consultoria">
+                                    <option value="fassil@fassilconsultoria.com.br">Administrativo</option>
+                                    <option value="financeiro@fassilconsultoria.com.br">Financeiro</option>
+                                </optgroup>
+                            </select>
+                        </label>
+
+                        <div class="clear"></div>
+
+                        <label class="box">
+                            <span>Assunto</span>
+                            <input type="text" name="assunto" placeholder="...">
+                        </label>
+
+                        <label class="box">
+                            <span>Mensagem</span>
+                            <textarea name="mensagem" rows="8" placeholder="..."></textarea>
+                        </label>
+
+                        <div class="clear"></div><br>
+
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+
+                        <button type="submit" class="btn btn-green right" id="gravar">ENVIAR MENSAGEM <i class="fa fa-send"></i></button>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/fale_conosco.js"></script>
+    </body>
+</html>

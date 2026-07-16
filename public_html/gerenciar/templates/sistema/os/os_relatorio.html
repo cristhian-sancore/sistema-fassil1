@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" id="os" value="{$dados.OS_ID}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/os_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-warning pad">
+                        <div class="box-header">
+                            <h3 class="box-title">Relatório de Atendimento</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+                            <input type="hidden" name="OS_ID" value="{$dados.OS_ID}">
+
+                            <div class="box-body">
+                                {if $dados.Status_ID >= 3}
+                                <h4 class="page-header text-center"><i class="fa fa-unlock-alt"></i> Confirmação Fechamento</h4>
+
+                                <div class="box_assinaturas">
+                                    <p class="text-center">Será enviado para cada Cliente uma notificação para que o mesmo Confirme o fechamento da Ordem de Serviço. Só será fechado se todos confirmarem.</p>
+                                    {if $rel.fe}
+                                    {section name=i loop=$rel.fe}
+                                    <div class="row linha_assinatura">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label>Nome</label>
+                                                <input type="text" class="form-control" placeholder="Nome" disabled value="{$rel.fe[i].Cliente_Nome}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-5">
+                                            <div class="form-group">
+                                                <label>Cargo</label>
+                                                <input type="text" class="form-control" placeholder="Cargo" disabled value="{$rel.fe[i].Cliente_Cargo}">
+                                            </div>
+                                        </div>
+
+                                        {if $smarty.section.i.index != 0}
+                                        {if $dados.Status_ID != 3}
+                                        <div class="col-xs-1">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-danger as_exc" id="{$rel.fe[i].Fechamento_ID}" style="margin:24px 10px 0 0;"><i class="fa fa-remove"></i></button>
+                                            </div>
+                                        </div>
+                                        {/if}
+                                        {/if}
+
+                                        <div class="col-xs-11">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                                                <input type="text" class="form-control" value="{$urlSite}confirmacao-ticket/{$dados.OS_Protocolo}/{$rel.fe[i].Fechamento_Codigo}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/section}
+                                    {/if}
+
+                                    {if $dados.Status_ID != 3}
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label>Nome</label>
+                                                <input type="text" class="form-control" name="as_nome" id="as_nome" placeholder="Nome">
+                                                <input type="hidden" id="as_nome_id">
+                                                <input type="hidden" id="os_id" value="{$dados.OS_ID}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-5">
+                                            <div class="form-group">
+                                                <label>Cargo</label>
+                                                <input type="text" class="form-control" name="as_cargo" id="as_cargo" placeholder="Cargo" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-1">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success as_gravar" style="margin:24px 10px 0 0;"><i class="fa fa-save"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                </div>
+                                {/if}
+
+                                <div class="row ">
+                                    <div class="col-xs-3 pull-right">
+                                        <div class="form-group">
+                                            <label>Gerar relatório?</label>
+                                            <select class="form-control" name="relatorio" {if $dados.Status_ID==3}disabled{/if}>
+                                                <option value="1" {if !$dados.OS_Relatorio==1}selected{/if}>Não</option>
+                                                <option value="2" {if $dados.OS_Relatorio==2}selected{/if}>Sim</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box_relatorio" style="display: none;">
+                                    <h4 class="page-header text-center"><i class="fa fa-check-square-o"></i> Relatório</h4>
+
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="form-group">
+                                                <label>Timbre</label>
+                                                <select class="form-control" name="timbre" {if $dados.Status_ID==3}disabled{/if}>
+                                                    <option value="1" {if $rel.Relatorio_Timbre==1}selected{/if}>Faspel Informática</option>
+                                                    <option value="2" {if $rel.Relatorio_Timbre==2}selected{/if}>Fassil Consultoria</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-2">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div class="form-group">
+                                                    <label>
+                                                        <input type="checkbox" name="mensagem" {if $rel.Relatorio_Mensagem==1}checked{/if} {if $dados.Status_ID==3}disabled{/if}> Mensagens
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {if $rel.Relatorio_ID}
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/gerar_pdf_relatorio.php?id={$rel.OS_ID}&t={$rel.Relatorio_Timbre}&m={$rel.Relatorio_Mensagem}" target="_blank" class="btn btn-app bg-yellow pull-right">
+                                                    <i class="fa fa-file-pdf-o"></i> Gerar PDF
+                                                </a>
+                                            </div>
+                                        </div>
+                                        {/if}
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Introdução</label>
+                                                <textarea class="textarea" id="introducao" name="introducao" placeholder="Descrição" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$rel.Relatorio_Introducao}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Descrições dos Serviços Executados</label>
+                                                <textarea class="textarea" id="descricao" name="descricao" placeholder="Descrição" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$rel.Relatorio_Descricao}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Resultados Alcançados</label>
+                                                <textarea class="textarea" id="resultado" name="resultado" placeholder="Descrição" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$rel.Relatorio_Resultado}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Orientações</label>
+                                                <textarea class="textarea" id="orientacao" name="orientacao" placeholder="Descrição" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$rel.Relatorio_Orientacao}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Observações</label>
+                                                <textarea class="textarea" id="observacao" name="observacao" placeholder="Descrição" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$rel.Relatorio_Observacao}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Conclusão</label>
+                                                <textarea class="textarea" id="conclusao" name="conclusao" placeholder="Descrição" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$rel.Relatorio_Conclusao}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {if $dados.Status_ID != 3}
+                                    <div class="box-footer text-right">
+                                        {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                        {/if}
+                                    </div>
+                                    {/if}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/ckeditor/ckeditor.js"></script>
+<script src="{$diretorio}js/ckeditor/samples/js/sample.js"></script>
+<script src="{$diretorio}js/modulos/os_relatorio.js"></script>
+</body>
+</html>

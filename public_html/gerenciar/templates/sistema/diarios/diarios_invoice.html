@@ -1,0 +1,71 @@
+<section class="invoice">
+    <div class="row no-print">
+        <div class="row">
+        </div>
+        <div class="col-xs-12 text-center">
+            <a href="javascript: window.print();" class="btn btn-app"><i class="fa fa-print"></i> Imprimir</a>
+            <a href="javascript: window.close();" class="btn btn-app bg-red"><i class="fa fa-close"></i> Fechar</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-align-center"></i> Diário de Bordo: <strong>{$dados.Diario_ID}</strong>
+                <small class="pull-right">Data: {$dados.Diario_DiaSaida}</small>
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 invoice-col">
+            <p>Informações:</p>
+            <address>
+            Numero Requisição: <b>{$dados.Diario_NRequisicao}</b><br>
+            Carro: <b>{$dados.Auto_Nome}</b> Placa: <b>{$dados.Auto_Placa}</b><br>
+            Cidade: <b>{$dados.Cidade_Nome}-{$dados.Cidade_UF}</b><br>
+            <br>
+            Dia Saída: <b id="date">{$dados.Diario_DiaSaida}</b><br>
+                                            KM Saída: <b>{$dados.Diario_KMSaida}</b><br>
+                                            <br>
+                                            Dia Chegada: <b id="date">{$dados.Diario_DiaChegada}</b><br>
+                                            KM Chegada: <b>{$dados.Diario_KMChegada}</b><br>
+                                        </address>
+                                            <p>Responsável</p>
+                                        <address>
+                                            <strong>{$dados.Usuario_Nome}</strong><br>
+                                        </address>
+                                    </div>
+                                    <address>
+                                        <div class="col-xs-6 invoice-col">
+                                            <div class="form-group">
+                                                <br>
+                                        Empresa : <b>{$dados.DiarioEmp_Nome}</b><br>
+                                        CNPJ    : <b>{$dados.DiarioEmp_Cnpj}</b>
+                                            </div>
+                                        </div>
+                                    </address>
+                                    
+                                    <div class="col-sm-2 invoice-col" style="text-align: right;">
+                                        Diário de Bordo: <b>{if $dados.Diario_Status == 1} Aberto{else} Fechado{/if}</b><br>
+                                        Código OS: <b>{$dados.Diario_OS}</b>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <address>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Descrição/Observação</label>
+                                                <textarea name="descricao" placeholder="Descrição/Observação"
+                                                      style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" disabled>{$dados.Diario_Descricao}</textarea>
+                                            </div>
+                                        </div>
+                                    </address>
+                                </div>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+                <p class="print_assinatura">{$dados.Usuario_Nome}</p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Painel Ticket</title>
+
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    {include file="_menu_painel.html"}
+
+                    <form name="cadastro" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+                        <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                        <label class="box2 left">
+                            <span>Prioridade</span>
+                            <select name="prioridade" class="form-control">
+                                <option value="0">SELECIONE</option>
+                                {section name=i loop=$prioridades}
+                                <option value="{$prioridades[i].Prioridade_ID}" {if $prioridades[i].Prioridade_ID==$dados.Prioridade_ID}selected{/if}>
+                                    {$prioridades[i].Prioridade_Titulo}
+                                </option>
+                                {/section}
+                            </select>
+                        </label>
+
+                        <label class="box3 left">
+                            <span>Grupo</span>
+                            <select name="grupo" class="form-control">
+                                <option value="0">SELECIONE</option>
+                                {section name=i loop=$grupos}
+                                <option value="{$grupos[i].Grupo_ID}"
+                                        style="background: {$grupos[i].Grupo_Background}; color: {$grupos[i].Grupo_Color};"
+                                        {if
+                                        $grupos[i].Grupo_ID==$dados.Grupo_ID}selected{/if}>
+                                    {$grupos[i].Grupo_Nome}
+                                </option>
+                                {/section}
+                            </select>
+                        </label>
+
+                        <label class="box2 left">
+                            <span>Tipo</span>
+                            <select name="tipo" class="form-control">
+                                <option value="0">SELECIONE</option>
+                                {section name=i loop=$tipos}
+                                <option value="{$tipos[i].Tipo_ID}" {if $tipos[i].Tipo_ID==$dados.Tipo_ID}selected{/if}>
+                                    {$tipos[i].Tipo_Nome}
+                                </option>
+                                {/section}
+                            </select>
+                        </label>
+
+                        <div class="clear"></div>
+
+                        <label class="box">
+                            <span>Descrição/Observação</span>
+                            <textarea name="descricao" rows="8" placeholder="..."></textarea>
+                        </label>
+
+                        <div class="clear"></div>
+
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+
+                        <button type="submit" class="btn btn-green right" id="gravar"><i class="fa fa-save"></i> CADASTRAR</button>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/ticket.js"></script>
+    </body>
+</html>

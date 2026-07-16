@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{$Info['title']}</title>
+
+  {include file="_head.html"}
+  <style>
+    .tr {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body class="skin-blue">
+  <div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+      <section class="content-header">
+        <h1>
+          {ucfirst($Mod[1])}
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+          <li class="active">{ucfirst($Mod[0])}</li>
+          <li class="active">{ucfirst($Mod[1])}</li>
+        </ol>
+      </section>
+
+      <section class="content">
+        <input type="hidden" id="urlBase" value="{$urlBase}">
+        <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}/{$ajax}">
+
+        {include file="{$Mod[0]}/{$Mod[1]}/saidasExpedientes_guia.html"}
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">Registros {if $lista.t}<span class="label bg-black">{$lista.t}</span>{/if}</h3>
+                <div class="pad table-responsive">
+                  <form action="" method="get" class="pesquisa">
+                    <div class="col-xs-2 pad">
+                      <input type="number" name="" class="form-control" placeholder="ID..."
+                        value="{if $Busca}{$Busca}{/if}" />
+                    </div>
+                    <div class="col-xs-8 pad">
+                      <input type="text" name="b" class="form-control" placeholder="Nome responsável..."
+                        value="{if $Busca}{$Busca}{/if}" />
+                    </div>
+
+                    <div class="col-xs-2 pad">
+                      <select name="s" class="form-control">
+                        <option value="">Status</option>
+                        <option value="1" {if $Status==1}selected{/if}>Ativos</option>
+                        <option value="2" {if $Status==2}selected{/if}>Inativos</option>
+                      </select>
+                    </div>
+                    <div class="col-lg-12 pad text-right pull-right">
+                      <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i>
+                        Pesquisar</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>&nbsp;</th>
+                      <th>ID</th>
+                      <th>Responsável</th>
+                      <th>Dia Saída</th>
+                      <th>Hs Saída</th>
+                      <th>Autorização</th>
+                      <th>Status</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                  </thead>
+                  {section name=i loop=$lista.d}
+                  <tbody>
+                    <tr class="tr">
+                      <td>
+                          {if $lista.d[i].SaidasExp_Descricao != '' }
+                        <span1>+</span1>
+                        {/if}
+                      </td>
+                      <td>{$lista.d[i].SaidasExp_ID}</td>
+                      <td>{$lista.d[i].Usuario_Nome}</td>
+                      <td>{$lista.d[i].SaidasExp_DataSaida}</td>
+                      <td>{$lista.d[i].SaidasExp_HoraSaida}</td>
+                      <td>{if $lista.d[i].SaidasExp_Autorizacao==1}Sandra{elseif
+                        $lista.d[i].SaidasExp_Autorizacao==2}Gilberto de Oliveira{elseif
+                        $lista.d[i].SaidasExp_Autorizacao==3}Paulo Sérgio Gonçalves{elseif
+                        $lista.d[i].SaidasExp_Autorizacao==4}Giovani Mendes da Silva{/if}
+                      </td>
+                      <td>
+                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                        <a href="javascript: void(0);" class="reg" id="a-{$lista.d[i].SaidasExp_ID}">
+                          <span class="label label-{if $lista.d[i].SaidasExp_Status==1}success{else}danger{/if}">{if
+                            $lista.d[i].SaidasExp_Status==1}Ativo{else}Inativo{/if}</span>
+                        </a>
+                        {else}
+                        <span class="label label-{if $lista.d[i].SaidasExp_Status==1}success{else}danger{/if}">{if
+                          $lista.d[i].SaidasExp_Status==1}Ativo{else}Inativo{/if}</span>
+                        {/if}
+                      </td>
+                      <td class="text-center">
+                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/saidasExpedientes_ie.php?ac=e&id={$lista.d[i].SaidasExp_ID}"
+                          class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>
+                        {/if}
+                        {if $smarty.session.Menu_ID|cat:'d'|in_array:$smarty.session._user.Permissao_Modulos}
+                        <a href="javascript: void(0);" class="btn btn-danger btn-xs reg"
+                          id="d-{$lista.d[i].SaidasExp_ID}"><i class="fa fa-times"></i></a>
+                        {/if}
+
+                      </td>
+                    <tr>
+                      <td colspan="8">
+                        <table>
+                          <tr class="dentro">
+                            <td>
+                                {if $lista.d[i].SaidasExp_Descricao != '' || $lista.d[i].SaidasExp_Descricao != null}
+                              {$lista.d[i].SaidasExp_Descricao|truncate:500}
+                              {else}Nada consta na descrição!{/if}</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    </tr>
+                  </tbody>
+                  {/section}
+                </table>
+              </div>
+
+              <!--PAGINADOR-->
+              {$lista.paginador}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  {include file="_footer.html"}
+  <script type="text/javascript">
+    $(function () {
+      $("td[colspan=8]").hide();
+      $("tr").click(function (event) {
+        var $target = $(event.target);
+        $(this).find('span1').text(function (_, value) { return value == '+' ? '-' : '+' });
+        $target.closest("tr").next().find("td[colspan=8]").slideToggle();
+      });
+    });
+  </script>
+</body>
+
+</html>

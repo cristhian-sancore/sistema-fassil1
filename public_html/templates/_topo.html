@@ -1,0 +1,47 @@
+<header class="no-print"><meta charset="gb18030">
+    <div class="container">
+        <div class="content">
+            <div class="box_login right">
+                {if $smarty.session.xxx.login}
+                <div class="dados_login">
+                    <p>Bem vindo <b>{$smarty.session.xxx.login.Cliente_Nome}</b>!</p>
+
+                    <div class="clear"></div>
+
+                    <a href="{$urlBase}painel" class="btn btn-green"><i class="fa fa-dashboard"></i> Painel</a>
+                    <a href="{$urlBase}logout" class="btn btn-red">Sair <i class="fa fa-sign-out"></i></a>
+                </div>
+                {else}
+                <p>Área do cliente:</p>
+
+                <form role="form" method="post" enctype="multipart/form-data">
+                    <input type="text" name="c_login" placeholder="Usuário" autocomplete="off">
+                    <input type="password" name="c_senha" placeholder="Senha">
+                    <button type="submit" class="btn btn-green" name="logar" id="logar">ACESSAR <i class="fa fa-sign-in"></i></button>
+                </form>
+                <a href="{$urlBase}recuperar-senha" class="lembrar_senha">Esqueceu a senha?</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg_nav">
+        <div class="content">
+            <a href="{$urlBase}" class="logo"><img src="{$urlBase}img/logo.png"></a>
+            <div class="mobile_action"></div>
+
+            <ul class="nav_main">
+                <li {if $nav.n1_p == 'home'}class="active"{/if}><a href="{$urlBase}"><i class="fa fa-home"></i>Home</a></li>
+                <li {if $nav.n1_p == 'sobre-nos'}class="active"{/if}><a href="{$urlBase}sobre-nos"><i class="fa fa-institution"></i>Sobrenós</a></li>
+                <li {if $nav.n1_p == 'clientes'}class="active"{/if}><a href="{$urlBase}clientes"><i class="fa fa-globe"></i>Clientes</a></li>
+                <li {if $nav.n1_p == 'equipe'}class="active"{/if}><a href="{$urlBase}equipe"><i class="fa fa-group"></i>Equipe</a></li>
+                <li {if $nav.n1_p == 'downloads'}class="active"{/if}><a href="{$urlBase}downloads"><i class="fa fa-download"></i>Downloads</a></li>
+                <li {if $nav.n1_p == 'fale-conosco'}class="active"{/if}><a href="{$urlBase}fale-conosco"><i class="fa fa-phone"></i>Fale conosco</a></li>
+                <!--<li {if $nav.n1_p == 'validador'}class="active"{/if}><a href="{$urlBase}validador"><i class="fa fa-file"></i>validador</a></li>-->
+                {if !$smarty.session.xxx.login}
+                <li class="cad"><a href="{$urlBase}cadastro"><i class="fa fa-user-plus"></i> Cadastrar</a></li>
+                {/if}
+            </ul>
+        </div>
+    </div>
+</header>

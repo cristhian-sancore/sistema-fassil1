@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" name="subcidade" value="{$dados.Cidade_ID}" id="subcidade">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/empresas_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div><!-- /.box-header -->
+                        <!-- form start -->
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <div class="box-body">
+                                {section name=i loop=$dados.cidades}
+                                <div class="row cx_ce">
+                                    <div class="col-xs-5">
+                                        <div class="form-group">
+                                            <label>Estado</label>
+                                            <input type="text" class="form-control" value="{$dados.cidades[i].Estado_Nome}" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Cidade</label>
+                                            <input type="text" class="form-control" value="{$dados.cidades[i].Cidade_Nome}" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-1">
+                                        <button type="button" class="btn btn-danger btn-sm del_ec" id="{$dados.cidades[i].Empresa_ID}-{$dados.cidades[i].Cidade_ID}" style="margin-top: 26px;"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                {/section}
+
+                                <div class="row cx_ce">
+                                    <div class="col-xs-5">
+                                        <div class="form-group">
+                                            <label>Estado</label>
+                                            <select name="estado" class="form-control estado">
+                                                <option value="0">Selecione</option>
+                                                {section name=i loop=$estados}
+                                                <option value="{$estados[i].Estado_ID}" {if
+                                                        $estados[i].Estado_ID==$dados.Estado_ID}selected{/if}>
+                                                    {$estados[i].Estado_Nome}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Cidade</label>
+                                            <select name="cidade[]" class="form-control cidade">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-1">
+                                        <button type="button" class="btn btn-success btn-sm add_ec" style="margin-top: 26px;"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="box_ce"></div> <!--Recebe dados de mais estados/cidades-->
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Nome</label>
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome"
+                                                   value="{$dados.Empresa_Nome}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-right">
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/empresas_ie.js"></script>
+</body>
+</html>

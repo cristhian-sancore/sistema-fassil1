@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+    <style>
+
+        #tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 0%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        #tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+    </head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+{if $lista.os_aberta > 100}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <span class="text-danger bg-danger piscar" style="font-size:18px; padding:4px; margin:10px; border-radius:5px;">
+                    <i class="fa fa-exclamation-triangle"></i>
+        Atenção existem tickets em "Aberto"</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <b>Quantidade de Dias:</b> {$lista.os_aberta.Quantidade_Dias} <br>
+        <b>Quantidade de Tickets:</b> {$lista.os_aberta.Quantidade_OS_Aberta}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    function abreModal() {
+  $("#exampleModalCenter").modal({
+    show: true
+  });
+}
+
+setTimeout(abreModal, 1000);
+</script>
+{/if}
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}/{$ajax}">
+            <input type="hidden" id="urlModal" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/os_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Registros {if $lista.t}<span class="label bg-black">{$lista.t}</span>{/if}</h3>
+
+                            <div class="pad table-responsive">
+                                <form action="" method="get" class="pesquisa">
+                                    <div class="col-lg-5 pad">
+                                        <input type="text" name="b" class="form-control"
+                                               placeholder="Procurar..."
+                                               value="{if $Busca}{$Busca}{/if}"/>
+                                    </div>
+
+                                    <div class="col-lg-3 pad">
+                                        <select name="p" class="form-control">
+                                        <option value="">Prioridade</option>
+                                        {section name=i loop=$prioridades}
+                                        <option value="{$prioridades[i].Prioridade_ID}" {if $prioridades[i].Prioridade_ID==$Prioridade}selected{/if}>
+                                            {$prioridades[i].Prioridade_Titulo}
+                                        </option>
+                                        {/section}
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <select name="s" class="form-control">
+                                            <option value="">Status</option>
+                                            {section name=i loop=$status}
+                                            <option value="{$status[i].Status_ID}" {if $status[i].Status_ID==$Status}selected{/if}>{$status[i].Status_Nome}</option>
+                                            {/section}
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <select name="u" class="form-control">
+                                            <option value="">Usuário</option>
+                                            {section name=i loop=$usuarios}
+                                            <option value="{$usuarios[i].Usuario_ID}" {if $usuarios[i].Usuario_ID==$Usuario}selected{/if}>{$usuarios[i].Usuario_Nome}</option>
+                                            {/section}
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <select name="c" class="form-control">
+                                            <option value="">Cidade</option>
+                                            {section name=i loop=$cidades}
+                                            <option value="{$cidades[i].Cidade_ID}" {if $cidades[i].Cidade_ID==$Cidade}selected{/if}>{$cidades[i].Cidade_Nome}</option>
+                                            {/section}
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-lg-2 pad" id="tooltip">
+                                        <select name="e" class="form-control" disabled>
+                                            <option value="">Entidade</option>
+                                            <option value=""></option>
+                                        </select>
+                                        <span class="tooltiptext"><b>(Opção em Desenvolvimento!)</b><br>Esta opção está desabilitada até que seja completamente implementada <i class="fa fa-ban"></i></span>
+                                    </div>
+                                    
+                                    <div class="col-lg-2 pad">
+                                        <select name="g" class="form-control" {section name=i loop=$grupos}{if
+                                                $grupos[i].Grupo_ID==$Grupo}style="background:
+                                                {$grupos[i].Grupo_Background}; color:
+                                                {$grupos[i].Grupo_Color};"{/if}{/section}>
+                                        <option value="">Grupo</option>
+                                        {section name=i loop=$grupos}
+                                        <option value="{$grupos[i].Grupo_ID}" style="background: {$grupos[i].Grupo_Background}; color: {$grupos[i].Grupo_Color};" {if $grupos[i].Grupo_ID==$Prioridade}selected{/if}>
+                                            {$grupos[i].Grupo_Nome}
+                                        </option>
+                                        {/section}
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <select name="t" class="form-control">
+                                            <option value="">Tipo</option>
+                                            {section name=i loop=$tipos}
+                                            <option value="{$tipos[i].Tipo_ID}" {if $tipos[i].Tipo_ID==$Tipo}selected{/if}>{$tipos[i].Tipo_Nome}</option>
+                                            {/section}
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <select name="n" class="form-control">
+                                            <option value="">Notificações</option>
+                                            <option value="1" {if $Notificacao == 1}selected{/if}>Possui notificações novas</option>
+                                            <option value="2" {if $Notificacao == 2}selected{/if}>Últimas notificações</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <input type="text" name="d1" class="form-control datepicker pull-right"
+                                               placeholder="Data menor"
+                                               data-inputmask='"mask": "99/99/9999"' data-mask
+                                               value="{if $Data1}{$Data1}{/if}"/>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <input type="text" name="d2" class="form-control datepicker pull-right"
+                                               placeholder="Data maior"
+                                               data-inputmask='"mask": "99/99/9999"' data-mask
+                                               value="{if $Data2}{$Data2}{/if}"/>
+                                    </div>
+
+                                    <div class="col-lg-12 pad text-right pull-right">
+                                        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/gerar_pdf_os.php?{$Params}" class="btn btn-warning btn-sm" target="_blank"><i class="fa fa-file-pdf-o"></i> Gerar PDF</a>
+                                        <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Pesquisar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        {if isset($lista.g)}
+                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+                        {/if}
+
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover" style="font-size:13px;">
+                                <tr>
+                                    <th>Ações</th>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Data</th>
+                                    <!--<th>Protocolo</th>-->
+                                    <th>Grupo</th>
+                                    <th>Tipo</th>
+                                    <th>Status</th>
+                                    <th>Descrição</th>
+                                    <th>Responsável</th>
+                                    
+                                </tr>
+                                {section name=i loop=$lista.d}
+                                <tr style="background: {$lista.d[i].Grupo_Background}; color: {$lista.d[i].Grupo_Color};">
+                                    <td class="text-center">
+                                        {if $lista.d[i].Status_ID!=3}
+                                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_ie.php?ac=e&id={$lista.d[i].OS_ID}"
+                                           class="btn btn-sm btn-default"><i class="fa fa-pencil"></i></a>
+                                        {/if}
+                                        {if $smarty.session.Menu_ID|cat:'d'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="javascript: void(0);" class="btn btn-sm btn-danger reg"
+                                           id="d-{$lista.d[i].OS_ID}"><i class="fa fa-times"></i></a>
+                                        {/if}
+                                        {/if}
+                                    </td>
+                                    <td>{$lista.d[i].OS_ID}</td>
+                                    <td>
+                                        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_view.php?ac=v&id={$lista.d[i].OS_ID}"
+                                           class="btn btn-default"><i class="fa fa-eye"></i> {if $lista.d[i].Msg_Total_Visualizada}<span class="badge bg-red">{$lista.d[i].Msg_Total_Visualizada}</span>{/if}</a>
+                                        {$lista.d[i].Cliente_Nome}
+                                        {if $lista.d[i].Cliente_Admin}<span class="label label-danger">administrador</span>{/if}
+                                    </td>
+                                    <td width="175px">
+                                        Início: {$lista.d[i].OS_DataInicio} às {$lista.d[i].OS_HorasInicio}
+                                        {if $lista.d[i].DataFechamento}<br>Fim: {$lista.d[i].DataFechamento}
+                                        <br>Tempo: {$lista.d[i].TempoOS}
+                                        {/if}
+                                    </td>
+                                    <!--<td>{$lista.d[i].OS_Protocolo}</td>-->
+                                    <td>{$lista.d[i].Grupo_Nome}</td>
+                                    <td>{$lista.d[i].Tipo_Nome}</td>
+                                    <td align="center"><button class="btn {$lista.d[i].Status_Color}"><i class="fa {$lista.d[i].Status_Icon}"></i> {$lista.d[i].Status_Nome}</button></td>
+                                    <td style="max-width: 400px; overflow: auto;">{$lista.d[i].OS_Descricao|truncate:150}</td>
+                                    <td>
+                                        {if $lista.d[i].Status_ID!=3}
+                                        <a href="javascript: void(0);" class="btn btn-default alt_user"
+                                           id="{$lista.d[i].OS_ID}"><i class="fa fa-user"></i></a>
+                                        {/if}
+                                        {$lista.d[i].Usuario_Nome}
+                                    </td>
+                                    
+                                </tr>
+                                {/section}
+                            </table>
+                        </div>
+
+                        <!--PAGINADOR-->
+                        {$lista.paginador}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/os.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+<script type="text/javascript">
+    {if isset($lista.g)}
+    {literal}
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawVisualization);
+
+    function drawVisualization() {
+        var data = google.visualization.arrayToDataTable([
+            {/literal}{$lista.g}{literal}
+        ]);
+
+        var options = {
+//            title : 'Titulo',
+            vAxis: {title: 'Tickets'},
+//            hAxis: {title: 'Month'},
+            seriesType: 'bars'
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+    {/literal}
+    {/if}
+</script>
+</body>
+</html>

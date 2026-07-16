@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Grupo Fassil</title>
+
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Alterar senha</div>
+
+                    {if $nav.n1 == 'recuperar-senha_ok'}
+                    <div class="msg_success">
+                        <h3>Senha alterada com sucesso!</h3>
+                        <p>Foi enviado para seu e-mail os dados da nova senha.</p>
+                    </div>
+                    {else}
+                    <form name="cadastro" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+
+                        <label class="box2 left">
+                            <span>Seu nome</span>
+                            <input type="text" name="nome" placeholder="Ex: Paulo da Silva" autocomplete="off" disabled value="{$dados.Cliente_Nome}">
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Departamento</span>
+                            <input type="text" name="departamento" placeholder="Ex: Licitação" autocomplete="off" disabled value="{$dados.Cliente_Departamento}">
+                        </label>
+
+                        <label class="box4 right">
+                            <span>Cargo</span>
+                            <input type="text" name="cargo" placeholder="Ex: Pregoeiro" autocomplete="off" disabled value="{$dados.Cliente_Cargo}">
+                        </label>
+
+                        <div class="clear"></div>
+
+                        <label class="box2 left">
+                            <span>E-mail</span>
+                            <input type="text" name="email" id="email" placeholder="seuemail@gmail.com" autocomplete="off" disabled value="{$dados.Cliente_Email}">
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Celular</span>
+                            <input type="text" name="celular" class="cel" placeholder="(65) 0 0000-000" autocomplete="off" disabled value="{$dados.Cliente_Contato1}">
+                        </label>
+
+                        <label class="box4 right">
+                            <span>Telefone</span>
+                            <input type="text" name="telefone" class="fone" placeholder="(65) 0000-000" autocomplete="off" disabled value="{$dados.Cliente_Contato2}">
+                        </label>
+
+                        <div class="clear"></div>
+                        <h2 class="titulo_painel"><i class="fa fa-lock"></i> Acesso</h2>
+
+                        <label class="box4 left">
+                            <span>Login</span>
+                            <input type="text" name="login" id="login" placeholder="" autocomplete="off" disabled value="{$dados.Cliente_Login}">
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Senha</span>
+                            <input type="password" name="senha" placeholder="">
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Repetir Senha</span>
+                            <input type="password" name="senha2" placeholder="">
+                        </label>
+
+                        <div class="clear"></div><br>
+
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+
+                        <div class="clear"></div><br>
+
+                        <button type="submit" class="btn btn-green right" id="gravar"><i class="fa fa-save"></i> ALTERAR SENHA</button>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                    {/if}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/alterar-senha.js"></script>
+    </body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Painel Ticket</title>
+
+        {include file="_head.html"}
+        <link rel="stylesheet" href="{$urlBase}js/uploadifive/uploadifive.css"/>
+        <link rel="stylesheet" href="{$urlBase}css/rating.css?v=1"/>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    {include file="_menu_painel.html"}
+
+                    <div class="ticket_info">
+                        {if $dados.Status_ID==3}
+                        <div class="no-print">
+                            <h2>Avaliação Atendimento</h2>
+
+                            <div class="avaliacao">
+                                <fieldset class="rating">
+                                    <input type="radio" id="star5" name="av_nota" value="5" {if $dados.OS_Avaliacao==5}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class = "full" for="star5" title="Excelente - 5 estrelas"></label>
+                                    <input type="radio" id="star4half" name="av_nota" value="4.5" {if $dados.OS_Avaliacao==4.5}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class="half" for="star4half" title="Muito bom - 4.5 estrelas"></label>
+                                    <input type="radio" id="star4" name="av_nota" value="4" {if $dados.OS_Avaliacao==4}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class = "full" for="star4" title="Muito bom - 4 estrelas"></label>
+                                    <input type="radio" id="star3half" name="av_nota" value="3.5" {if $dados.OS_Avaliacao==3.5}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class="half" for="star3half" title="Bom - 3.5 estrelas"></label>
+                                    <input type="radio" id="star3" name="av_nota" value="3" {if $dados.OS_Avaliacao==3}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class = "full" for="star3" title="Bom - 3 estrelas"></label>
+                                    <input type="radio" id="star2half" name="av_nota" value="2.5" {if $dados.OS_Avaliacao==2.5}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class="half" for="star2half" title="Regular - 2.5 estrelas"></label>
+                                    <input type="radio" id="star2" name="av_nota" value="2" {if $dados.OS_Avaliacao==2}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class = "full" for="star2" title="Ruim - 2 estrelas"></label>
+                                    <input type="radio" id="star1half" name="av_nota" value="1.5" {if $dados.OS_Avaliacao==1.5}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class="half" for="star1half" title="Ruim - 1.5 estrelas"></label>
+                                    <input type="radio" id="star1" name="av_nota" value="1" {if $dados.OS_Avaliacao==1}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class = "full" for="star1" title="Péssimo - 1 estrela"></label>
+                                    <input type="radio" id="starhalf" name="av_nota" value="0.5" {if $dados.OS_Avaliacao==0.5}checked{/if} {if $dados.OS_Avaliacao}disabled{/if}/><label class="half" for="starhalf" title="Péssimo - 0.5 estrela"></label>
+                                </fieldset>
+
+                                {if $dados.OS_Avaliacao}
+                                    {if $dados.OS_AvaliacaoComentario}
+                                    <p><b>Comentário:</b> {$dados.OS_AvaliacaoComentario}</p>
+                                    {/if}
+                                {else}
+                                <textarea name="av_comentario" placeholder="Comentário" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{$dados.OS_AvaliacaoComentario}</textarea>
+                                {/if}
+
+                                {if !$dados.OS_Avaliacao}
+                                <button type="submit" class="btn btn-green btn_avaliar no-print" id="{$dados.OS_ID}"><i class="fa fa-send"></i> AVALIAR</button>
+                                {/if}
+                            </div>
+
+                            <div class="clear"></div>
+                        </div>
+                        {/if}
+
+                        {if $dados.OS_Relatorio==1 || $dados.r}
+                        <h2>Confirmação Fechamento</h2>
+                        <div class="confirmacao">
+                            <div class="no-print">
+                            <p>O responsável pelo Ticket <b>{$dados.Usuario_Nome}</b> deseja fechar esse atendimento. Clique em <b>'CONFIRMAR'</b> caso esteja de acordo e o problema tenha sido resolvido.</p>
+                            <span>Obs: Todos vinculados a este ticket precisam confirmar para que o mesmo seja fechado.</span>
+                            </div>
+
+                            <div class="confirmacao_box">
+                                {section name=i loop=$dados.f}
+                                <p><b>{$dados.f[i].Cliente_Nome}</b> - {$dados.f[i].Cliente_Departamento}/{$dados.f[i].Cliente_Cargo} <i class="fa fa-arrow-right"></i> {$dados.f[i].Status}</p>
+
+                                {if $dados.f[i].Cliente_ID==$smarty.session.xxx.login.Cliente_ID && !$dados.f[i].Fechamento_Status}
+                                <form role="form" method="post" enctype="multipart/form-data" action="" class="fechamento" name="fechamento">
+                                    <input type="hidden" name="os" value="{$dados.OS_ID}">
+                                    <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                                    <button type="submit" class="btn btn-red btn_confirmar no-print" name="fechamento" id="gravar"><i class="fa fa-lock"></i> CONFIRMAR</button>
+                                </form>
+                                {/if}
+                                {/section}
+                            </div>
+                        </div>
+                        {elseif $dados.Status_ID==4}
+                        <h2>Confirmar Fechamento</h2>
+                        <div class="confirmacao">
+                            <p>O responsável pelo Ticket <b>{$dados.Usuario_Nome}</b> está finalizando o relatório.</p>
+                        </div>
+                        {/if}
+
+                        <div class="btn_print">
+                            <a href="javascript: window.print();" class="btn btn-blue no-print"><i class="fa fa-print"></i> Imprimir</a>
+                        </div>
+
+                        <div class="no-print">
+                            <h2 style="margin:10px;">Anexar Documentos</h2>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="piscar" style="background-color:#F2DEDE;color:#A94442; max-width:400px; padding:10px; top:30px;">Tipo de anexos aceitos: PNG, JPG, DOCX, DOC, PDF!</p>
+                                </div>
+                            </div>
+                                
+                            <div class="ticket_anexos">
+                                <form role="form" method="post" enctype="multipart/form-data" action="">
+                                    <div class="form-group pull-left">
+                                        <button type="button" class="btn btn-green" onclick="return EnviaAnexo();" style="margin:0 10px 0 0;">ENVIAR <i class="fa fa-upload"></i></button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="file" id="anexo-ticket" style="float: left;">
+                                    </div>
+                                </form>
+
+                                <div class="clear"></div>
+                                <b>Anexos:</b>
+                                <div class="box_anexos">
+                                    {if $dados.a}
+                                    {section name=i loop=$dados.a}
+                                    <div class="anexo" style="float: left; padding: 5px 15px 5px 0;">
+                                        <a href="{$urlBase}gerenciar/midias/{$dados.a[i].Anexo_Caminho}" class="btn btn-blue" target="_blank"><i class="fa fa-download"></i> {$dados.a[i].Anexo_Nome}</a>
+                                        {if !$dados.a[i].Anexo_Envio}
+                                        <a class="btn btn-red anexo_exc" id="{$dados.a[i].Anexo_ID}"><i class="fa fa-remove"></i></a>
+                                        {/if}
+                                    </div>
+                                    {/section}
+                                    {else}
+                                    <p>Nenhum anexo!</p>
+                                    {/if}
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <h2>Informações</h2>
+                        <div class="ticket_info_box">
+                            <p class="print">
+                                <b>Cliente:</b>{$dados.Cliente_Nome} |
+                                <b>Departamento:</b>{$dados.Cliente_Departamento} |
+                                <b>Cargo:</b>{$dados.Cliente_Cargo}
+                            </p>
+                            <p class="print" style="margin-bottom: 15px;">
+                                <b>Entidade:</b>{$dados.CE_Nome} de {$dados.Cidade_Nome}
+                            </p>
+                            <p>
+                                <b>Status:</b>{$dados.Status_Nome}
+                            </p>
+                            <p>
+                                <b>Data início:</b>{$dados.OS_DataInicio} às {$dados.OS_HorasInicio}
+                            </p>
+                            <p>
+                                <b>Protocolo:</b>{$dados.OS_Protocolo}
+                            </p>
+                            <p>
+                                <b>Prioridade:</b>{$dados.Prioridade_Titulo}
+                            </p>
+                            <p>
+                                <b>Grupo:</b>{$dados.Grupo_Nome}
+                            </p>
+                            <p>
+                                <b>Tipo:</b>{$dados.Tipo_Nome}
+                            </p>
+                            <p>
+                                <b>Descrição/Observação:</b>{$dados.OS_Descricao}
+                            </p>
+                        </div>
+
+                        <div class="ticket_info_box" style="border: none;">
+                            <p>
+                                <b>Responsável:</b>{if $dados.Usuario_Nome}{$dados.Usuario_Nome}{else}Sem responsável até o momento.{/if}
+                            </p>
+                            <p>
+                                <b>Relatório:</b>{$dados.Relatorio}
+                            </p>
+                            {if $dados.DataFechamento}
+                            <p>
+                                <b>Data fechamento:</b>{$dados.DataFechamento}
+                            </p>
+                            <p>
+                                <b>Tempo:</b>{$dados.TempoOS}
+                            </p>
+                            {/if}
+                            {if $dados.OS_NotaUsuario}
+                            <p>
+                                <b>Nota:</b>{$dados.OS_NotaUsuario}
+                            </p>
+                            {/if}
+                            <br>
+                            {if $dados.OS_Relatorio==2 && $dados.r}
+                            <p class="no-print">
+                                <b>Relatório:</b> <a href="{$urlBase}gerar_pdf_relatorio.php?id={$dados.OS_ID}" TARGET="_blank" class="btn btn-yellow"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                            </p>
+                            {/if}
+                        </div>
+
+                        <div class="clear"></div>
+                    </div>
+
+                    {if $msg}
+                    <!--MENSAGENS PARA IMPRESSÃO-->
+                    <div class="print">
+                        <h2>Mensagens</h2>
+                        <div class="clear" style="margin-bottom: 20px;"></div>
+
+                        {section name=i loop=$msg}
+                        {if $msg[i].Msg_Recebimento}
+                        {if $msg[i.index_prev].Msg_Recebimento != $msg[i].Msg_Recebimento}
+                        <span class="cliente">{$dados['Usuario_Nome']}</span>
+                        {/if}
+                        <div class="linha">
+                            <div class="linha_msg1">
+                                {$msg[i].Msg_Conteudo}
+
+                                {if $msg[i].Anexos}
+                                <div class="linha_anexo">
+                                    {section name=j loop=$msg[i].Anexos}
+                                    <a href="{$urlBase}midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                                    {/section}
+                                </div>
+                                {/if}
+
+                                <div class="linha_data1"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                            </div>
+                        </div>
+                        {else}
+                        {if $msg[i.index_prev].Msg_Recebimento != $msg[i].Msg_Recebimento}
+                        <span class="user">{$dados['Cliente_Nome']}</span>
+                        {/if}
+                        <div class="linha">
+                            <div class="linha_msg2">
+                                {$msg[i].Msg_Conteudo}
+
+                                {if $msg[i].Anexos}
+                                <div class="linha_anexo">
+                                    {section name=j loop=$msg[i].Anexos}
+                                    <a href="{$urlBase}midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                                    {/section}
+                                </div>
+                                {/if}
+
+                                <div class="linha_data2"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                            </div>
+                        </div>
+                        {/if}
+                        {/section}
+                    </div>
+                    {/if}
+
+                    {if $dados.Cliente_ID==$smarty.session.xxx.login.Cliente_ID}
+                    <div class="chat no-print">
+                        <h2><i class="fa fa-send"></i> Mensagem</h2>
+
+                        <div class="chat_box" id="chat_box">
+                            {if $msg}
+                            {section name=i loop=$msg}
+                            {if $msg[i].Msg_Recebimento}
+                            <div class="linha">
+                                <div class="linha_msg1">
+                                    {$msg[i].Msg_Conteudo}
+
+                                    {if $msg[i].Anexos}
+                                    <div class="linha_anexo">
+                                        {section name=j loop=$msg[i].Anexos}
+                                        <a href="{$urlBase}gerenciar/midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                                        {/section}
+                                    </div>
+                                    {/if}
+
+                                    <div class="linha_data1"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                                </div>
+                            </div>
+                            {else}
+                            <div class="linha">
+                                <div class="linha_msg2">
+                                    {$msg[i].Msg_Conteudo}
+
+                                    {if $msg[i].Anexos}
+                                    <div class="linha_anexo">
+                                        {section name=j loop=$msg[i].Anexos}
+                                        <a href="{$urlBase}gerenciar/midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                                        {/section}
+                                    </div>
+                                    {/if}
+
+                                    <div class="linha_data2"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                                </div>
+                            </div>
+                            {/if}
+                            {/section}
+                            {else}
+                            Nenhuma menssagem!
+                            {/if}
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="" name="mensagem" id="form_mensagem">
+                            <input type="hidden" id="urlBase" value="{$urlBase}">
+                            <input type="hidden" id="os" value="{$dados.OS_ID}">
+                            <input type="hidden" id="os_qtd" value="{count($msg)}">
+                            <input type="hidden" id="status" name="status" value="{$dados.Status_ID}">
+
+                            <textarea class="textarea" id="editor" name="conteudo" placeholder="Mensagem..." {if $dados.Status_ID==3}disabled{/if} style="width: 100%; min-height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+
+                            <div class="clear" style="margin-bottom: 5px;"></div>
+
+                            <div class="left">
+                                <button type="button" class="btn btn-green envia_mensagem" {if $dados.Status_ID!=3}onclick="return EnviaMensagem();"{/if}>ENVIAR <i class="fa fa-send"></i></button>
+                            </div>
+
+                            <p class="right enviando">Aguarde! Enviando mensagem...</p>
+
+                            <div>
+                                <input type="file" name="anexo" id="anexo" style="float: left;">
+                            </div>
+                        </form>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/uploadifive/jquery.uploadifive.js" type="text/javascript"></script>
+        <script src="{$urlBase}js/ion.sound.min.js"></script>
+        <script src="{$urlBase}js/ckeditor/ckeditor.js"></script>
+        <script src="{$urlBase}js/ckeditor/samples/js/sample.js"></script>
+        <script src="{$urlBase}js/modulos/ticket_view.js"></script>
+    </body>
+</html>

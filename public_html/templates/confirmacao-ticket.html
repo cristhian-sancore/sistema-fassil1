@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Grupo Fassil</title>
+
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Confirmação Ticket</div>
+
+                    <h2>Confirmar Fechamento</h2>
+                    <div class="confirmacao">
+                        {if !$dados.Fechamento_Status}
+                        <p>O responsável pelo Ticket <b>{$dados.Usuario_Nome}</b> deseja fechar esse atendimento. Clique em <b>'CONFIRMAR'</b> caso esteja de acordo e o problema tenha sido resolvido.</p>
+                        <span>Obs: Todos vinculados a este ticket precisam confirmar para que o mesmo seja fechado.</span>
+                        {else}
+                        <p>Este ticket ja foi confirmado o fechamento. Obrigado!</p>
+                        {/if}
+
+                        <div class="confirmacao_box">
+                            {section name=i loop=$dados.f}
+                            <p><b>{$dados.f[i].Cliente_Nome}</b> - {$dados.f[i].Cliente_Departamento}/{$dados.f[i].Cliente_Cargo} <i class="fa fa-arrow-right"></i> {$dados.f[i].Status}</p>
+                            {/section}
+                        </div>
+                    </div>
+
+                    {if !$dados.Fechamento_Status}
+                    <div class="clear"></div>
+
+                    <form name="cadastro" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+
+                        <div class="clear"></div><br>
+
+                        <div style="text-align: center">
+                            <button type="submit" class="btn btn-red" id="gravar"><i class="fa fa-lock"></i> CONFIRMAR</button>
+                        </div>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                    {/if}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/confirmacao-ticket.js"></script>
+    </body>
+</html>

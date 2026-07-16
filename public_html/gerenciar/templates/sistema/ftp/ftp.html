@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+    
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}/{$ajax}">
+            <input type="hidden" id="urlModal" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <div class="row">
+               <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">FTP</h3>
+                                <div class="pad table-responsive">
+                                <div class="row text-center">
+                                    <a href="ftp://177.222.239.118" class="btn btn-primary green" target="_blank"><i class="fa fa-link"></i> FTP SERVIDOR</a>
+                                </div>
+                                <div class="pad table-responsive">
+                                <div class="row text-center">
+                                    <a href="ftp://177.222.239.118:888" class="btn btn-danger" target="_blank"><i class="fa fa-link"></i> FTP TECNICOS</a>
+                                </div>
+
+                                <iframe width="100%" height="540" frameborder="0" style="border:0" allowfullscreen src="ftp://ftp1.faspel.com.br/"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/os.js"></script>
+</body>
+</html>

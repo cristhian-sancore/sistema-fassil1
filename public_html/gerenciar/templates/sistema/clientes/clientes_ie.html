@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" name="subcidade" value="{$dados.Cidade_ID}" id="subcidade">
+            <input type="hidden" name="subempresa" value="{$dados.CE_ID}" id="subempresa">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/clientes_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <div class="form-group">
+                                            <label>Adminstrador</label>
+                                            <select name="admin" class="form-control">
+                                                <option value="0" {if $dados.Cliente_Admin == 0}selected{/if}>Não</option>
+                                                <option value="1" {if $dados.Cliente_Admin == 1}selected{/if}>Sim</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Estado</label>
+                                            <select name="estado" class="form-control">
+                                                <option value="0">Selecione</option>
+                                                {section name=i loop=$estados}
+                                                <option value="{$estados[i].Estado_ID}" {if
+                                                        $estados[i].Estado_ID==$dados.Estado_ID}selected{/if}>
+                                                    {$estados[i].Estado_Nome}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Cidade</label>
+                                            <select name="cidade" class="form-control cidade">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Empresa/Orgão</label>
+                                            <select name="empresa" class="form-control empresa">
+                                                {if $dados.CE_Nome}
+                                                <option value="{$dados.CE_ID}">{$dados.CE_Nome}</option>
+                                                {/if}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Nome</label>
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome"
+                                                   value="{$dados.Cliente_Nome}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Departamento</label>
+                                            <input type="text" class="form-control" name="departamento" placeholder="Departamento"
+                                                   value="{$dados.Cliente_Departamento}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Cargo</label>
+                                            <input type="text" class="form-control" name="cargo" placeholder="Cargo"
+                                                   value="{$dados.Cliente_Cargo}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>E-mail</label>
+                                            <input type="text" class="form-control" name="email" id="email" placeholder="E-mail"
+                                                   value="{$dados.Cliente_Email}">
+                                            <p class="error_email"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Contato 1</label>
+                                            <input type="text" class="form-control" name="contato1"
+                                                   placeholder="(65) 90000-0000"
+                                                   data-inputmask='"mask": "(99) 99999-9999"' data-mask
+                                                   value="{$dados.Cliente_Contato1}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Contato 2</label>
+                                            <input type="text" class="form-control" name="contato2"
+                                                   placeholder="(65) 90000-0000"
+                                                   data-inputmask='"mask": "(99) 99999-9999"' data-mask
+                                                   value="{$dados.Cliente_Contato2}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Contato 3</label>
+                                            <input type="text" class="form-control" name="contato3"
+                                                   placeholder="(65) 90000-0000"
+                                                   data-inputmask='"mask": "(99) 99999-9999"' data-mask
+                                                   value="{$dados.Cliente_Contato3}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="page-header text-center"><i class="fa fa-lock"></i> Acesso</h4>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class=Login</label>
+                                            <input type="text" class="form-control" name="login" id="login" placeholder="Login"
+                                                   value="{$dados.Cliente_Login}">
+                                            <p class="error_login"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class=Login</label>
+                                            <input type="password" class="form-control" name="senha" placeholder="Senha">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer text-right">
+                                    {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                    <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                    {/if}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/clientes_ie.js"></script>
+</body>
+</html>

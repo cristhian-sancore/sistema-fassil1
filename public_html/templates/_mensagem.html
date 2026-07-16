@@ -1,0 +1,35 @@
+{section name=i loop=$msg}
+{if $msg[i].Msg_Recebimento}
+<div class="linha">
+    <div class="linha_msg1">
+        {$msg[i].Msg_Conteudo|utf8_decode}
+
+        {if $msg[i].Anexos}
+        <div class="linha_anexo">
+            {section name=j loop=$msg[i].Anexos}
+            <a href="{$urlBase}gerenciar/midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome|utf8_decode}</a>
+            {/section}
+        </div>
+        {/if}
+
+        <div class="linha_data1"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data|utf8_decode}</div>
+    </div>
+</div>
+{else}
+<div class="linha">
+    <div class="linha_msg2">
+        {$msg[i].Msg_Conteudo|utf8_decode}
+
+        {if $msg[i].Anexos}
+        <div class="linha_anexo">
+            {section name=j loop=$msg[i].Anexos}
+            <a href="{$urlBase}gerenciar/midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome|utf8_decode}</a>
+            {/section}
+        </div>
+        {/if}
+
+        <div class="linha_data2"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data|utf8_decode}</div>
+    </div>
+</div>
+{/if}
+{/section}

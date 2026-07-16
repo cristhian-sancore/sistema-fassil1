@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}home.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/entidades_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 entidade text-center">
+                                        {if $dados.Entidade_Imagem}
+                                        <img src="{$dados.Entidade_Imagem}">
+                                        {/if}
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <label>Imagem</label>
+                                        <div class="form-group">
+                                            <input type="file" name="midia[]" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-9">
+                                        <div class="form-group">
+                                            <label>Título</label>
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome" value="{$dados.Entidade_Nome}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" name="status" {if $dados.Entidade_Status==1}checked{/if}> Ativo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="lead">Orgão: <button type="button" class="btn btn-success add_orgao"><i class="fa fa-plus"></i></button></p>
+
+                                <div class="box_orgaos">
+                                    {section name=i loop=$dados.orgaos}
+                                    <div class="row qtd_orgao">
+                                        <div class="col-xs-4">
+                                            <div class="form-group">
+                                                <label>Nome</label>
+                                                <input type="text" class="form-control" value="{$dados.orgaos[i].Orgao_Nome}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-4">
+                                            <div class="form-group">
+                                                <label>Link</label>
+                                                <input type="text" class="form-control" value="{$dados.orgaos[i].Orgao_Link}" disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <label>&nbsp;</label>
+                                            <div class="form-group">
+                                                <label style="margin-right: 20px;">
+                                                    <input type="checkbox" {if $dados.orgaos[i].Orgao_Sistema}checked{/if}> Sistema
+                                                </label>
+                                                <label>
+                                                    <input type="checkbox" {if $dados.orgaos[i].Orgao_Consultoria}checked{/if}> Consultoria
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-1">
+                                            <label>&nbsp;</label>
+                                            {if !$dados}
+                                            <button type="button" class="btn btn-block btn-danger rmv_orgao"><i class="fa fa-times"></i></button>
+                                            {else}
+                                            <a href="{$urlBase}website/entidades/entidades_ie.php?ac=d&id={$dados.Entidade_ID}&og={$dados.orgaos[i].Orgao_ID}" class="btn btn-block btn-danger"><i class="fa fa-times"></i></a>
+
+                                            {/if}
+                                        </div>
+                                    </div>
+                                    {/section}
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-right">
+                                {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                {/if}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/entidades_ie.js"></script>
+</body>
+</html>

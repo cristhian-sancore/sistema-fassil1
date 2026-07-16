@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+
+<body class="skin-blue">
+    <div class="wrapper">
+
+        {include file="_header.html"}
+        
+        {include file="_menu.html"}
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    {ucfirst($Mod[1])}
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">{ucfirst($Mod[0])}</li>
+                    <li class="active">{ucfirst($Mod[1])}</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <input type="hidden" id="urlBase" value="{$urlBase}">
+                <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}/{$ajax}"> {include file="{$Mod[0]}/{$Mod[1]}/diarios_guia.html"}
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <h3 class="box-title">Registros {if $lista.t}<span class="label bg-black">{$lista.t}</span>{/if}</h3>
+                                <div class="pad table-responsive">
+                                    <form action="" method="get" class="pesquisa">
+                    
+                                            <div class="col-lg-4 pad">
+                                                <select name="c" class="form-control">
+                                                <option value="">Cidade</option>
+                                                {section name=i loop=$cidades}
+                                                <option value="{$cidades[i].Cidade_ID}" {if $cidades[i].Cidade_ID==$Cidade}selected{/if}>
+                                                {$cidades[i].Cidade_Nome} - {$cidades[i].Cidade_UF}
+                                                </option>
+                                                {/section}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 pad">
+                                                <select name="u" class="form-control">
+                                                <option value="">Motorista</option>
+                                                {section name=i loop=$usuarios}
+                                                <option value="{$usuarios[i].Usuario_ID}" {if $usuarios[i].Usuario_ID==$Usuario}selected{/if}>
+                                                {$usuarios[i].Usuario_Nome}
+                                                </option>
+                                                {/section}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2 pad">
+                                                <select name="a" class="form-control">
+                                                <option value="">Automóvel</option>
+                                                {section name=i loop=$automoveis}
+                                                <option value="{$automoveis[i].Auto_ID}" {if $automoveis[i].Auto_ID==$Automovel}selected{/if}>
+                                                {$automoveis[i].Auto_Nome} / {$automoveis[i].Auto_Placa}
+                                                </option>
+                                                {/section}
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-2 pad">
+                                                <select name="s" class="form-control">
+                                                <option value="">Status</option>
+                                                <option value="1" {if $Status==1}selected{/if}>Ativos</option>
+                                                <option value="2" {if $Status==2}selected{/if}>Inativos</option>
+                                            </select>
+                                            </div>
+                                            <div class="col-lg-2 pad">
+                                                <input type="text" name="d1" class="form-control datepicker pull-right"
+                                                    placeholder="Data menor (Saida)"
+                                                    data-inputmask='"mask": "99/99/9999"' data-mask
+                                                    value="{if $Data1}{$Data1}{/if}"/>
+                                            </div>
+
+                                            <div class="col-lg-2 pad">
+                                                <input type="text" name="d2" class="form-control datepicker pull-right"
+                                                    placeholder="Data maior (Saida)"
+                                                    data-inputmask='"mask": "99/99/9999"' data-mask
+                                                    value="{if $Data2}{$Data2}{/if}"/>
+                                            </div>
+                                        
+                                        <div class="col-lg-12 pad text-right pull-right">
+                                            <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/gerar_pdf_diarios.php?{$Params}" class="btn bg-blue btn-sm" target="_blank"><i class="fa fa-file-pdf-o"></i> Gerar PDF</a>
+                                            <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Pesquisar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Automovel</th>
+                                        <!--<th>N. Requisicao</th>-->
+                                        <th>Motorista</th>
+                                        <th>Cidade Destino</th>
+                                        <th>Dia de Saida</th>
+                                        <th>KM Saida</th>
+                                        <th>Dia de Chegada</th>
+                                        <th>KM Chegada</th>
+                                        <th>Status</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                    {section name=i loop=$lista.d}
+                                    <tr>
+                                        <td>{$lista.d[i].Diario_ID}</td>
+                                        <td>{$lista.d[i].Auto_Nome} {$lista.d[i].Auto_Placa}</td>
+                                        <!--<td>{$lista.d[i].Diario_NRequisicao}</td>-->
+                                        <td>{$lista.d[i].Usuario_Nome}</td>
+                                        <td>{$lista.d[i].Cidade_Nome} - {$lista.d[i].Cidade_UF}</td>
+                                        <td>{$lista.d[i].Diario_DiaSaida}</td>
+                                        <td>{$lista.d[i].Diario_KMSaida}</td>
+                                        <td>{$lista.d[i].Diario_DiaChegada}</td>
+                                        <td>{$lista.d[i].Diario_KMChegada}</td>
+                                        <td>
+                                            <span class="label label-{if $lista.d[i].Diario_Status==1}success{else}danger{/if}">{if $lista.d[i].Diario_Status==1}Aberto{else}Fechado{/if}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            {if $smarty.session.Menu_ID|cat:'f'|in_array:$smarty.session._user.Permissao_Modulos}
+                                            <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/diarios_confirm.php?ac=f&id={$lista.d[i].Diario_ID}" class="btn btn-default btn-xs" title="{if $lista.d[i].Diario_Status == 1}Fechar{else}Visualizar{/if}"><i class="fa {if $lista.d[i].Diario_Status == 1}fa-lock{else}fa-eye{/if}"></i></a>
+                                            {/if}
+                                            {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                            <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/diarios_ie.php?ac=e&id={$lista.d[i].Diario_ID}" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a> {/if} {if $smarty.session.Menu_ID|cat:'d'|in_array:$smarty.session._user.Permissao_Modulos}
+                                            <a href="javascript: void(0);" class="btn btn-danger btn-xs reg" id="d-{$lista.d[i].Diario_ID}"><i class="fa fa-times"></i></a>
+                                            {/if}
+                                        </td>
+                                    </tr>
+                                    {/section}
+                                </table>
+                            </div>
+
+                            <!--PAGINADOR-->
+                            {$lista.paginador}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    {include file="_footer.html"}
+<script src="{$diretorio}js/modulos/diarios_ie.js"></script>
+</body>
+</html>

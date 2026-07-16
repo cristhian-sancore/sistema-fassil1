@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-sx-12">
+        <span class="text-danger bg-danger piscar" style="font-size:18px; padding:4px; margin:10px; border-radius:5px;">
+        <i class="fa fa-exclamation-triangle"></i>
+            Tipos aceitos: DOCX, DOC, PDF!
+        </span>
+    </div>
+    <div class="col-xs-8 mt-3">
+        <div class="form-group">
+            <label>Anexar Documentos</label>
+                <div class="clear"></div>
+                    <form role="form" method="post" enctype="multipart/form-data" action="">
+                        <div class="form-group pull-left">
+                            <button type="button" class="btn btn-success" onclick="return EnviaAnexo();" style="margin:0 10px 0 0;">ENVIAR <i class="fa fa-upload"></i></button>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="file" id="os_upload" style="float: left;">
+                        </div>
+                    </form>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label>Anexos</label>
+                <div class="box_anexos">
+                    {if $dados.a}
+                        {section name=i loop=$dados.a}
+                            <div class="anexo" style="float: left; padding: 5px 15px 5px 0;">
+                                <a href="{$urlBase}midias/{$dados.a[i].Anexo_Caminho}" class="btn btn-primary" target="_blank"><i class="fa fa-download"></i> {$dados.a[i].Anexo_Nome}</a>
+                                {if $dados.a[i].Anexo_Envio}
+                                    <a class="btn btn-danger anexo_exc" id="{$dados.a[i].Anexo_ID}"><i class="fa fa-remove"></i></a>
+                                {/if}
+                            </div>
+                        {/section}
+                    {else}
+                        <p>Nenhum anexo!</p>
+                    {/if}
+            </div>
+        </div>
+    </div>
+</div>

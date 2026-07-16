@@ -1,0 +1,163 @@
+.hack{
+    clear: both;
+}
+
+.galeria_descricao {
+    width: 500px;
+    height: 150px;
+    border: 1px solid #aeaeae;
+    padding: 3px;
+    overflow: auto;
+}
+
+.galeria_thumb {
+    position: relative;
+    background-color: #f2f2f2;
+    border: 2px solid #aeaeae;
+    float: left;
+    padding: 5px;
+    margin: 9px 10px 5px 5px;
+    text-align: center;
+}
+
+.imgThumb{
+    width: 100px;
+    height: 100px;
+}
+
+.msg_delete {
+    width: 100px;
+    height: 90px;
+    text-align: center;
+    font-size: 12px;
+    padding-top: 40px;
+}
+
+.delete_midia {
+    position: absolute;
+    top: -8px;
+    left: 70px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.expand_image {
+    position: absolute;
+    top: -7px;
+    left: 53px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+object {
+    float: left;
+    margin: 10px 10px 10px 0px;
+    cursor: pointer;
+}
+
+.galeria_form_feedback {
+    height: 20px;
+}
+
+.galeria_form_feedback span {
+    float: left;
+}
+
+.galeria_form_feedback p {
+    float: right;
+    padding: 0px;
+    margin: 0px;
+}
+
+.galeria_form_feedback_sub {
+    display: none;
+    margin: -5px 0px 0px 0px !important;
+}
+
+.galeria_form_feedback_sub img {
+    float: left;
+    margin: 5px 0px 0px 0px;
+}
+
+.galeria_form_feedback_sub span {
+    float: left;
+    margin: 5px 0px 0px 10px;
+    font-weight: normal !important;
+}
+
+.enviadas_alvo {
+    /*max-height: 260px;*/
+    overflow: auto;
+}
+
+.button_enviar {
+    display: block;
+    float: left;
+    margin: 20px 10px 0px 0px;
+}
+
+.total_imagens {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.total_restante {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.taxa_upload {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0px 0px 0px 10px;
+
+}
+
+.modal_imagem {
+    border: 3px solid #f2f2f2;
+    background-color: white;
+    position: absolute;
+    top: 550px;
+    left: 300px;
+    width: 600px;
+    height: 450px;
+    z-index: 1;
+    display: none;
+}
+
+.loader_image {
+    margin: 150px 0px 0px 235px;
+}
+
+.modal_imagem_fechar {
+    text-align: right;
+    padding: 3px 10px 3px 3px;
+    margin: 0px 0px 0px 0px;
+}
+
+/* Icon Classes */
+.btn-arrow-down span { background-position: -48px 0; }
+.btn-arrow-up span { background-position: -32px 0; }
+.btn-arrow-right span { background-position: -16px 0; }
+.btn-arrow-left span { background-position: 0 0; }
+.btn-comment span { background-position: -112px 0; }
+.btn-heart span { background-position: -96px 0; }
+.btn-star span { background-position: -80px 0; }
+.btn-cart span { background-position: -64px 0; }
+.btn-print span { background-position: -128px 0; }
+.btn-rss span { background-position: -144px 0; }
+.btn-person span { background-position: 0 -16px; }
+.btn-check span { background-position: -16px -16px; }
+.btn-dollar span { background-position: -32px -16px; }
+.btn-refresh span { background-position: -48px -16px; }
+.btn-home span { background-position: -64px -16px; }
+.btn-plus span { background-position: -80px -16px; }
+.btn-minus span { background-position: -96px -16px; }
+.btn-cross span { background-position: -112px -16px; }
+
+/* Transparent Button Styles */
+.btn-transparent, .btn-transparent:hover { background-image: url(../../images/bg-lite.png); background-color: transparent; filter: none; border-color: transparent\0/; border-color: rgba(0,0,0,.4) !important; margin: 0 1em 0 0; }
+*+html .btn-transparent { border: none; }

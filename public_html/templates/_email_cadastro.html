@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Grupo Fassil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin: 0; padding: 0;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td style="padding: 20px 0 30px 0;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="80%" style="border: 1px solid #cccccc;">
+                <tr>
+                    <td align="center" bgcolor="#f2f2f2" style="padding: 40px 0 30px 0;">
+                        <img src="{$dados.url}img/logo.png" width="300" style="display: block;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding: 5px 10px;">
+                        <b>Motivo:</b> {if !$dados.Cliente_Codigo}Cadastro Cliente{else}Alteração de senha{/if}
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" style="padding: 20px 30px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Nome:</b> {$dados.Cliente_Nome}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>E-mail:</b> {$dados.Cliente_Email}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%" {if !$dados.Cliente_Contato2}colspan="2"{/if} style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Celular:</b> {$dados.Cliente_Contato1}
+                                </td>
+                                {if $dados.Cliente_Contato2}
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Telefone:</b> {$dados.Cliente_Contato2}
+                                </td>
+                                {/if}
+                            </tr>
+                            <tr>
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Departamento:</b> {$dados.Cliente_Departamento}
+                                </td>
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Cargo:</b> {$dados.Cliente_Cargo}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Entidade:</b> {$dados.CE_Nome}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Cidade:</b> {$dados.Cidade_Nome}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px; padding-top: 10px;">
+                                    <b>Login:</b> {$dados.Cliente_Login}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Senha:</b> {$dados.senha}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#009B3A" style="padding: 10px; color: #FFFFFF; text-align: center; font-size: 18px;">
+                        <a href="{$dados.url}" target="_blank" style="text-decoration: none; color: #FFFFFF;">www.grupofassil.com.br</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#000031" style="padding: 30px 30px 30px 30px; color: #FFFFFF;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td align="center" width="50%">
+                                    Rua Niterói, 740 - Jardim Popular<br>
+                                    São José dos Quatro Marcos - MT
+                                </td>
+                                <td align="center">
+                                    (65) 3251-3017 / (65) 9 9981-9916<br>
+                                    faspel@faspelinformatica.com.br<br>
+                                    fassil@fassilconsultoria.com.br
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

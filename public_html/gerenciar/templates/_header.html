@@ -1,0 +1,45 @@
+<header class="main-header">
+    <a href="{$urlBase}dashboard.php" class="logo"><b>{$Info['title-topo']}</b></a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Navegação</span>
+        </a>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{$urlBase}img/user.png" class="user-image" alt="User Image"/>
+                        <span class="hidden-xs">{$smarty.session._user.Usuario_Nome}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header">
+                            <img src="{$urlBase}img/user.png" class="img-circle" alt="User Image"/>
+                            <p>
+                                {$smarty.session._user.Usuario_Nome}
+                                <small><strong>ÚLTIMO ACESSO:</strong> {$smarty.session._user.Usuario_LastAcesso}
+                                </small>
+                            </p>
+                        </li>
+                        <!--<li class="user-body">
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Followers</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Sales</a>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <a href="#">Friends</a>
+                            </div>
+                        </li>-->
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a href="{$urlBase}logout.php" class="btn btn-danger btn-flat"><i
+                                        class="fa fa-power-off"></i> Sair</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>

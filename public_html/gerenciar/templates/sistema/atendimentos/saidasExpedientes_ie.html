@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+    <link rel="stylesheet" href="{$diretorio}css/modulos/atendimentos/saidasExpedientes.css">
+    <link rel="stylesheet" href="{$urlBase}js/uploadifive/uploadifive.css" />
+
+</head>
+
+<body class="skin-blue">
+    <div class="wrapper">
+
+        {include file="_header.html"}
+
+        {include file="_menu.html"}
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    {ucfirst($Mod[1])}
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">{ucfirst($Mod[0])}</li>
+                    <li class="active">{ucfirst($Mod[1])}</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+                <input type="hidden" id="urlBase" value="{$urlBase}">
+                <input type="hidden" id="saida_id" value="{$dados.SaidasExp_ID}">
+
+                {include file="{$Mod[0]}/{$Mod[1]}/saidasExpedientes_guia.html"}
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                            <div class="box-header">
+                                <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-sx-12">
+                                        <span class="text-danger bg-danger piscar"
+                                            style="font-size:18px; padding:4px; margin:10px; border-radius:5px;">
+                                            <i class="fa fa-exclamation-triangle"></i>
+                                            Tipos aceitos: PNG, JPG, DOCX, DOC, PDF!
+                                        </span>
+                                    </div>
+                                    <div class="col-xs-8 mt-3">
+                                        <div class="form-group">
+                                            <label>Anexar Documentos</label>
+                                            <div class="clear"></div>
+                                            <form role="form" method="post" enctype="multipart/form-data" action="">
+                                                <div class="form-group pull-left">
+                                                    <button type="button" class="btn btn-success"
+                                                        onclick="return EnviaAnexos();"
+                                                        style="margin:0 10px 0 0;">ENVIAR <i
+                                                            class="fa fa-upload"></i></button>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="file" id="saidasExp_upload" style="float: left;">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form role="form" method="post" enctype="multipart/form-data" action="">
+                                <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                                <div class="box-body">
+                                    {if $ac=='e'}
+                                    <div class="row">
+                                        <div class="col-xs-3" id="min">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <select class="form-control" name="status">
+                                                    <option value="1" {if $dados.SaidasExp_Status==1}selected{/if}>Ativo
+                                                    </option>
+                                                    <option value="2" {if $dados.SaidasExp_Status==0}selected{/if}>
+                                                        Inativo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3" id="min">
+                                            <div class="form-group">
+                                                <label>Código OS</label>
+                                                <input type="number" class="form-control" name="os"
+                                                    placeholder="Código OS..."
+                                                    value="{if $dados.SaidasExp_CodOs}{$dados.SaidasExp_CodOs}{/if}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Anexos</label>
+                                                <div class="box_anexos">
+                                                    {if $dados.a}
+                                                    {section name=i loop=$dados.a}
+                                                    <div class="anexo" style="float: left; padding: 5px 15px 5px 0;">
+                                                        <a href="{$urlBase}midias/{$dados.a[i].Anexo_Caminho}"
+                                                            class="btn btn-primary" target="_blank"><i
+                                                                class="fa fa-download"></i> {$dados.a[i].Anexo_Nome}</a>
+                                                        {if $dados.a[i].Anexo_Envio}
+                                                        <a class="btn btn-danger anexo_exc"
+                                                            id="{$dados.a[i].Anexo_ID}"><i class="fa fa-remove"></i></a>
+                                                        {/if}
+                                                    </div>
+                                                    {/section}
+                                                    {else}
+                                                    <p>Nenhum anexo!</p>
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    {/if}
+                                    <div class="row">
+                                        {if $ac=='i' &&
+                                        $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos
+                                        || $ac=='e' &&
+                                        $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos
+                                        }
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label>Responsável</label>
+                                                <input type="text" class="form-control" name="responsavel"
+                                                    placeholder="Usuário responsável" id="usuario"
+                                                    value="{if $dados.Usuario_Nome}{$dados.Usuario_Nome}{else}{$smarty.session._user.Usuario_Nome}{/if}">
+                                                <input type="hidden" name="usuario_id" id="usuario_id"
+                                                    value="{if $dados.Usuario_Nome}{$dados.Usuario_ID}{else}{$smarty.session._user.Usuario_ID}{/if}">
+                                            </div>
+                                        </div>
+                                        {elseif
+                                        $smarty.session.Menu_ID|cat:'f'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <div class="col-xs-6">
+                                            <div class="form-group">
+                                                <label>Responsável</label>
+                                                <input type="text" class="form-control" name="responsavel"
+                                                    placeholder="Usuário responsável" id="usuario"
+                                                    value="{if $dados.Usuario_Nome}{$dados.Usuario_Nome}{else}{$smarty.session._user.Usuario_Nome}{/if}">
+                                                <input type="hidden" name="usuario_id" id="usuario_id"
+                                                    value="{if $dados.Usuario_Nome}{$dados.Usuario_ID}{else}{$smarty.session._user.Usuario_ID}{/if}">
+                                            </div>
+                                        </div>
+                                        {/if}
+                                        {if $ac=='e' &&
+                                        $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <div class="col-xs-2">
+                                            <div class="form-group">
+                                                <label>Data Saída</label>
+                                                <input type="text" class="form-control datepicker" name="dtsaida"
+                                                    placeholder="00/00/0000" data-inputmask='"mask": "99/99/9999"'
+                                                    data-mask
+                                                    value="{if $dados.SaidasExp_DataSaida}{$dados.SaidasExp_DataSaida}{else}{$data}{/if}"
+                                                    {if $ac=='i' }disabled{/if}>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <div class="form-group">
+                                                <label>Hs</label>
+                                                <input type="text" class="form-control" name="horas_saida"
+                                                    placeholder="00:00" data-inputmask='"mask": "99:99"' data-mask
+                                                    value="{if $dados.SaidasExp_HoraSaida}{$dados.SaidasExp_HoraSaida}{else}{$horas}{/if}"
+                                                    {if $ac=='i' }disabled{/if}>
+                                            </div>
+                                        </div>
+                                        {if $ac=='e'}
+                                        <div class="col-xs-2">
+                                            <div class="form-group">
+                                                <label>Data Chegada</label>
+                                                <input type="text" class="form-control datepicker" name="dtchegada"
+                                                    placeholder="00/00/0000" data-inputmask='"mask": "99/99/9999"'
+                                                    data-mask
+                                                    value="{if $dados.SaidasExp_DataChegada}{$dados.SaidasExp_DataChegada}{else}{$data}{/if}">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <div class="form-group">
+                                                <label>Hs</label>
+                                                <input type="text" class="form-control" name="horas_chegada"
+                                                    placeholder="00:00" data-inputmask='"mask": "99:99"' data-mask
+                                                    value="{if $dados.SaidasExp_HoraChegada}{$dados.SaidasExp_HoraChegada}{else}{$horas}{/if}">
+                                            </div>
+                                        </div>
+                                        {/if}
+                                        {/if}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <div class="form-group">
+                                                <label>Cidade</label>
+                                                <select name="cidade" class="form-control">
+                                                    <option value="">Cidade...</option>
+                                                    {section name=i loop=$cidades}
+                                                    <option value="{$cidades[i].Cidade_ID}" {if
+                                                        $cidades[i].Cidade_ID==$dados.SaidasExp_CidadeID}selected{/if}>
+                                                        {$cidades[i].Cidade_Nome} - {$cidades[i].Cidade_UF}
+                                                    </option>
+                                                    {/section}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div class="form-group">
+                                                <label>Autorização</label>
+                                                <select class="form-control" name="autorizacao">
+                                                    <option value="{$dados.SaidasExp_Autorizacao}" hidden>{if
+                                                        $dados.SaidasExp_Autorizacao==1}Sandra{elseif
+                                                        $dados.SaidasExp_Autorizacao==2}Gilberto de Oliveira{elseif
+                                                        $dados.SaidasExp_Autorizacao==3}Paulo Sérgio Gonçalves{elseif
+                                                        $dados.SaidasExp_Autorizacao==4}Giovani Mendes da Silva{/if}
+                                                    </option>
+                                                    <option value="1">Sandra</option>
+                                                    <option value="2">Gilberto de Oliveira</option>
+                                                    <option value="3">Paulo Sérgio Gonçalves</option>
+                                                    <option value="4">Giovani Mendes da Silva</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row">-->
+                                    <!--    <div class="col-xs-12">-->
+                                    <!--        <div class="form-group">-->
+                                    <!--                <label>Descrição da Saída</label>-->
+                                    <!--                <textarea name="descricao" placeholder="Descrição/Observação"-->
+                                    <!--                      style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>-->
+                                    <!--        </div>-->
+                                    <!--    </div>-->
+                                    <!--</div>-->
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Descrição da Saída</label>
+                                                <textarea name="descricao" placeholder="Descrição/Observação"
+                                                    style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{if $dados.SaidasExp_Descricao}{$dados.SaidasExp_Descricao}{/if}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="box-footer text-right">
+                                    {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos
+                                    || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                    <button type="submit" class="btn btn-primary" id="gravar" value=""><i
+                                            class="fa fa-save"></i> Gravar</button>
+                                    {/if}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    {include file="_footer.html"}
+    <script src="{$diretorio}js/uploadifive/jquery.uploadifive.js" type="text/javascript"></script>
+    <script src="{$diretorio}js/modulos/saidasExpedientes_ie.js"></script>
+
+</body>
+
+</html>

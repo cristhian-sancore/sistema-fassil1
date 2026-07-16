@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/os_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-danger pad">
+                        <div class="box-header">
+                            <h3 class="box-title">Log OS</h3>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <ul class="timeline">
+                            {if $dados.l}
+                            {section name=i loop=$dados.l}
+                            <li class="time-label">
+                                <span class="bg-blue">{$dados.l[i].Data_Formatada}</span>
+                            </li>
+                            {section name=j loop=$dados.l[i].reg}
+                            <li>
+                                {if ($dados.l[i].reg[j].Usuario_Logado_ID == $dados.l[i].reg[j].Usuario_Responsavel_ID) || $dados.l[i].reg[j].Cliente_ID}
+                                <i class="fa fa-code bg-blue"></i>
+                                {else}
+                                <i class="fa fa-code bg-red"></i>
+                                {/if}
+
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fa fa-clock-o"></i> {$dados.l[i].reg[j].Horas}</span>
+
+                                    {if $dados.l[i].reg[j].Usuario_Logado}
+                                    <h3 class="timeline-header">Usuário Logado: <b>{$dados.l[i].reg[j].Usuario_Logado}</b><br>Responsável: <b>{$dados.l[i].reg[j].Usuario_Responsavel}</b></h3>
+                                    {else}
+                                    <h3 class="timeline-header">Cliente: <b>{$dados.l[i].reg[j].Cliente_Nome}</b></b></h3>
+                                    {/if}
+
+                                    <div class="timeline-body">
+                                        {$dados.l[i].reg[j].Log_Comentario}
+                                    </div>
+                                </div>
+                            </li>
+                            {/section}
+                            {/section}
+                            {else}
+                            <li>
+                                <i class="fa fa-code bg-red"></i>
+                                <div class="timeline-item">
+                                    <div class="timeline-body">
+                                        Nenhum registro
+                                    </div>
+                                </div>
+                            </li>
+                            {/if}
+                            <li class="time-label">
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<!--<script src="{$diretorio}js/modulos/os_relatorio.js"></script>-->
+</body>
+</html>

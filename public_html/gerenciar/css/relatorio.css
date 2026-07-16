@@ -1,0 +1,169 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.topo{
+	text-align: center;
+}
+.topo img{
+	width: 623px;
+}
+
+.corpo{
+	background-image: url("../img/timbre_faspel_corpo.jpg");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.corpo h1{
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+	text-decoration: underline;
+	text-align: center;
+}
+
+.cabecalho{
+	width: 613px;
+	border: 1px solid #000000;
+	margin: 15px auto 0 auto;
+	padding: 5px;
+	font-weight: bold;
+}
+.cabecalho p{
+	margin: 0px;
+}
+.cabecalho p span{
+	clear: inherit !important;
+	font-weight: normal;
+	margin: 0px;
+}
+
+.cabecalho b{
+	font-weight: normal !important;
+}
+
+.conteudo h2{
+	font-size: 16px;
+	margin-top: 30px;
+}
+.conteudo p{
+	margin:10px 0 0 0;
+	text-indent:4em;
+}
+.conteudo p div{
+	text-indent:4em;
+}
+
+.box_assinaturas{
+	margin-top: 80px;
+}
+.box_assinaturas h3{
+	text-align: right;
+	font-size: 12px;
+}
+
+.assinaturas{
+	text-align: center;
+	margin-top: 65px;
+}
+.assinaturas h2{
+	width: 350px;
+	border-top: 1px solid #000000;
+	margin: 0 auto;
+	font-size: 14px;
+}
+.assinaturas span{
+	font-size: 12px;
+}
+
+.rodape{
+	border-top:2px solid #000000;
+	text-align: center;
+	margin-top: 50px;
+}
+.rodape p{
+	margin: 0;
+	font-size: 13px;
+}
+.rodape span{
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.mensagens h1{
+	font-size: 18px;
+	text-decoration: underline;
+	text-align: center;
+}
+
+.linha{
+	clear: both;
+	display: block;
+}
+.linha_msg1 {
+	width: 80%;
+	float: left !important;
+	background: #f2f2f2;
+	padding: 5px 10px;
+	margin: 5px 0;
+	border-radius: 3px;
+	font-size: 10px;
+}
+.linha_msg2 {
+	width: 80%;
+	float: right !important;
+	background: #d3d3d3;
+	padding: 5px 10px;
+	margin: 5px 0;
+	border-radius: 3px;
+	font-size: 10px;
+}
+.linha_data1{
+	font-size: 8px;
+	margin-top: 5px;
+}
+.linha_data2{
+	text-align: right;
+	font-size: 8px;
+	margin-top: 10px;
+}
+.linha_anexo{
+	margin-top: 5px;
+}
+
+.linha_anexo span{
+	margin: 0 20px;
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.user{
+	text-align: right;
+	margin: 0px;
+	padding: 0px;
+	font-size: 10px;
+}
+
+.cliente{
+	font-size: 10px;
+}
+
+.tabela {
+	margin-top: 20px;
+	width: 100%;
+	border-spacing: 0px;
+	font-size: 12px;
+}
+.tabela th{
+	text-align: left;
+}
+.tabela td{
+	font-size: 9px;
+}
+.tabela .dif{
+	background: #f2f2f2;
+}

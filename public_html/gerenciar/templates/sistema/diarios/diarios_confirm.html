@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/diarios_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{elseif $dados.Diario_Status==0}info{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{elseif $dados.Diario_Status==0}Visualização Diário{else}Editar{/if}</h3>
+                            {if $dados.Diario_Status == 1}
+                                {if $ac=='f'}
+                                {if $dados.Diario_OS != null}
+                                <div class="col-xs-12" style="text-align: right">
+                                    <a href="{$urlBase}{$Mod[0]}/os/os_view.php?ac=v&id={$dados.Diario_OS}"
+                                           class="btn btn-default btn-xl"><i class="fa fa-eye"></i>
+                                    OS {$dados.Diario_OS}</a><b class="data-mask"> Diário-{$dados.Diario_DiaSaida}</b>
+                                </div>
+                                {else}
+                                <div class="col-xs-12" style="text-align: right">
+                                <b> Diário-{$dados.Diario_DiaSaida}</b>
+                                </div>
+                                    {/if}
+                                {/if}
+                            {/if}
+                        </div>
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+                            <div class="box-body">
+                                {if $dados.Diario_Status == 1}
+                                <div class="row">
+                                     <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Carro (Utilizado)</label>
+                                            <select name="automovel" class="form-control">
+                                                <option value="{$dados.Auto_ID}">{$dados.Auto_Nome}/{$dados.Auto_Placa}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>KM Chegada</label>
+                                            <input type="number" class="form-control" name="kmchegada" placeholder="KM Chegada" value="{if $dados.Diario_KMChegada}{$dados.Diario_KMChegada}{else}{/if}">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Código OS</label>
+                                            <input type="number" class="form-control" name="os" placeholder="Código OS." value="{if $dados.Diario_OS}{$dados.Diario_OS}{else}{/if}">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Descrição/Observação</label>
+                                            <textarea name="descricao" placeholder="Descrição/Observação"
+                                                      style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{$dados.Diario_Descricao}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                {else}
+                                <div class="row">
+                                        <div class="col-xs-8">
+                                            <h2 class="page-header">
+                                                <i class="fa fa-align-center"></i> Diario de Bordo: <strong>{$dados.Diario_ID}</strong>
+                                                <small class="pull-right">Data: {$dados.Diario_DiaSaida}</small>
+                                            </h2>
+                                        </div>
+                                    
+                                    <div class="col-xs-4 text-right">
+                                        <a href="diarios_view.php?ac=i&id={$dados.Diario_ID}" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Imprimir</a>
+                                        <a href="{$urlBase}{$Mod[0]}/os/os_view.php?ac=v&id={$dados.Diario_OS}" target="_blank" class="btn btn-app"><i class="fa fa fa-eye"></i>OS {$dados.Diario_OS}</a>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-sm-4 invoice-col">
+                                            <p>Informações:</p>
+                                        <address>
+                                            Numero Requisição: <b>{$dados.Diario_NRequisicao}</b><br>
+                                            Carro: <b>{$dados.Auto_Nome}</b> Placa: <b>{$dados.Auto_Placa}</b><br>
+                                            Cidade: <b>{$dados.Cidade_Nome}-{$dados.Cidade_UF}</b><br>
+                                            <br>
+                                            Dia Saída: <b id="date">{$dados.Diario_DiaSaida}</b><br>
+                                            KM Saída: <b>{$dados.Diario_KMSaida}</b><br>
+                                            <br>
+                                            Dia Chegada: <b id="date">{$dados.Diario_DiaChegada}</b><br>
+                                            KM Chegada: <b>{$dados.Diario_KMChegada}</b><br>
+                                        </address>
+                                            <p>Responsável</p>
+                                        <address>
+                                            <strong>{$dados.Usuario_Nome}</strong><br>
+                                        </address>
+                                    </div>
+                                    <address>
+                                        <div class="col-xs-6 invoice-col">
+                                            <div class="form-group">
+                                                <br>
+                                        Empresa : <b>{$dados.DiarioEmp_Nome}</b><br>
+                                        CNPJ    : <b>{$dados.DiarioEmp_Cnpj}</b>
+                                            </div>
+                                        </div>
+                                    </address>
+                                    
+                                    <div class="col-sm-2 invoice-col" style="text-align: right;">
+                                        Diário de Bordo: <b>{if $dados.Diario_Status == 1} Aberto{else} Fechado{/if}</b><br>
+                                        Código OS: <b>{$dados.Diario_OS}</b>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <address>
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Descrição/Observação</label>
+                                                <textarea name="descricao" placeholder="Descrição/Observação"
+                                                      style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" disabled>{$dados.Diario_Descricao}</textarea>
+                                            </div>
+                                        </div>
+                                    </address>
+                                </div>
+                                {/if}
+                            </div>
+                            {if $dados.Diario_Status == 1}
+                            <div class="box-footer text-right">
+                                {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                {/if}
+                            </div>
+                            {/if}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/diarios_ie.js"></script>
+</body>
+</html>

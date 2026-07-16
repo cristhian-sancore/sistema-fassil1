@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Grupo Fassil</title>
+
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js?hl=pt-BR'></script>
+</script>
+</script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Recuperar senha</div>
+
+                    {if $nav.n1 == 'recuperar-senha_ok'}
+                    <div class="msg_success">
+                        <h3>E-mail enviado com sucesso!</h3>
+                        <p>Foi enviado um link com o <b>Código</b> de recuperação de senha para seu E-mail. Caso não esteja na 'Caixa de Entrada', veirifique a 'Caixa Spam'.</p>
+                    </div>
+                    {else}
+                    <form name="cadastro" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+
+                        <label class="box">
+                            <span>Informe o E-mail</span>
+                            <input type="text" name="email" id="email" placeholder="seuemail@gmail.com" autocomplete="off">
+                            <p class="error_email"></p>
+                        </label>
+                        
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+<!--
+                        <div class="g-recaptcha" data-sitekey="6LfSwu0UAAAAAJxSi8mfsNUS1CZwvmqA9IDu8HT7"></div>
+-->
+
+                        <div class="clear"></div><br>
+
+                        <button type="submit" class="btn btn-green right" id="gravar"><i class="fa fa-send"></i> ENVIAR E-MAIL</button>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                    {/if}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/recuperar-senha.js"></script>
+    </body>
+</html>

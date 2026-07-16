@@ -1,0 +1,100 @@
+<aside class="main-sidebar no-print">
+    <section class="sidebar">
+        <ul class="sidebar-menu">
+            <!--<li class="header"><i class="fa fa-gears"></i> NAVEGAÇÃO</li>-->
+            <!--<li>
+                <a href="pages/widgets.html">
+                    <i class="fa fa-th"></i>
+                    <span>Widgets</span>
+                        <span class="pull-right-container">
+                        <small class="label pull-right bg-green">new</small>
+                    </span>
+                </a>
+            </li>-->
+            {if !$MenuBar}
+            <li class="treeview {if $Mod[0]=='sistema'}active{/if}">
+                <a href="#">
+                    <i class="fa fa-gear"></i> <span>Sistema</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li {if $Mod[1]=='menu'}class="active"{/if}><a href="{$urlBase}sistema/menu/menu.php"><i
+                            class="fa fa-circle-o"></i> Menu</a></li>
+                </ul>
+            </li>
+            {/if}
+            {if $smarty.session._user.Usuario_Tipo=='G'}
+            <li class="active treeview {if $Mod[0]=='sistema'}active{/if}">
+                <a href="#">
+                    <i class="fa fa-gear"></i> <span>Administrador</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{$urlBase}sistema/menu/menu.php"><i class="fa fa-th-list"></i> Menu/Módulos</a></li>
+                    <li><a href="{$urlBase}sistema/empresas/empresas.php"><i class="fa fa-briefcase"></i> Empresas</a></li>
+                </ul>
+            </li>
+            {/if}
+            {section name=i loop=$MenuBar}
+            <li class="active treeview {if $smarty.session._m.n1==$MenuBar[i].Menu_ID}active{/if}">
+                <a href="{if $MenuBar[i].N2}#{else}{$urlBase}{if $MenuBar[i].Menu_Desenvolvimento == 1}sistema/desenvolvimento/desenvolvimento.php{else}{$MenuBar[i].Menu_Link}{/if}{/if}" id="{$MenuBar[i].Menu_ID}"
+                   class="menu_bar" onclick="linkno(event);">
+                    <i class="{$MenuBar[i].Menu_Icon}"></i> <span>{$MenuBar[i].Menu_Titulo}</span>
+                    {if $MenuBar[i].N2}
+                    <i class="fa fa-angle-left pull-right"></i>
+                    {/if}
+                </a>
+                {if $MenuBar[i].N2}
+                {section name=j loop=$MenuBar[i].N2}
+                <ul class="treeview-menu">
+                    {if $MenuBar[i].N2[j].Menu_ID|cat:'v'|in_array:$smarty.session._user.Permissao_Modulos}
+                    <li {if $smarty.session._m.n2==$MenuBar[i].N2[j].Menu_ID}class="active"{/if}>
+                        <a href="{if $MenuBar[i].N2[j].N3}#{else}{$urlBase}{if $MenuBar[i].N2[j].Menu_Desenvolvimento == 1}sistema/desenvolvimento/desenvolvimento.php{else}{$MenuBar[i].N2[j].Menu_Link}{/if}{/if}"
+                           id="{$MenuBar[i].Menu_ID}-{$MenuBar[i].N2[j].Menu_ID}" class="menu_bar"
+                           onclick="linkno(event);">
+                            <i class="{$MenuBar[i].N2[j].Menu_Icon}"></i> {$MenuBar[i].N2[j].Menu_Titulo}
+                            {if $MenuBar[i].N2[j].N3}
+                            <i class="fa fa-angle-left pull-right"></i>
+                            {/if}
+                        </a>
+                        {if $MenuBar[i].N2[j].N3}
+                        {section name=k loop=$MenuBar[i].N2[j].N3}
+                        <ul class="treeview-menu">
+                            <li {if $smarty.session._m.n3==$MenuBar[i].N2[j].N3[k].Menu_ID}class="active"{/if}>
+                                <a href="{if $MenuBar[i].N2[j].N3[k].N4}#{else}{$urlBase}{if $MenuBar[i].N2[j].N3[k].Menu_Desenvolvimento == 1}sistema/desenvolvimento/desenvolvimento.php{else}{$MenuBar[i].N2[j].N3[k].Menu_Link}{/if}{/if}"
+                                   id="{$MenuBar[i].Menu_ID}-{$MenuBar[i].N2[j].Menu_ID}-{$MenuBar[i].N2[j].N3[k].Menu_ID}"
+                                   class="menu_bar" onclick="linkno(event);">
+                                    <i class="{$MenuBar[i].N2[j].N3[k].Menu_Icon}"></i>
+                                    {$MenuBar[i].N2[j].N3[k].Menu_Titulo}
+                                    {if $MenuBar[i].N2[j].N3[k].N4}
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                    {/if}
+                                </a>
+                                {if $MenuBar[i].N2[j].N3[k].N4}
+                                {section name=l loop=$MenuBar[i].N2[j].N3[k].N4}
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{if $MenuBar[i].N2[j].N3[k].N4[l].N5}#{else}{$urlBase}{if $MenuBar[i].N2[j].N3[k].N4[l].Menu_Desenvolvimento == 1}sistema/desenvolvimento/desenvolvimento.php{else}{$MenuBar[i].N2[j].N3[k].N4[l].Menu_Link}{/if}{/if}"
+                                           id="{$MenuBar[i].Menu_ID}-{$MenuBar[i].N2[j].Menu_ID}-{$MenuBar[i].N2[j].N3[k].Menu_ID}-{$MenuBar[i].N2[j].N3[k].N4[l].Menu_ID}"
+                                           class="menu_bar" onclick="linkno(event);">
+                                            <i class="{$MenuBar[i].N2[j].N3[k].N4[l].Menu_Icon}"></i>
+                                            {$MenuBar[i].N2[j].N3[k].N4[l].Menu_Titulo}
+                                        </a>
+                                    </li>
+                                </ul>
+                                {/section}
+                                {/if}
+                            </li>
+                        </ul>
+                        {/section}
+                        {/if}
+                    </li>
+                    {/if}
+                </ul>
+                {/section}
+                {/if}
+            </li>
+            {/section}
+        </ul>
+    </section>
+</aside>

@@ -1,0 +1,310 @@
+<section class="invoice">
+    <div class="row no-print">
+        {if $ac != 'i'}
+        <div class="row">
+            <div class="col-sx-12">
+                <span class="text-danger bg-danger piscar" style="font-size:18px; padding:4px; margin:10px; border-radius:5px;">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    Tipos aceitos: PNG, JPG, DOCX, DOC, PDF!
+                </span>
+            </div>
+            <div class="col-xs-8 mt-3">
+                <div class="form-group">
+                    <label>Anexar Documentos</label>
+                    <div class="clear"></div>
+                    <form role="form" method="post" enctype="multipart/form-data" action="">
+                        <div class="form-group pull-left">
+                            <button type="button" class="btn btn-success" onclick="return EnviaAnexo();" style="margin:0 10px 0 0;">ENVIAR <i class="fa fa-upload"></i></button>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="file" id="os_upload" style="float: left;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-xs-4 text-right">
+                <a href="os_view.php?ac=i&id={$dados.OS_ID}" target="_blank" class="btn btn-app"><i class="fa fa-print"></i> Imprimir OS</a>
+                {if $dados.Status_ID < 3}
+                <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_relatorio.php?ac=i&id={$dados.OS_ID}" class="btn btn-app bg-yellow"><i class="fa fa-file-pdf-o"></i> Relatório</a>
+                {/if}
+
+                {if $dados.Status_ID >= 3}
+                    {if $dados.Status_ID == 3}
+                    <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_relatorio.php?ac=i&id={$dados.OS_ID}" class="btn btn-app bg-red pull-right"><i class="fa fa-lock"></i> Visualizar Fechamento</a>
+                    {else}
+                    <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_relatorio.php?ac=i&id={$dados.OS_ID}" class="btn btn-app bg-yellow pull-right"><i class="fa fa-unlock-alt"></i> Visualizar Fechamento</a>
+                    {/if}
+
+                    {if $dados.OS_Relatorio==2 && $dados.r}
+                    <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/gerar_pdf_relatorio.php?id={$dados.OS_ID}&t={$dados.r.Relatorio_Timbre}&m={$dados.r.Relatorio_Mensagem}" target="_blank" class="btn btn-app bg-yellow pull-right"><i class="fa fa-file-pdf-o"></i> Gerar PDF</a>
+                    {/if}
+                {elseif $dados.Status_ID != 3}
+                <button type="button" formaction="os_view.php?ac=f&id={$dados.OS_ID}&c={$dados.Cliente_ID}" class="btn btn-app bg-red btn_fechar_os"><i class="fa fa-lock"></i> Fechar OS
+                </button>
+                {/if}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label>Anexos</label>
+                    <div class="box_anexos">
+                        {if $dados.a}
+                        {section name=i loop=$dados.a}
+                        <div class="anexo" style="float: left; padding: 5px 15px 5px 0;">
+                            <a href="{$urlBase}midias/{$dados.a[i].Anexo_Caminho}" class="btn btn-primary" target="_blank"><i class="fa fa-download"></i> {$dados.a[i].Anexo_Nome}</a>
+                            {if $dados.a[i].Anexo_Envio}
+                            <a class="btn btn-danger anexo_exc" id="{$dados.a[i].Anexo_ID}"><i class="fa fa-remove"></i></a>
+                            {/if}
+                        </div>
+                        {/section}
+                        {else}
+                        <p>Nenhum anexo!</p>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {else}
+        <div class="col-xs-12 text-center">
+            <a href="javascript: window.print();" class="btn btn-app"><i class="fa fa-print"></i> Imprimir</a>
+            <a href="javascript: window.close();" class="btn btn-app bg-red"><i class="fa fa-close"></i> Fechar</a>
+        </div>
+        {/if}
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">
+                <i class="fa fa-ticket"></i> Ordem de Serviço <strong>{$dados.OS_ID}</strong>
+                <small class="pull-right">Data: {$dados.OS_DataInicio} {if $dados.OS_HorasInicio}às
+                    {$dados.OS_HorasInicio}{/if}
+                </small>
+            </h2>
+        </div>
+    </div>
+
+    <div class="row invoice-info">
+        <div class="col-sm-6 invoice-col">
+            <p>Cliente:</p>
+            <address>
+                {$dados.Cliente_Nome}<br>
+                <b>Login:</b> {$dados.Cliente_Login}<br>
+                <b>Departamento:</b> {$dados.Cliente_Departamento}<br>
+                <b>Empresa/Orgão:</b> {$dados.CE_Nome}<br>
+                <b>Cidade:</b> {$dados.Cidade_Nome} - {$dados.Estado_UF}<br>
+                <b>Contato:</b> {$dados.Cliente_Contato1}
+                {if $dados.Cliente_Contato2}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$dados.Cliente_Contato2}{/if}<br>
+                {if $dados.Cliente_Contato3}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$dados.Cliente_Contato3}{/if}
+                {if $dados.Cliente_Email}<br><b>E-mail:</b> {$dados.Cliente_Email}{/if}
+            </address>
+        </div>
+        <div class="col-sm-6 invoice-col">
+            <p>Informações:</p>
+            <address>
+                Protocolo: <b>{$dados.OS_Protocolo}</b><br>
+                Prioridade: <b>{$dados.Prioridade_Titulo}</b><br>
+                Grupo: <b>{$dados.Grupo_Nome}</b><br>
+                Tipo: <b>{$dados.Tipo_Nome}</b><br>
+            </address>
+
+            <p>Responsável</p>
+            <address>
+                <strong>{$dados.Usuario_Nome}</strong><br>
+                {if $dados.Usuario_Email}E-mail: {$dados.Usuario_Email}{/if}
+                Ordem de Serviço: <b>{$dados.Status_Nome}</b>
+            </address>
+
+            {if $dados.Status_ID==3}
+            <p>Avaliação Cliente</p>
+            <address>
+                <div class="avaliacao">
+                    <fieldset class="rating">
+                        <input type="radio" id="star5" name="av_nota" value="5" {if $dados.OS_Avaliacao==5}checked{/if} disabled/><label class = "full" for="star5" title="Excelente - 5 estrelas"></label>
+                        <input type="radio" id="star4half" name="av_nota" value="4.5" {if $dados.OS_Avaliacao==4.5}checked{/if} disabled/><label class="half" for="star4half" title="Muito bom - 4.5 estrelas"></label>
+                        <input type="radio" id="star4" name="av_nota" value="4" {if $dados.OS_Avaliacao==4}checked{/if} disabled/><label class = "full" for="star4" title="Muito bom - 4 estrelas"></label>
+                        <input type="radio" id="star3half" name="av_nota" value="3.5" {if $dados.OS_Avaliacao==3.5}checked{/if} disabled/><label class="half" for="star3half" title="Bom - 3.5 estrelas"></label>
+                        <input type="radio" id="star3" name="av_nota" value="3" {if $dados.OS_Avaliacao==3}checked{/if} disabled/><label class = "full" for="star3" title="Bom - 3 estrelas"></label>
+                        <input type="radio" id="star2half" name="av_nota" value="2.5" {if $dados.OS_Avaliacao==2.5}checked{/if} disabled/><label class="half" for="star2half" title="Regular - 2.5 estrelas"></label>
+                        <input type="radio" id="star2" name="av_nota" value="2" {if $dados.OS_Avaliacao==2}checked{/if} disabled/><label class = "full" for="star2" title="Ruim - 2 estrelas"></label>
+                        <input type="radio" id="star1half" name="av_nota" value="1.5" {if $dados.OS_Avaliacao==1.5}checked{/if} disabled/><label class="half" for="star1half" title="Ruim - 1.5 estrelas"></label>
+                        <input type="radio" id="star1" name="av_nota" value="1" {if $dados.OS_Avaliacao==1}checked{/if} disabled/><label class = "full" for="star1" title="Péssimo - 1 estrela"></label>
+                        <input type="radio" id="starhalf" name="av_nota" value="0.5" {if $dados.OS_Avaliacao==0.5}checked{/if} disabled/><label class="half" for="starhalf" title="Péssimo - 0.5 estrela"></label>
+                    </fieldset>
+
+                    {if $dados.OS_AvaliacaoComentario}
+                    <div class="clear"></div>
+
+                    <b>Comentário:</b>
+                    <span>{$dados.OS_AvaliacaoComentario}</span>
+                    {/if}
+                </div>
+            </address>
+            {/if}
+        </div>
+    </div>
+
+    <div class="row invoice-info">
+        <div class="col-sm-12">
+            <p><b>Descrição/Observação:</b></p>
+            {$dados.OS_Descricao}
+        </div>
+    </div>
+
+    {if $ac != 'i'}
+    <br>
+    <div class="row no-print">
+        {if $dados.Status_ID <= 2}
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" class="form-control" {if $dados.Status_ID==3}disabled{/if}>
+                    {section name=i loop=$status}
+                    <option value="{$status[i].Status_ID}" {if $status[i].Status_ID==$dados.Status_ID}selected{/if}>{$status[i].Status_Nome}</option>
+                    {/section}
+                </select>
+            </div>
+        </div>
+        {/if}
+
+        <div class="col-xs-12">
+            <div class="form-group">
+                <label>Nota</label>
+                <textarea class="textarea" name="nota" placeholder="Descrição/Observação" style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" {if $dados.Status_ID==3}disabled{/if}>{$dados.OS_NotaUsuario}</textarea>
+            </div>
+        </div>
+
+        {if $dados.Status_ID!=3}
+        <div class="col-xs-12">
+            {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+            <button type="submit" formaction="os_view.php?ac=a&id={$dados.OS_ID}" class="btn btn-primary pull-right"
+                    style="margin-right: 5px;"><i
+                    class="fa fa-refresh"></i> Atualizar
+            </button>
+            {/if}
+        </div>
+        {/if}
+    </div>
+
+    <!--MENSAGEM-->
+    <div class="no-print">
+        <h4 class="page-header text-center"><i class="fa fa-send"></i> Mensagem</h4>
+
+        <div class="box box-success">
+        <div class="box-body chat" id="chat-box">
+            {section name=i loop=$msg}
+            {if !$msg[i].Msg_Recebimento}
+            <div class="linha">
+                <div class="linha_msg1">
+                    {$msg[i].Msg_Conteudo}
+
+                    {if $msg[i].Anexos}
+                    <div class="linha_anexo">
+                        {section name=j loop=$msg[i].Anexos}
+                        <a href="{$urlBase}midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                        {/section}
+                    </div>
+                    {/if}
+
+                    <div class="linha_data1"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                </div>
+            </div>
+            {else}
+            <div class="linha">
+                <div class="linha_msg2">
+                    {$msg[i].Msg_Conteudo}
+
+                    {if $msg[i].Anexos}
+                    <div class="linha_anexo">
+                        {section name=j loop=$msg[i].Anexos}
+                        <a href="{$urlBase}midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                        {/section}
+                    </div>
+                    {/if}
+
+                    <div class="linha_data2"><i class="fa fa-user"></i> {$msg[i].Usuario_Nome} | <i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                </div>
+            </div>
+            {/if}
+            {/section}
+        </div>
+
+        <div class="box-footer">
+            <div class="">
+                <form role="form" method="post" enctype="multipart/form-data" action="" name="mensagem" id="form_mensagem">
+                    <textarea class="textarea" id="conteudo" name="conteudo" placeholder="Mensagem..." {if $dados.Status_ID==3}disabled{/if} style="width: 100%; min-height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+
+                    <div class="form-group pull-left">
+                        <button type="button" class="btn btn-success envia_mensagem" {if $dados.Status_ID!=3}onclick="return EnviaMensagem();"{/if} style="margin:0 10px 0 0;">ENVIAR <i class="fa fa-send"></i></button>
+                    </div>
+
+                    <p class="pull-right enviando">Aguarde! Enviado mensagem...</p>
+
+                    <div class="form-group">
+                        <input type="file" name="anexo" id="anexo" style="float: left;">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--FIM MENSAGEM-->
+
+    {else}
+    
+    <!--mensagens impressao-->
+    {if $msg}
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <p><b>Mensagens:</b></p>
+
+            {section name=i loop=$msg}
+            {if !$msg[i].Msg_Recebimento}
+            <div class="linha">
+                <div class="linha_msg1">
+                    {$msg[i].Msg_Conteudo}
+
+                    {if $msg[i].Anexos}
+                    <div class="linha_anexo">
+                        {section name=j loop=$msg[i].Anexos}
+                        <a href="{$urlBase}midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                        {/section}
+                    </div>
+                    {/if}
+
+                    <div class="linha_data1"><i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                </div>
+            </div>
+            {else}
+            <div class="linha">
+                <div class="linha_msg2">
+                    {$msg[i].Msg_Conteudo}
+
+                    {if $msg[i].Anexos}
+                    <div class="linha_anexo">
+                        {section name=j loop=$msg[i].Anexos}
+                        <a href="{$urlBase}midias/{$msg[i].Anexos[j].Anexo_Caminho}" target="_blank"><i class="fa fa-download"></i> {$msg[i].Anexos[j].Anexo_Nome}</a>
+                        {/section}
+                    </div>
+                    {/if}
+
+                    <div class="linha_data2"><i class="fa fa-user"></i> {$msg[i].Usuario_Nome} | <i class="fa fa-clock-o"></i> {$msg[i].Msg_Data}</div>
+                </div>
+            </div>
+            {/if}
+            {/section}
+        </div>
+    </div>
+    {/if}
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+                <p class="print_assinatura">{$dados.Cliente_Nome}</p>
+        </div>
+    </div>
+    {/if}
+</section>

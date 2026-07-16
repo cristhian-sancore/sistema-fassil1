@@ -1,0 +1,27 @@
+html,
+body {
+  height: 100%;
+}
+html .table,
+body .table {
+  display: table;
+  width: 100%;
+  height: 100%;
+}
+html .table .cell,
+body .table .cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.contenedor-modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.contenedor-modal button {
+  position: relative;
+  top: 40%;
+}

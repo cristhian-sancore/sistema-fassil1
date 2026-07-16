@@ -1,0 +1,6 @@
+<ul class="menu_painel no-print">
+    <li {if !$nav.n2_p}class="active"{/if}><a href="{$urlBase}painel"><i class="fa fa-dashboard"></i>Painel</a></li>
+    <li {if $nav.n2_p == 'ticket'}class="active"{/if}><a href="{$urlBase}painel/ticket"><i class="fa fa-ticket"></i>Ticket</a></li>
+    <li {if $nav.n2_p == 'notificacoes'}class="active"{/if}><a href="{$urlBase}painel/notificacoes"><i class="fa fa-info-circle"></i>Notificações{if $total.not}<span>{$total.not}</span>{/if}</a></li>
+    <li {if $nav.n2_p == 'meus-dados'}class="active"{/if}><a href="{$urlBase}painel/meus-dados"><i class="fa fa-user"></i>Meus dados</a></li>
+</ul>

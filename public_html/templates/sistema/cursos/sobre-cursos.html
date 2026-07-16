@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Sobre Cursos</title>
+
+        {include file="_head.html"}
+        <style>
+           /*Sobre o Cursos*/
+            .container_curso {
+                display: flex;
+                column-width: 100px;
+                column-gap: 20px;
+            }
+
+            .card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                padding: 10px;
+                margin: 0 0 1em 0;
+            }
+
+            .card_conteudo {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                background-color: rgb(233, 239, 251);
+                border: 2px solid rgb(79, 185, 227);
+                padding: 10px;
+                margin: 0 0 1em 0;
+                }
+    
+            @media only screen and (max-width: 850px) {
+                .container_curso{
+                    display: grid;
+                }
+                .conteudo .imagem{
+                    float: left;
+                    margin-left: 18%;
+                    margin-right: 18%;
+                }
+            } 
+        </style>
+    </head>
+    <body>
+        {include file="_topo.html"}
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    
+                    <div class="titulo">Sobre o Curso</div>
+                    
+                    <div class="container_curso">
+                        <div class="card">
+                                <b>{$dados.Curso_Nome}</b> <i style="float: right;">{$dados.Curso_DataInicial} à {$dados.Curso_DataFinal}</i>
+                            <div class="conteudo">
+                                <div class="imagem animaze aniimated-thumbnials">
+                                    <a href="{$urlBase}gerenciar/sistema/cursos/{$dados.Curso_Imagem}">
+                                        <img class="img-orador" src="{$urlBase}gerenciar/sistema/cursos/{$dados.Curso_Imagem}">
+                                    </a>
+                                    <div>{$dados.Curso_Tipo}: {$dados.Curso_NomeOrador}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card_conteudo">
+                            <div class="descricao">
+                                {$dados.Curso_Conteudo}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+    </body>
+</html>

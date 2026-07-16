@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Sobre nós</title>
+
+        {include file="_head.html"}
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Sobre nós</div>
+
+                    <div class="conteudo">
+                        <p>{$dados.Conteudo_Descricao}</p>
+
+                        <div class="imagem animaze aniimated-thumbnials">
+                            <a href="gerenciar/midias/{$dados.m[0].Midia_Caminho}">
+                                <img src="{$urlBase}tim.php?src=gerenciar/midias/{$dados.m[0].Midia_Caminho}&w=500&h=397&zc=1">
+                            </a>
+                        </div>
+
+                        <div class="descricao">
+                            {$dados.Conteudo_Texto}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+    </body>
+</html>

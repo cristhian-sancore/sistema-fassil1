@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Downloads</title>
+
+        {include file="_head.html"}
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Downloads</div>
+
+                    {section name=i loop=$lista.d}
+                    <div class="downloads">
+                        <p>{$lista.d[i].Conteudo_Titulo}</p>
+
+                        <div class="clear"></div>
+
+                        {section name=j loop=$lista.d[i].m}
+                        <a href="http://{$lista.d[i].m[j].Midia_Link}" target="_blank" class="animaze">
+                            <img src="{$urlBase}tim.php?src=gerenciar/midias/{$lista.d[i].m[j].Midia_Caminho}&w=250&h=100&zc=2">
+                            <span>{$lista.d[i].m[j].Midia_Legenda}</span>
+                        </a>
+                        {/section}
+                    </div>
+                    {/section}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/fale_conosco.js"></script>
+    </body>
+</html>

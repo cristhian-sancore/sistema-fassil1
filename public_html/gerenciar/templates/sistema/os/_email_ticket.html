@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Grupo Fassil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin: 0; padding: 0;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <td style="padding: 20px 0 30px 0;">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="80%" style="border: 1px solid #cccccc;">
+                <tr>
+                    <td align="center" bgcolor="#f2f2f2" style="padding: 40px 0 30px 0;">
+                        <img src="{$dados.url}img/logo.png" width="300" style="display: block;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" style="padding: 5px 10px;">
+                        <b>Motivo:</b> {if $dados.Status_ID==1}Cadastro Ticket{elseif $dados.Status_ID==2}Alteração Status Ticket{elseif $dados.Status_ID==3}Fechamento Ticket{elseif $dados.Status_ID==4}Confirmação Fechamento Ticket{/if}
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" style="padding: 20px 30px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td width="50%" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Protocolo:</b> {$dados.OS_Protocolo}
+                                </td>
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Data:</b> {$dados.OS_DataInicio} às {$dados.OS_HorasInicio}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Status:</b> {$dados.Status_Nome}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Prioridade:</b> {$dados.Prioridade_Titulo}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Grupo:</b> {$dados.Grupo_Nome}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px;">
+                                    <b>Tipo:</b> {$dados.Tipo_Nome}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px; padding-top: 10px;">
+                                    <b>Descrição:</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="justify" style="color: #153643; font-family: Arial, sans-serif; font-size: 17px; line-height: 20px; padding-top: 5px;">
+                                    {$dados.OS_Descricao}
+                                </td>
+                            </tr>
+
+                            {if $dados.OS_NotaUsuario}
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px; padding-top: 10px;">
+                                    <b>Nota Usuário:</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="justify" style="color: #153643; font-family: Arial, sans-serif; font-size: 17px; line-height: 20px; padding-top: 5px;">
+                                    {$dados.OS_NotaUsuario}
+                                </td>
+                            </tr>
+                            {/if}
+
+                            {if $dados.Status_ID>=3 && $dados.Status_ID<=4}
+                            <tr>
+                                <td colspan="2" style="color: #153643; font-family: Arial, sans-serif; font-size: 18px; padding-top: 15px;">
+                                    <b>Confirmações:</b>
+                                </td>
+                            </tr>
+                            {section name=i loop=$dados.f}
+                            <tr>
+                                <td colspan="2" align="center" style="color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px; padding-top: 5px;">
+                                    <b>{$dados.f[i].Cliente_Nome}</b> - {$dados.f[i].Cliente_Departamento}/{$dados.f[i].Cliente_Cargo} - <b>{$dados.f[i].Status}</b>
+                                </td>
+                            </tr>
+
+                            {if $dados.f[i].Cliente_ID==$dados.Cliente_ID && !$dados.f[i].Fechamento_Status}
+                            <tr>
+                                <td colspan="2" align="center" style="padding-top: 5px; text-align: center;">
+                                    <a href="{$dados.url}confirmacao-ticket/{$dados.OS_Protocolo}/{$dados.f[i].Fechamento_Codigo}" style="position: relative; display: inline-block; padding: 7px 15px; text-align: center; font-size: 1em; font-weight: 500 !important; text-decoration: none !important; cursor: pointer; -webkit-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -moz-box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; transition: all 0.3s ease 0s; -webki-transition: all 0.3s ease 0s; -moz-transition: all 0.3s ease 0s; background: #EA4335; color:#fff !important; border-color: #EA4335;" target="_blank">CONFIRMAR</a>
+                                </td>
+                            </tr>
+                            {/if}
+                            {/section}
+
+                            <tr>
+                                <td colspan="2" align="center" style="padding-top: 30px; text-align: center; font-size: 18px;">
+                                    <b>Este Ticket será fechado automaticamente se não houver nenhuma interassão num prazo de 48 horas.</b>
+                                </td>
+                            </tr>
+                            {/if}
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#009B3A" style="padding: 10px; color: #FFFFFF; text-align: center; font-size: 18px;">
+                        <a href="{$dados.url}" target="_blank" style="text-decoration: none; color: #FFFFFF;">www.grupofassil.com.br</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#000031" style="padding: 30px 30px 30px 30px; color: #FFFFFF;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td align="center" width="50%">
+                                    Rua Niterói, 740 - Jardim Popular<br>
+                                    São José dos Quatro Marcos - MT
+                                </td>
+                                <td align="center">
+                                    (65) 3251-3017 / (65) 9 9981-9916<br>
+                                    faspel@faspelinformatica.com.br<br>
+                                    fassil@fassilconsultoria.com.br
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

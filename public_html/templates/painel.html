@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Painel</title>
+
+        {include file="_head.html"}
+
+        <script type="text/javascript">
+            {literal}
+            function pesquisa(busca) {
+                location.href="{/literal}{$urlBase}{literal}painel_1_"+busca;
+                return false;
+            }
+            {/literal}
+        </script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    {include file="_menu_painel.html"}
+
+                    <div class="prioridades">
+                        {section name=i loop=$grupos}
+                        <div class="box_prioridades">
+                            <p style="background: {$grupos[i].Grupo_Background};">&nbsp;</p><span>{$grupos[i].Grupo_Nome}</span>
+                        </div>
+                        {/section}
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <form role="form" method="post" enctype="multipart/form-data" class="painel_busca">
+                        <input type="text" name="busca" placeholder="Protocolo/Grupo/Tipo" autocomplete="off" value="{$busca}">
+                        <button type="submit" class="btn btn-blue" id="buscar"><i class="fa fa-search"></i> BUSCAR</button>
+                        <div class="clear"></div>
+                    </form>
+
+                    <table class="tabela">
+                        <thead>
+                        <tr>
+                            <th scope="col" width="200px">Protocolo</th>
+                            <th scope="col" width="200px">Data</th>
+                            <th scope="col">Prioridade</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Status</th>
+                            <th scope="col" width="120px">&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {if $lista.d}
+                        {section name=i loop=$lista.d}
+                        <tr style="background: {$lista.d[i].Grupo_Background}; color: {$lista.d[i].Grupo_Color};">
+                            <td data-label="Protocolo">{$lista.d[i].OS_Protocolo}</td>
+                            <td data-label="Data">
+                                Início: {$lista.d[i].OS_DataInicio} às {$lista.d[i].OS_HorasInicio}
+                                {if $lista.d[i].DataFechamento}<br>Fim: {$lista.d[i].DataFechamento}
+                                <br>Tempo: {$lista.d[i].TempoOS}
+                                {/if}
+                            </td>
+                            <td data-label="Prioridade">{$lista.d[i].Prioridade_Titulo}</td>
+                            <td data-label="Tipo">{$lista.d[i].Tipo_Nome}</td>
+                            <td data-label="Descrição">{$lista.d[i].OS_Descricao|truncate:100:'...'}</td>
+                            <td data-label="Status" class="center"><button class="btn {$lista.d[i].Status_Color}"><i class="fa {$lista.d[i].Status_Icon}"></i> {$lista.d[i].Status_Nome}</button></td>
+                            <td>
+                                <a href="{$urlBase}painel/ticket/{$lista.d[i].OS_Protocolo}" class="btn"><i class="fa fa-eye"></i>{if $lista.d[i].OS_Relatorio && $lista.d[i].Status_ID==4}<span><i class="fa fa-unlock-alt"></i></span>{elseif $lista.d[i].OS_Relatorio && $lista.d[i].Status_ID==3}<span><i class="fa fa-lock"></i></span>{/if}</a>
+                                <a href="{$urlBase}painel/ticket/{$lista.d[i].OS_Protocolo}" class="btn"><i class="fa fa-envelope"></i>{if $lista.d[i].Msg_Total_Visualizada}<span>{$lista.d[i].Msg_Total_Visualizada}</span>{/if}</a>
+                            </td>
+                        </tr>
+                        {/section}
+                        {else}
+                            <tr>
+                                <td colspan="6">Nenhum ticket!</td>
+                            </tr>
+                        {/if}
+                        </tbody>
+                    </table><br><br>
+
+
+
+                    <!--PAGINADOR-->
+                    {$lista.paginador}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/painel.js"></script>
+    </body>
+</html>

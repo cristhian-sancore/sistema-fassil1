@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/index.css">
+    <title>{$Info['title']} - Cursos</title>
+    {include file="_head.html"}
+</head>
+
+<body>
+    {include file="_topo.html"}
+    
+    <section class="card-list bg_main">
+        
+        {section name=i loop=$dados}
+        <article class="card" style="background-color:{$dados[i].Curso_Background};">
+            <header class="card-header">
+                <p>{$dados[i].Curso_DataInicial} á {$dados[i].Curso_DataFinal}</p>
+                <h2>{$dados[i].Curso_Nome}</h2>
+            </header>
+
+            <div class="card-author">
+                <a class="author-avatar" href="{if date > $dados[i].Curo_DataFinal}{$urlSite}cursos/sobre-cursos.php?ac=e&id={$dados[i].Curso_ID}{else}{$urlSite}cursos/form-inscricao.php?ac=i&id={$dados[i].Curso_ID}{/if}">
+                    <img src="{$urlBase}gerenciar/sistema/cursos/{$dados[i].Curso_Imagem}"/>
+                </a>
+                <svg class="half-circle" viewbox="0 0 106 57" >
+                    <path d="M102 4c0 27.1-21.9 49-49 49S4 31.1 4 4"></path>
+                </svg>
+
+                <div class="author-name">
+                    <div class="author-name-prefix">{$dados[i].Curso_Tipo}</div>
+                    {$dados[i].Curso_NomeOrador}
+                </div>
+            </div>
+            <div class="tags">
+                {if date > $dados[i].Curo_DataFinal}
+                <a href="#"><i class="fa fa-ban"> </i> Inscrições Finalizadas</a>
+                {else}
+                 <a href="{$urlSite}cursos/form-inscricao.php?ac=i&id={$dados[i].Curso_ID}"</i>Inscreva-se</a>
+                {/if}
+                <a href="{$urlSite}cursos/sobre-cursos.php?id={$dados[i].Curso_ID}"</i>Saber mais</a>
+               
+                <!--<a href="#">css</a>-->
+            </div>
+        </article>
+        
+        {/section}
+    </section>
+    
+    <!--Campo pesquisa-->
+        <div class="container">
+            <div class="box">
+                <spam style="color: white"> * </spam>
+                <a type="button" href="{$urlSite}cursos/validador.php" class="btn btn-blue btn-sm"><i class="fa fa-certificate"></i> Verificar Autenticidade</a>
+            </div>
+        </div>
+    <!-- partial -->
+    {include file="_footer.html"}
+</body>
+
+</html>

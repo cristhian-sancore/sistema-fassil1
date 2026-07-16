@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Painel Meus Dados</title>
+
+        {include file="_head.html"}
+
+        <!--RECAPTCHA-->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    {include file="_menu_painel.html"}
+
+                    <form name="cadastro" action="" method="post" class="form">
+                        <input type="hidden" id="urlBase" value="{$urlBase}">
+                        <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+                        <label class="box2 left">
+                            <span>Estado</span>
+                            <select name="estado" class="form-control estado" disabled>
+                                <option value="0">Selecione</option>
+                                {section name=i loop=$estados}
+                                <option value="{$estados[i].Estado_ID}" {if
+                                        $estados[i].Estado_ID==$dados.Estado_ID}selected{/if}>
+                                    {$estados[i].Estado_Nome}
+                                </option>
+                                {/section}
+                            </select>
+                        </label>
+
+                        <label class="box4 left">
+                            <span>Cidade</span>
+                            <select name="cidade" class="form-control cidade" disabled>
+                                {if $dados.Cidade_Nome}
+                                <option value="{$dados.Cidade_ID}">{$dados.Cidade_Nome}</option>
+                                {/if}
+                            </select>
+                        </label>
+                        
+                        <label class="box4 right">
+                            <span>Entidade</span>
+                            <select name="empresa" class="form-control empresa" disabled>
+                                {if $dados.CE_Nome}
+                                <option value="{$dados.CE_ID}">{$dados.CE_Nome}</option>
+                                {/if}
+                            </select>
+                        </label>
+                        
+                        <div class="clear"></div>
+
+                        <label class="box4 left">
+                            <span>Seu nome</span>
+                            <input type="text" name="nome" placeholder="Ex: Paulo da Silva" value="{$dados.Cliente_Nome}">
+                        </label>
+
+                        <label class="box3 left">
+                            <span>Departamento</span>
+                            <input type="text" name="departamento" placeholder="Ex: Licitação" value="{$dados.Cliente_Departamento}">
+                        </label>
+
+                        <label class="box3 right">
+                            <span>Cargo</span>
+                            <input type="text" name="cargo" placeholder="Ex: Pregoeiro" value="{$dados.Cliente_Cargo}">
+                        </label>
+
+                        <div class="clear"></div>
+
+                        <label class="box4 left">
+                            <span>E-mail</span>
+                            <input type="text" name="email" placeholder="seuemail@gmail.com" value="{$dados.Cliente_Email}" disabled>
+                        </label>
+
+                        <label class="box3 left">
+                            <span>Celular</span>
+                            <input type="text" name="celular" class="cel" placeholder="(65) 0 0000-000" value="{$dados.Cliente_Contato1}">
+                        </label>
+
+                        <label class="box3 right">
+                            <span>Telefone</span>
+                            <input type="text" name="telefone" class="fone" placeholder="(65) 0000-000" value="{$dados.Cliente_Contato2}">
+                        </label>
+
+                        <div class="clear"></div>
+                        <h2 class="titulo_painel"><i class="fa fa-lock"></i> Acesso</h2>
+
+                        <label class="box4 left">
+                            <span>Login</span>
+                            <input type="text" name="login" placeholder="" value="{$dados.Cliente_Login}" disabled>
+                        </label>
+
+                        <label class="box3 left">
+                            <span>Senha</span>
+                            <input type="password" name="senha" placeholder="">
+                        </label>
+
+                        <label class="box3 right">
+                            <span>Repetir Senha</span>
+                            <input type="password" name="senha2" placeholder="">
+                        </label>
+
+                        <div class="clear"></div><br>
+
+                        <div class="g-recaptcha" data-sitekey="6LfQATAUAAAAAPyDk0lkMYKxecwfglps4ix45a4t"></div>
+                        <p class="error_captcha"></p>
+
+                        <button type="submit" class="btn btn-green right" id="gravar"><i class="fa fa-save"></i> ALTERAR</button>
+
+                        <div class="clear" style="margin-bottom: 50px;"></div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+        <script src="{$urlBase}js/modulos/meus-dados.js"></script>
+    </body>
+</html>

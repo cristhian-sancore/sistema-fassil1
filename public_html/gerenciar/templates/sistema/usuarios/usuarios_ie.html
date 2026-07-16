@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/usuarios_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                            <div class="box-body">
+                                {if $smarty.session._user.Usuario_Tipo=='G'}
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Empresa</label>
+                                            <select name="empresa" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$empresas}
+                                                <option value="{$empresas[i].Empresa_ID}" {if $empresas[i].Empresa_ID==$dados.Empresa_ID}selected{/if}>{$empresas[i].Empresa_Nome}</option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/if}
+
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <div class="form-group">
+                                            <label>Nome</label>
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome"
+                                                   value="{$dados.Usuario_Nome}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Cargo</label>
+                                            <input type="text" class="form-control" name="cargo" placeholder="Cargo"
+                                                   value="{$dados.Usuario_Cargo}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>E-mail</label>
+                                            <input type="text" class="form-control" name="email" placeholder="E-mail"
+                                                   value="{$dados.Usuario_Email}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Login</label>
+                                            <input type="text" class="form-control" name="login"
+                                                   placeholder="Login"
+                                                   value="{$dados.Usuario_Login}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Permissão</label>
+                                            <select name="permissao" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$permissoes}
+                                                <option value="{$permissoes[i].Permissao_ID}" {if $permissoes[i].Permissao_ID==$dados.Permissao_ID}selected{/if}>{$permissoes[i].Permissao_Nome}</option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Senha</label>
+                                            <input type="password" class="form-control" name="senha">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Repetir Senha</label>
+                                            <input type="password" class="form-control" name="repetir_senha">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-right">
+                                {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                {/if}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/usuarios_ie.js"></script>
+</body>
+</html>

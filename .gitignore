@@ -1,0 +1,26 @@
+error_log
+*.log
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+
+# Cache e compilação Smarty
+public_html/templates_c/
+!public_html/templates_c/.gitkeep
+public_html/cache/
+!public_html/cache/.gitkeep
+public_html/gerenciar/templates_c/
+!public_html/gerenciar/templates_c/.gitkeep
+public_html/gerenciar/cache/
+!public_html/gerenciar/cache/.gitkeep
+
+# Uploads e mídias pesadas (anexos dos tickets e documentos históricos que somam >6.2 GB)
+public_html/gerenciar/midias/
+!public_html/gerenciar/midias/.gitkeep
+public_html/documentos/
+!public_html/documentos/.gitkeep
+public_html/backup/
+!public_html/backup/.gitkeep
+public_html/gerenciar/backup/
+!public_html/gerenciar/backup/.gitkeep

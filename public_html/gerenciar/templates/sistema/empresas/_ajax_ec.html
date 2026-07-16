@@ -1,0 +1,24 @@
+<div class="row cx_ce">
+    <div class="col-xs-5">
+        <div class="form-group">
+            <label>Estado</label>
+            <select name="estado" class="form-control estado">
+                <option value="0">Selecione</option>
+                {section name=i loop=$estados}
+                <option value="{$estados[i].Estado_ID}" {if
+                        $estados[i].Estado_ID==$dados.Estado_ID}selected{/if}>
+                    {$estados[i].Estado_Nome}
+                </option>
+                {/section}
+            </select>
+        </div>
+    </div>
+
+    <div class="col-xs-6">
+        <div class="form-group">
+            <label>Cidade</label>
+            <select name="cidade[]" class="form-control cidade">
+            </select>
+        </div>
+    </div>
+</div>

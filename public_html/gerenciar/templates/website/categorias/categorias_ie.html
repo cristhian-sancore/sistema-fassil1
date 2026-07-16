@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}home.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/categorias_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Menu Pai</label>
+                                            <select name="categoria_pai" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$categoria_ie}
+                                                <option value="{$categoria_ie[i].Categoria_ID}" {if
+                                                        $categoria_ie[i].Categoria_ID==$dados.Categoria_Pai_ID}selected{/if}>
+                                                    {if $categoria_ie[i].Categoria_TituloPai}
+                                                    {$categoria_ie[i].Categoria_TituloPai} /
+                                                    {/if}{$categoria_ie[i].Categoria_Titulo} ({$categoria_ie[i].Qtd})
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <label>&nbsp;</label>
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" name="status" {if
+                                                       $dados.Categoria_Status==1}checked{/if}> Ativo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Título</label>
+                                    <input type="text" class="form-control" name="titulo" placeholder="Título"
+                                           value="{$dados.Categoria_Titulo}">
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-right">
+                                {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                {/if}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/categoria_ie.js"></script>
+</body>
+</html>

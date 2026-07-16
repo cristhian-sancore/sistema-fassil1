@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+    <style>
+@media screen and (max-width: 1000px) {
+    .col-xs-4,
+    .col-xs-6,
+    .col-xs-12,
+    .btn-primary {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .col-xs-3 {
+        width: 50%;
+        margin-top: 0;
+    }
+}
+    </style>
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/cursos_guia.html"}
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                        </div>
+                        
+                        
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+                            
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-12 entidade text-center">
+                                        {if $dados.Curso_Imagem}
+                                        <img src="{$dados.Curso_Imagem}">
+                                        {/if}
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label>Imagem</label>
+                                        <div class="form-group">
+                                            <input type="file" name="midia[]" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Nome Curso</label>
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome"
+                                                   value="{$dados.Curso_Nome}">
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Tipo Orador</label>
+                                            <input type="text" class="form-control" name="tipo" placeholder="Palastrante, Mestre..."
+                                                   value="{$dados.Curso_Tipo}">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>Nome Orador</label>
+                                            <input type="text" class="form-control" name="nome_orador" placeholder="Nome Orador"
+                                                   value="{$dados.Curso_NomeOrador}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Cor do Fundo</label>
+                                            <input type="color" class="form-control colorpicker1" name="background"
+                                                   placeholder="Cor do Fundo"
+                                                   value="{$dados.Curso_Background}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Cor da Fonte</label>
+                                            <input type="color" class="form-control colorpicker1" name="color"
+                                                   placeholder="Cor da Fonte"
+                                                   value="{$dados.Curso_Color}">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                            <label>Data Início:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control datemask" name="data_inicio" value="{if $dados.Curso_DataInicial}{$dados.Curso_DataInicial}{else}{$data}{/if}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3">
+                                        <div class="form-group">
+                                        <label>Data Fim:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <input type="text" class="form-control datemask" name="data_fim" value="{if $dados.Curso_DataFinal}{$dados.Curso_DataFinal}{else}{$data}{/if}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>Conteúdo</label>
+                                                <textarea class="textarea" name="conteudo" placeholder="Conteúdo Programático" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{$dados.Curso_Conteudo}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-footer text-right">
+                                {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                {/if}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/entidades_ie.js"></script>
+<script src="{$diretorio}plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+    <script src="{$diretorio}plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+    <script src="{$diretorio}plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+    <script src="{$diretorio}plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            {literal}
+            //Datemask dd/mm/yyyy
+            $(".datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+            {/literal}
+        });
+    </script>
+    <script src="{$diretorio}js/uploadifive/jquery.uploadifive.js" type="text/javascript"></script>
+    <script src="{$diretorio}js/modulos/conteudo_ie.js"></script>
+<script src="{$diretorio}js/modulos/cursos_ie.js"></script>
+</body>
+</html>

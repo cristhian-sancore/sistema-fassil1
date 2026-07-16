@@ -1,0 +1,19 @@
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+#Impede visualizar arquivos subpastas
+Options -Indexes
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php5_module>
+   php_value date.timezone "America/Cuiaba"
+   php_value upload_max_filesize 20M
+   php_value post_max_size 20M
+</IfModule>
+# END cPanel-generated php ini directives, do not edit

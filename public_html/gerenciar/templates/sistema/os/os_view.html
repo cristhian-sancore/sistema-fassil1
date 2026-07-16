@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+    <link rel="stylesheet"          href="{$urlBase}js/uploadifive/uploadifive.css"/>
+    <link rel="stylesheet"          href="{$urlBase}css/rating.css?v=1"/>
+
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header no-print">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" id="os" value="{$dados.OS_ID}">
+            <input type="hidden" id="os_qtd" value="{count($msg)}">
+            <input type="hidden" id="subcidade" name="subcidade" value="{$dados.Cidade_ID}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/os_guia.html"}
+
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">Visualizar OS</h3>
+                        </div>
+
+                        <form role="form" method="post" enctype="multipart/form-data" action="" class="form">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+                            <input type="hidden" id="status" name="status" value="{$dados.Status_ID}">
+
+                            {include file="{$Mod[0]}/{$Mod[1]}/os_invoice.html"}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+<script src="{$diretorio}js/uploadifive/jquery.uploadifive.js" type="text/javascript"></script>
+<script src="{$diretorio}js/ion.sound.min.js"></script>
+<script src="{$diretorio}js/modulos/os_view.js"></script>
+</body>
+</html>

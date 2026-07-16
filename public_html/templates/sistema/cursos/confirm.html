@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A page with information about the WIT-Project and application form.">
+    <meta name="author" content="The webpage for WIT created by members from the 2018/2019 course. Grace, Osman, Jehad and Hiruth.">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="{$urlSite}css/stylemodal.css">
+    <link rel="shortcut icon"       href="{$urlBase}img/favicon.png"/>
+    <title>{$Info['title']} Inscrição em Andamento</title>
+
+    <!-- External CSS file(s) -->
+    <link rel="stylesheet" href="/css/confirm.css">
+    
+</head>
+
+<body>
+    
+
+    <div class="funds-success-message-container">
+        <div class="funds-checkmark-text-container">
+            <div class="funds-checkmark-container">
+                <svg class="funds-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="funds-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+          <path class="funds-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+        </svg>
+
+                <div class="funds-display-on-ie">
+                    <svg class="funds-ie-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="funds-ie-checkmark-circle" cx="26" cy="26" r="25" fill="none" />
+            <path class="funds-ie-checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+          </svg>
+                </div>
+            </div>
+
+            <h1 class="funds-success-done-text">Okay!</h1>
+        </div>
+
+        <div class="funds-success-message">
+
+
+
+            <h2>Inscrição feita com sucesso</h2>
+            
+            <p>Acesse a área do pix para pagamento da inscrição!</p>
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#miModal">Área do
+                Pix!</button>
+            <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <img src="img/pix.png" alt="" style="max-height: 130px; max-width: 180px;">
+                                    </div>
+        
+                                    <div class="text-center">
+                                        <img class="img-thumbnail img-responsive" data-output="qrcode">
+                                    </div>
+        
+                                </div>
+                            </div>
+        
+        
+                            <div class="cell">
+                                <div class="container-fluid">
+        
+        
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <h4
+                                                style="color: black; text-shadow: rgb(188, 160, 160) 0.1em 0.1em 0.2em; text-align: center;">
+                                                Clique no "Botão abaixo para gerar o Pix!"</h4>
+                                            <br>
+                                            <label class="control-label col-sm-3" for="content">URL para Pix
+                                                QrCode:</label>
+        
+                                            <div class="col-sm-9">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Chave QrCode"
+                                                        aria-label="https://www.google.com.br/" data-grab="url"
+                                                        value="00020126580014BR.GOV.BCB.PIX01362213b5c9-6f5f-4f66-af06-cfc3b08f7693520400005303986540550.005802BR5925Christyan Allan Alves da 6009SAO PAULO61080540900062070503***6304925B"
+                                                        disabled>
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" data-qrcode="generate"><i
+                                                                class="fa fa-gears"></i>
+                                                            Gerar!</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="cursos.php">Deseja voltar para o início?</a>
+        </div>
+        </div>
+    </div>
+   <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/130527/qrcode.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="/js/script.js"></script>
+    <script src="https://kit.fontawesome.com/74b3fb22a4.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

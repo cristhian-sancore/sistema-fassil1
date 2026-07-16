@@ -1,0 +1,258 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    font-size: .8rem;
+    color: white;
+    padding: 1.2rem;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Segoe UI", "Helvetica Neue", sans-serif !important;
+}
+
+
+/*Barra de Rolagem*/
+
+body::-webkit-scrollbar-track {
+    background-color: #F4F4F4;
+}
+
+body::-webkit-scrollbar {
+    width: 6px;
+    background: #00dd5c;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #00dd5c;
+    border-radius: 1px;
+}
+
+
+/*Fechamento - Barra de Rolagem*/
+
+header {
+    /*background-image: url('../img/banner.png');
+    background-size: 100%;*/
+    background-color: #000000;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 20vh;
+}
+
+header p {
+    /* background-color: #27AE60; */
+    color: #00ff6a;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    text-align: center;
+    width: 95%;
+    padding: 10px;
+}
+
+.container .form-control {
+    margin: 10px 0;
+    width: 100%;
+    position: relative;
+    padding-bottom: 20px;
+    text-align: left;
+    position: relative;
+}
+
+.container .form-control.text .label {
+    color: #00dd5c;
+    background-color: white;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    visibility: hidden;
+    font-size: .8rem;
+}
+
+.container .form-control input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #f0f0f0;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.container .form-control select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #f0f0f0;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+select:focus,
+#textarea-container textarea:focus {
+    outline: none;
+    border-color: #00dd5c !important;
+}
+
+input:focus,
+#textarea-container textarea:focus {
+    outline: none;
+    border-color: #00dd5c !important;
+}
+
+label.focus {
+    /* color: #2ecc71;
+    background-color: white; */
+    padding: 1px 5px;
+    transition: all .5s ease-out;
+}
+
+#textarea-container {
+    text-align: left;
+    position: relative;
+    width: 100%;
+}
+
+.container textarea {
+    /* max-width: 100%; */
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 2px solid #f0f0f0;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #00dd5c;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.container .form-control input[type="checkbox"] {
+    width: fit-content;
+}
+
+.container .form-control.least label {
+    visibility: visible;
+    font-size: .8em;
+}
+
+input[type='checkbox'] {
+    position: relative;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    outline: none;
+    transition: 0.5s;
+}
+
+input[type='checkbox']::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border: 2.5px solid #f0f0f5;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+input:checked[type='checkbox']::before {
+    border-left: none;
+    border-top: none;
+    width: 10px;
+    transform: rotate(50deg) translate(0px, -10px);
+    border-color: green;
+    transition: 0.2s;
+}
+
+.form-control small {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+}
+
+.form-control i.fa-circle-exclamation {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+}
+
+.form-control.error small {
+    color: #e74c3c;
+    visibility: visible;
+    bottom: -2px;
+}
+
+.form-control.error i.fa-circle-exclamation {
+    color: #e74c3c;
+    visibility: visible;
+    bottom: -2px;
+}
+
+.form-control.success input {
+    border-color: #2ecc71;
+}
+
+.form-control.error input {
+    border-color: #e74c3c;
+}
+
+.form-control.success select {
+    border-color: #2ecc71;
+}
+
+.form-control.error select {
+    border-color: #e74c3c;
+}
+
+@media (min-width: 450px) {
+    .container {
+        width: 80%;
+    }
+}
+
+@media (min-width: 700px) {
+    header {
+        font-size: 1rem;
+        /* padding: 1.2rem; */
+    }
+    .container {
+        width: 90%;
+    }
+    .container .form-control {
+        margin: 10px 5px;
+        width: 46%;
+        display: inline-block;
+    }
+}
+
+@media (min-width: 900px) {
+    .container {
+        width: 70%;
+    }
+    .container .form-control {
+        margin: 10px 5px;
+        width: 46%;
+        display: inline-block;
+    }
+}

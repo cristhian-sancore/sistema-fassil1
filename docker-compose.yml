@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: grupofas_app
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./public_html:/var/www/html/public_html
+    environment:
+      - DB_HOST=db
+      - DB_USER=grupofas_admin
+      - DB_PASS=fassil3017#
+      - DB_NAME=grupofas_sistema
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: grupofas_db
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Senha de root interna do MySQL
+      MYSQL_DATABASE: grupofas_sistema
+      MYSQL_USER: grupofas_admin
+      MYSQL_PASSWORD: fassil3017#
+    ports:
+      - "33060:3306" # Mapeando a porta do MySQL para 33060 externa para evitar conflitos na porta 3306
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d # Importação automática do dump grupofas_sistema.sql
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

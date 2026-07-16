@@ -1,0 +1,78 @@
+<link rel="shortcut icon"       href="{$urlBase}img/favicon.png"/>
+{if !$head}
+<meta name="description"        content="Fassil Assessoria e Consultoria, Faspel Informática e Franciso de Assis Advogados e Associados."/>
+        <meta name="author"             content="Paullo Sergio Andrade">
+        <meta name="keywords"           content="fassil, faspel, franciso de assis, advogados">
+        <meta name="robots" content="index, follow"/>
+
+        <meta itemprop="name"           content="Grupo Fassil"/>
+        <meta itemprop="author"         content="Paullo Sergio Andrade"/>
+        <meta itemprop="description"    content="Fassil Assessoria e Consultoria, Faspel Informática e Franciso de Assis Advogados e Associados."/>
+        <meta itemprop="image"          content="{$urlBase}img/logo.png"/>
+        <meta itemprop="url"            content="{$urlBase}"/>
+        {/if}
+        
+        <link rel="canonical"           href="{$urlBase}"/>
+        <link rel="base"                href="{$urlBase}"/>
+        <p></p>
+        <div class="redes_sociais">Acesse
+            <ul>
+                <li>
+                    <a href="https://www.instagram.com/grupofassil/" target="blank" title="Instagram - Grupo Fassil">
+                    <img src="{$urlBase}img/inst.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/Fassil2001/?ref=page_internal" target="blank"  title="Facebook - Grupo Fassil">
+                    <img src="{$urlBase}img/facebook_icon-icons.com_53612.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://wa.me/5565996806715?text=Tenho%20interesse%20em%20atendimento!" target="blank"  title="Whatsapp - Grupo Fassil">
+                    <img src="{$urlBase}img/iconfinder-social-media-applications-23whatsapp-4102606_113811.png">
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        
+        <!--[if lt IE 9]>
+        <script src="{$urlBase}js/html5shiv.js"></script>
+        <![endif]-->
+
+        <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+
+        <link rel="shortcut icon"       href="{$urlBase}img/favicon.png"/>
+        <link rel="stylesheet"          href="{$urlBase}css/reset.css?v=9"/>
+        <link rel="stylesheet"          href="{$urlBase}css/style.css?v=12"/>
+        <link rel="stylesheet"          href="{$urlBase}css/lightgallery.css"/>
+        <link rel="stylesheet"          href="{$urlBase}css/font-awesome.css"/>
+        <link rel="stylesheet"          href="{$urlBase}css/jquery-confirm.css"/>
+{if !$fb}
+        <meta property="og:url"         content="{$urlBase}" />
+        <meta property="og:type"        content="website" />
+        <meta property="og:title"       content="Grupo Fassil" />
+        <meta property="og:description" content="Fassil Assessoria e Consultoria, Faspel Informática e Franciso de Assis Advogados e Associados." />
+        <meta property="og:image"       content="{$urlBase}img/logo.png" />
+        {/if}
+
+        <!-- Global Site Tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106817727-1"></script>
+        <script>
+                {literal}
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments)};
+                gtag('js', new Date());
+
+                gtag('config', 'UA-106817727-1');
+                {/literal}
+        </script>
+
+        <script type="text/javascript">
+        {literal}
+        function pesquisa(busca) {
+                location.href="{/literal}{$urlBase}{literal}busca/"+busca;
+                return false;
+        }
+        {/literal}
+        </script>

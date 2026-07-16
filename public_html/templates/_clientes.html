@@ -1,0 +1,16 @@
+{section name=i loop=$dEntidades}
+<div class="box_cidades animaze fromTop">
+    <img src="{$urlBase}{$dEntidades[i].Entidade_Imagem}">
+    <p style="font-size: 1em;">{$dEntidades[i].Entidade_Nome}</p>
+
+    {section name=j loop=$dEntidades[i].orgaos}
+    <a href="{$dEntidades[i].orgaos[j].Orgao_Link}" class="entidade" target="_blank"><i class="fa fa-arrow-circle-right"></i> {$dEntidades[i].orgaos[j].Orgao_Nome}
+        <div class="servico">
+            <div class="bloco"><span>SISTEMA</span><i class="fa {if $dEntidades[i].orgaos[j].Orgao_Sistema==1}fa-check-square-o{else}fa-square-o{/if}"></i></div>
+            <div class="bloco"><span>CONSULTORIA</span><i class="fa {if $dEntidades[i].orgaos[j].Orgao_Consultoria==1}fa-check-square-o{else}fa-square-o{/if}"></i></div>
+            <div class="clear"></div>
+        </div>
+    </a>
+    {/section}
+</div>
+{/section}

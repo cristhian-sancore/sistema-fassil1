@@ -1,0 +1,27 @@
+<div class="row no-print">
+    <div class="col-xs-12 text-center">
+        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os.php" class="btn btn-app">
+            <i class="fa fa-bars"></i> Gerenciar
+        </a>
+        {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos}
+        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_ie.php?ac=i" class="btn btn-app bg-olive">
+            <i class="fa fa-plus"></i> Inserir
+        </a>
+        {if $ac}
+        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/os_log.php?ac=l&id={$dados.OS_ID}" class="btn btn-app bg-red">
+            <i class="fa fa-code"></i> Log
+        </a>
+        {/if}
+        {/if}
+
+        {if !$ac}
+        <a href="javascript: location.reload();" class="btn btn-app bg-blue">
+            <i class="fa fa-refresh"></i> Atualizar
+        </a>
+        {else}
+        <a href="javascript: history.back();" class="btn btn-app">
+            <i class="fa fa-arrow-left"></i> Voltar
+        </a>
+        {/if}
+    </div>
+</div>

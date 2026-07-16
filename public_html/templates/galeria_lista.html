@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br" itemscope itemtype="https://schema.org/WebPage">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>{$Info['title']} - Galeria de Fotos</title>
+
+        {include file="_head.html"}
+    </head>
+    <body>
+        {include file="_topo.html"}
+
+        <main>
+            <div class="container bg_main">
+                <div class="content main">
+                    <div class="titulo">Galeria de Fotos</div>
+
+                    {section name=i loop=$lista.d}
+                    <div class="box_galeria animaze center">
+                        <a href="{$urlBase}galeria-de-fotos/{$lista.d[i].Conteudo_TituloSlug}">
+                            <img src="{$urlBase}tim.php?src=gerenciar/midias/{$lista.d[i].Conteudo_Imagem}&w=400&h=200&zc=1">
+                            <p>{$lista.d[i].Conteudo_Titulo|truncate:100:'...'}</p>
+                        </a>
+                    </div>
+                    {/section}
+
+                    <div class="clear"></div>
+
+                    <!--PAGINADOR-->
+                    {$lista.paginador}
+                </div>
+            </div>
+        </main>
+
+        {include file="_footer.html"}
+    </body>
+</html>

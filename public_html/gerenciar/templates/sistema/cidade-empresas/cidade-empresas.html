@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}/{$ajax}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/cidade-empresas_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Registros {if $lista.t}<span class="label bg-black">{$lista.t}</span>{/if}</h3>
+                            <div class="pad table-responsive">
+                                <form action="" method="get" class="pesquisa">
+                                    <div class="col-lg-10 pad">
+                                        <input type="text" name="b" class="form-control"
+                                               placeholder="Procurar..."
+                                               value="{if $Busca}{$Busca}{/if}"/>
+                                    </div>
+
+                                    <div class="col-lg-2 pad">
+                                        <select name="s" class="form-control">
+                                            <option value="">Status</option>
+                                            <option value="1" {if $Status==1}selected{/if}>Ativos</option>
+                                            <option value="2" {if $Status==2}selected{/if}>Inativos</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-12 pad text-right pull-right">
+                                        <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Pesquisar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Empresa/Orgão</th>
+                                    <th>Cidade</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                {section name=i loop=$lista.d}
+                                <tr>
+                                    <td>{$lista.d[i].CE_ID}</td>
+                                    <td>{$lista.d[i].CE_Nome}</td>
+                                    <td>
+                                        {$lista.d[i].Cidade_Nome} - {$lista.d[i].Cidade_UF}
+                                    </td>
+                                    <td>
+                                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="javascript: void(0);" class="reg" id="a-{$lista.d[i].CE_ID}">
+                                            <span class="label label-{if $lista.d[i].CE_Status==1}success{else}danger{/if}">{if $lista.d[i].CE_Status==1}Ativo{else}Inativo{/if}</span>
+                                        </a>
+                                        {else}
+                                        <span class="label label-{if $lista.d[i].CE_Status==1}success{else}danger{/if}">{if $lista.d[i].CE_Status==1}Ativo{else}Inativo{/if}</span>
+                                        {/if}
+                                    </td>
+                                    <td class="text-center">
+                                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/cidade-empresas_ie.php?ac=e&id={$lista.d[i].CE_ID}"
+                                           class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>
+                                        {/if}
+                                        {if $smarty.session.Menu_ID|cat:'d'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="javascript: void(0);" class="btn btn-danger btn-xs reg" id="d-{$lista.d[i].CE_ID}"><i class="fa fa-times"></i></a>
+                                        {/if}
+                                    </td>
+                                </tr>
+                                {/section}
+                            </table>
+                        </div>
+
+                        <!--PAGINADOR-->
+                        {$lista.paginador}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+{include file="_footer.html"}
+</body>
+</html>

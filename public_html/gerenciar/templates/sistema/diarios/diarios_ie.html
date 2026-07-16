@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/diarios_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-{if $ac=='i'}success{else}warning{/if}">
+                        <div class="box-header">
+                            <h3 class="box-title">{if $ac=='i'}Inserir{else}Editar{/if}</h3>
+                             {if $ac=='e'}
+                            <div class="col-xs-12" style="text-align: right">
+                                <a href="{$urlBase}{$Mod[0]}/os/os_view.php?ac=v&id={$dados.Diario_OS}"
+                                           class="btn btn-default btn-xs"><i class="fa fa-eye"></i>
+                               OS {$dados.Diario_OS}</a><b> Diário-{$dados.Diario_DiaSaida}</b>
+                            </div>
+                            {/if}
+                        </div>
+                        <form role="form" method="post" enctype="multipart/form-data" action="">
+                            <input type="hidden" name="token" id="token" value="{$smarty.session.token_c}">
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Requisicao</label>
+                                            <input type="number" class="form-control" name="requisicao" placeholder="Numero Requisicao"
+                                            value="{if $dados.Diario_NRequisicao}{$dados.Diario_NRequisicao}{else}{/if}">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Empresas</label>
+                                            <select name="empresa" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$empresas}
+                                                <option value="{$empresas[i].DiarioEmp_ID}"
+                                                        {if
+                                                        $empresas[i].DiarioEmp_ID==$dados.DiarioEmp_ID}selected{/if}>
+                                                    {$empresas[i].DiarioEmp_Nome} {$empresas[i].DiarioEmp_Cnpj}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {if $ac=='e'}
+                                        <div class="col-xs-2">
+                                            <div class="form-group">
+                                                <label>Código OS</label>
+                                                <input type="number" class="form-control" name="os" placeholder="Código OS." value="{if $dados.Diario_OS}{$dados.Diario_OS}{else}{/if}">
+                                            </div>
+                                        </div>
+                                    {if $smarty.session._user.Usuario_Tipo=='G'}
+                                        <div class="col-xs-2">
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                {if $dados.Diario_Status=='0'}
+                                                    <select name="status" class="form-control" style="background-color: DarkRed; color: white;">
+                                                        <option value="0">Fechado</option>
+                                                        <option value="1">Aberto</option>
+                                                    </select>
+                                                {else}
+                                                    <select name="status" class="form-control" style="background-color: DarkGreen; color: white;">
+                                                        <option value="1">Aberto</option>
+                                                        <option value="0">Fechado</option>
+                                                    </select>
+                                                {/if}
+                                            </div>
+                                        </div>
+                                    {/if}
+                                    {/if}
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>{if $ac=='i'}Carros (Disponíveis){else}Carro{/if}</label>
+                                            <select name="automovel" class="form-control">
+                                                <option value="0">SELECIONE</option>
+                                                {section name=i loop=$automoveis}
+                                                {if $ac=='i'}
+                                                    {if $automoveis[i].Auto_Status==1}
+                                                        <option value="{$automoveis[i].Auto_ID}"
+                                                            {if
+                                                            $automoveis[i].Auto_ID==$dados.Auto_ID}selected{/if}>
+                                                            {$automoveis[i].Auto_Nome}/{$automoveis[i].Auto_Placa}/{$automoveis[i].Auto_Modelo}
+                                                        </option>
+                                                    {/if}
+                                                {/if}
+                                                {if $ac=='e'}
+                                                        <option value="{$automoveis[i].Auto_ID}"
+                                                            {if
+                                                            $automoveis[i].Auto_ID==$dados.Auto_ID}selected{/if}>
+                                                            {$automoveis[i].Auto_Nome}/{$automoveis[i].Auto_Placa}/{$automoveis[i].Auto_Modelo}
+                                                        </option>
+                                                {/if}
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+                                     <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Cidade</label>
+                                            <select name="cidade" class="form-control">
+                                                <option value="0">Selecione</option>
+                                                {section name=i loop=$cidades}
+                                                <option value="{$cidades[i].Cidade_ID}" {if
+                                                        $cidades[i].Cidade_ID==$dados.Cidade_ID}selected{/if}>
+                                                    {$cidades[i].Cidade_Nome} - {$cidades[i].Cidade_UF}
+                                                </option>
+                                                {/section}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>Motorista</label>
+                                            <input type="text" class="form-control" name="usuario"
+                                                   placeholder="Usuário responsável" id="usuario"
+                                                   value="{if $dados.Usuario_Nome}{$dados.Usuario_Nome}{else}{$smarty.session._user.Usuario_Nome}{/if}">
+                                            <input type="hidden" name="usuario_id" id="usuario_id"
+                                                   value="{if $dados.Usuario_Nome}{$dados.Usuario_ID}{else}{$smarty.session._user.Usuario_ID}{/if}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>KM Saida</label>
+                                            <input type="number" class="form-control" name="kmsaida" placeholder="KM Saida" value="{if $dados.Diario_KMSaida}{$dados.Diario_KMSaida}{else}{/if}">
+                                        </div>
+                                    </div>
+                                    {if $ac=='e'}
+                                    <div class="col-xs-4">
+                                        <div class="form-group">
+                                            <label>KM Chegada</label>
+                                            <input type="number" class="form-control" name="kmchegada" placeholder="KM Chegada" value="{if $dados.Diario_KMChegada}{$dados.Diario_KMChegada}{else}{/if}">
+                                        </div>
+                                    </div
+                                    {/if}
+                                    {if $ac!='i'}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <label>Descrição/Observação</label>
+                                                <textarea name="descricao" placeholder="Descrição/Observação"
+                                                      style="width: 100%; height: 150px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{$dados.Diario_Descricao}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/if}
+                                </div>
+                                <div class="box-footer text-right">
+                                    {if $smarty.session.Menu_ID|cat:'a'|in_array:$smarty.session._user.Permissao_Modulos || $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                    <button type="submit" class="btn btn-primary" id="gravar"><i class="fa fa-save"></i> Gravar</button>
+                                    {/if}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{include file="_footer.html"}
+<script src="{$diretorio}js/modulos/diarios_ie.js"></script>
+<script>
+    const data = document.querySelector("#date");
+    const date = new Date();
+    const formatter = Intl.DateTimeFormat("pt-BR",{
+        dateStyle: "short",
+    });
+    
+    data.innerHTML = formatter.format(date);
+</script>
+</body>
+</html>

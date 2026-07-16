@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>{$Info['title']}</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.33/dist/sweetalert2.all.min.js"></script>
+    {include file="_head.html"}
+</head>
+<body class="skin-blue">
+<div class="wrapper">
+
+    {include file="_header.html"}
+
+    {include file="_menu.html"}
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                {ucfirst($Mod[1])}
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="{$urlBase}dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">{ucfirst($Mod[0])}</li>
+                <li class="active">{ucfirst($Mod[1])}</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <input type="hidden" id="urlBase" value="{$urlBase}">
+            <input type="hidden" id="url" value="{$urlBase}{$Mod[0]}/{$Mod[1]}/{$ajax}">
+
+            {include file="{$Mod[0]}/{$Mod[1]}/inscritos_guia.html"}
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Registros {if $lista.t}<span class="label bg-black">{$lista.t}</span>{/if}</h3>
+                            <div class="pad table-responsive">
+                                <form action="" method="get" class="pesquisa">
+                                    <div class="row">
+                                        <div class="col-lg-1 pad">
+                                            <!--<label>ID</label>-->
+                                            <input type="text" name="c" class="form-control"
+                                               placeholder="ID Inscrito"
+                                               value="{if $Codigo}{$Codigo}{/if}"/>
+                                        </div>
+                                        <div class="col-lg-6 pad">
+                                            <!--<label>Nome</label>-->
+                                            <input type="text" name="n" class="form-control"
+                                               placeholder="Nome Inscrito"
+                                               value="{if $Nome}{$Nome}{/if}"/>
+                                        </div>
+                                        <div class="col-lg-3 pad">
+                                            <!--<label>Status</label>-->
+                                            <select name="b" class="form-control">
+                                                <option value="">Cursos...</option>
+                                                {section name=i loop=$Cursos}
+                                                <option value="{$Cursos[i].Curso_ID}" {if $Cursos[i].Curso_ID==$Busca}selected{/if}>{$Cursos[i].Curso_Nome}</option>
+                                                {/section}
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2 pad">
+                                            <!--<label>Status</label>-->
+                                            <select name="s" class="form-control">
+                                                <option value="">Status</option>
+                                                <option value="1" {if $Status==1}selected{/if}>Pagos</option>
+                                                <option value="2" {if $Status==2}selected{/if}>Pendente</option>
+                                            </select>
+                                        </div> 
+                                        <div class="col-lg-3 pad">
+                                            <select class="form-control" name="e">
+                                                <option value="{$Entidade}" hidden>{if $Entidade =='1'}Prefeitura Municipal{elseif $Entidade =='2'}Câmara Municipal{elseif $Entidade =='3'}Previdência Municipal{elseif $Entidade =='4'}Fundação, Consórcio e demais entidades{else}Entidade...{/if}</option>
+                                                <optgroup label="Municipal">
+                                                    <option value="1"{if $Entidade =='1'}selected{/if}>Prefeitura Municipal</option>
+                                                    <option value="2"{if $Entidade =='2'}selected{/if}>Câmara Municipal</option>
+                                                    <option value="3"{if $Entidade =='3'}selected{/if}>Previdência Municipal</option>
+                                                </optgroup>
+                                                <optgroup label="Outros">
+                                                    <option value="4"{if $Entidade =='4'}selected{/if}>Fundação, Consórcio e demais entidades</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-3 pad">
+                                            <!--<label>Status</label>-->
+                                            <select name="cid" class="form-control">
+                                                <option value="">Cidades...</option>
+                                                {section name=i loop=$Cidades}
+                                                <option value="{$Cidades[i].Cidade_ID}" {if $Cidades[i].Cidade_ID==$Cidade}selected{/if}>{$Cidades[i].Cidade_Nome} - {$Cidades[i].Cidade_UF}</option>
+                                                {/section}
+                                                
+                                            </select>
+                                        </div>
+                                         
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 pad text-right pull-right">
+                                        
+                                    
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-table" aria-hidden="true"> </i>
+                                            Gerar
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/gerar_planilha.php?c={$Codigo}&b={$Busca}&n={$Nome}&s={$Status}&e={$Entidade}&cid={$Cidade}" type="button" class="btn btn-success btn-sm" target="_blank"><i class="fa fa-file-excel-o"></i> Excel</a>
+                                            <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/#?c={$Codigo}&b={$Busca}&n={$Nome}&s={$Status}&e={$Entidade}&cid={$Cidade}" type="button" class="btn btn-warning btn-sm" target="_blank"><i class="fa fa-file-pdf-o"></i> PDF</a>
+                                        </div>
+                                        <button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Pesquisar</button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Cidade</th>
+                                    <th>Entidade</th>
+                                    <!--<th>Setor</th>-->
+                                    <!--<th>Cargo</th>-->
+                                    <th>Status</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                {section name=i loop=$lista.d}
+                                <tr>
+                                    <td>{$lista.d[i].Inscricao_ID}</td>
+                                    <td>{$lista.d[i].Inscricao_Nome}</td>
+                                    <td>{$lista.d[i].Cidade_Nome} - {$lista.d[i].Cidade_UF}</td>
+                                    <td>{$lista.d[i].Inscricao_Entidade}</td>
+                                    <!--<td>{$lista.d[i].Inscricao_Setor}</td>-->
+                                    <!--<td>{$lista.d[i].Inscricao_Cargo}</td>-->
+                                    <td>
+                                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="javascript: void(0);" class="reg" id="a-{$lista.d[i].Inscricao_ID}">
+                                            <span class="label label-{if $lista.d[i].Inscricao_Status==1}success{else}warning{/if}">{if $lista.d[i].Inscricao_Status==1}Pagos{else}Pendentes{/if}</span>
+                                        </a>
+                                        {else}
+                                        <span class="label label-{if $lista.d[i].Inscricao_Status==1}success{else}warning{/if}">{if $lista.d[i].Inscricao_Status==1}Pagos{else}Pendentes{/if}</span>
+                                        {/if}
+                                    </td>
+                                    <td class="text-center">
+                                        {if $smarty.session.Menu_ID|cat:'e'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="{$urlBase}{$Mod[0]}/{$Mod[1]}/inscritos_ie.php?ac=e&id={$lista.d[i].Inscricao_ID}"
+                                           class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a>
+                                        {/if}
+                                        {if $smarty.session.Menu_ID|cat:'d'|in_array:$smarty.session._user.Permissao_Modulos}
+                                        <a href="javascript: void(0);" class="btn btn-danger btn-xs reg" id="d-{$lista.d[i].Inscricao_ID}"><i class="fa fa-times"></i></a>
+                                        {/if}
+                                    </td>
+                                </tr>
+                                {/section}
+                            </table>
+                        </div>
+
+                        <!--PAGINADOR-->
+                        {$lista.paginador}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<script src="{$diretorio}js/sweetalert2.js"></script>
+{include file="_footer_Inscricoes.html"}
+</body>
+</html>
