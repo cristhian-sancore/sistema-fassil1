@@ -29,10 +29,8 @@ class Database{
             die("<div style='font-family: Arial, sans-serif; padding: 20px; text-align: center;'><h2>⏳ Aguardando Banco de Dados...</h2><p>O servidor MySQL está finalizando a inicialização e importando as tabelas. Por favor, <b>atualize a página (F5)</b> em cerca de 10 a 20 segundos.</p><p><small style='color: #666;'>Detalhes: (" . $this->sqli->connect_errno . ") " . $this->sqli->connect_error . "</small></p></div>");
         }
 
-        $tm = $this->sqli->prepare("SET TIME_ZONE = '-04:00'");
-        if ($tm) {
-            $tm->execute();
-        }
+        $this->sqli->query("SET TIME_ZONE = '-04:00'");
+        $this->sqli->query("SET SESSION sql_mode = ''");
 
         return $this->sqli;
     }
