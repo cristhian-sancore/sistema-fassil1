@@ -72,7 +72,9 @@ abstract class Smarty_Internal_CompileBase
                 }
                 // named attribute
             } else {
-                $kv = each($mixed);
+                $key = key($mixed);
+                $kv = ($key === null || $key === false) ? false : array(1 => current($mixed), 'value' => current($mixed), 0 => $key, 'key' => $key);
+                next($mixed);
                 // option flag?
                 if (in_array($kv['key'], $this->option_flags)) {
                     if (is_bool($kv['value'])) {
