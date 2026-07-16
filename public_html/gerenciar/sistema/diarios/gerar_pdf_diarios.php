@@ -2,7 +2,7 @@
 ob_start();
 if($_SERVER['SERVER_NAME']!='localhost') {
     //------------------- CAMINHO SESSION SERVIDOR
-    session_save_path("/home/grupofas/tmp");
+    session_save_path("/tmp/sessions");
 }
 
 set_time_limit(0);

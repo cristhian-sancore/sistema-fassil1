@@ -22,7 +22,7 @@ define('PASS', getenv('DB_PASS') ?: 'fassil3017#');
 define('DBSA', getenv('DB_NAME') ?: 'grupofas_sistema');
 
 //------------------- DEFINE A BASE DO SITE
-$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? "https" : "http";
+$protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) ? "https" : "http";
 $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost:8080';
 define('urlSite', $protocol . '://' . $host . '/');
 define('urlBase', $protocol . '://' . $host . '/');

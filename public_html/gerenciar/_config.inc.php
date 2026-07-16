@@ -3,8 +3,11 @@
 include("libs/Smarty.class.php");
 //------------------- CONFIG ACESSO BANCO DE DADOS
 include("_config_db.inc.php");
-//------------------- CONFIG ACESSO BANCO DE DADOS
-session_save_path("/home/grupofas/tmp");
+//------------------- CAMINHO SESSION SERVIDOR
+if (!is_dir("/tmp/sessions")) {
+    @mkdir("/tmp/sessions", 0777, true);
+}
+session_save_path("/tmp/sessions");
 
 //------------------- SETA FORMATO HORARIO
 date_default_timezone_set('America/Cuiaba');
@@ -16,28 +19,27 @@ $Info = array(
 );
 
 //------------------- DEFINE IDENTIDADE DO SITE
-define('SITENAME', 'Fassil - Ordem de Servi�0�4os');
-define('SITEDESC', 'Descri�0�4�0�0o');
+define('SITENAME', 'Fassil - Ordem de Serviços');
+define('SITEDESC', 'Descrição');
 
-//------------------- DEFINE A BASE DO SITE
-define('urlSite', 'https://www.grupofassil.com.br/');
-define('urlBase', 'https://www.grupofassil.com.br/gerenciar/');
+//------------------- DEFINE A BASE DO SITE (Dinamico para suportar proxy reverso SSL/nginx e Docker)
+$protocol = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) ? "https" : "http";
+$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost:8055';
+define('urlSite', $protocol . '://' . $host . '/');
+define('urlBase', $protocol . '://' . $host . '/gerenciar/');
 
 //------------------- DEFINE A BASE DA IMAGEM
-define('urlMidia', 'https://www.grupofassil.com.br/gerenciar/midias');
+define('urlMidia', $protocol . '://' . $host . '/gerenciar/midias');
 
 //------------------- CAMINHOS URL ACTIVE
-$Mod = explode('gerenciar/', $_SERVER['REQUEST_URI']);
-$Mod = explode('/', $Mod[1]);
-/*$Mod = array(
-    $Mod[1],
-    $Mod[2],
-    $Mod[3]
-);*/
+$Mod = explode('gerenciar/', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '');
+$Mod = isset($Mod[1]) ? explode('/', $Mod[1]) : array('');
 
 //------------------- AUTO LOAD DE CLASSES
 function __autoload($Class) {
-     include('libs/'.$Class.'.class.php');
+     if (file_exists('libs/'.$Class.'.class.php')) {
+         include('libs/'.$Class.'.class.php');
+     }
 }
 spl_autoload_register('__autoload');
 
@@ -63,9 +65,5 @@ function PHPErro($ErrNo, $ErrMsg, $ErrFile, $ErrLine) {
 
 set_error_handler('PHPErro');
 
+mb_internal_encoding("UTF-8");
 ob_start("mb_output_handler");
-
-//------------------- REDIRECIONAMENTO URL
-if ((explode('.', $_SERVER['HTTP_HOST'])[0] != 'www') && $_SERVER['SERVER_NAME'] != 'localhost'){
-    header("Location:".urlBase);
-}

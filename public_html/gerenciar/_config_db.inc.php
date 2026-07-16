@@ -1,6 +1,6 @@
 <?php
 //------------------- CONFIGURACOES DO BANCO
-define('HOST', 'localhost');
-define('USER', 'grupofas_admin');
-define('PASS', 'fassil3017#');
-define('DBSA', 'grupofas_sistema');
+define('HOST', getenv('DB_HOST') ?: 'db');
+define('USER', getenv('DB_USER') ?: 'grupofas_admin');
+define('PASS', getenv('DB_PASS') ?: 'fassil3017#');
+define('DBSA', getenv('DB_NAME') ?: 'grupofas_sistema');
