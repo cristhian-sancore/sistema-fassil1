@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   app:
-    # A imagem é compilada automaticamente na nuvem pelo GitHub Actions e baixada no Portainer
+    # A imagem pré-compilada é puxada diretamente do GitHub Container Registry (ghcr.io)
+    # Evita que o servidor do Portainer tente compilar o Dockerfile localmente gasta CPU/memória.
     image: ghcr.io/cristhian-sancore/sistema-fassil1:latest
-    # build: . # Descomente apenas se for rodar build manual local no seu computador
     container_name: grupofas_app
     restart: always
     ports:
       - "8080:80"
     volumes:
-      # Mantém as mídias e documentos históricos persisitidos no host para não perder anexos antigos
+      # Apenas as pastas de anexos históricos são montadas no host/volume para persistência contínua
       - ./public_html/gerenciar/midias:/var/www/html/public_html/gerenciar/midias
       - ./public_html/documentos:/var/www/html/public_html/documentos
     environment:
@@ -32,9 +32,9 @@ services:
       MYSQL_USER: grupofas_admin
       MYSQL_PASSWORD: fassil3017#
     ports:
-      - "33060:3306" # Mapeando a porta do MySQL para 33060 externa para evitar conflitos na porta 3306
+      - "33060:3306" # Mapeando a porta do MySQL para 33060 externa
     volumes:
-      - ./init-db:/docker-entrypoint-initdb.d # Importação automática do dump grupofas_sistema.sql
+      - ./init-db:/docker-entrypoint-initdb.d # Importação automática do dump
       - db_data:/var/lib/mysql
 
 volumes:

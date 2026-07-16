@@ -33,6 +33,9 @@ RUN echo "error_reporting = E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT\n" \
 # Define a pasta de trabalho
 WORKDIR /var/www/html/public_html
 
+# Copia todos os arquivos do site e painel administrativo para a imagem
+COPY ./public_html /var/www/html/public_html
+
 # Concede permissões nas pastas de cache do Smarty e sessões do PHP
 RUN mkdir -p /var/www/html/public_html/templates_c /var/www/html/public_html/cache /tmp/sessions \
     && chown -R www-data:www-data /var/www/html /tmp/sessions \
