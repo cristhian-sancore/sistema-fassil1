@@ -37,7 +37,10 @@ $Mod = isset($Mod[1]) ? explode('/', $Mod[1]) : array('');
 
 //------------------- AUTO LOAD DE CLASSES
 function __autoload($Class) {
-     if (file_exists('libs/'.$Class.'.class.php')) {
+     $path = __DIR__ . '/libs/' . $Class . '.class.php';
+     if (file_exists($path)) {
+         include($path);
+     } elseif (file_exists('libs/'.$Class.'.class.php')) {
          include('libs/'.$Class.'.class.php');
      }
 }

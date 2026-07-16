@@ -36,10 +36,11 @@ $Mod = isset($Mod[1]) ? explode('/', $Mod[1]) : array('');
 
 //------------------- AUTOLOAD DE CLASSES
 function grupofas_autoload($Class) {
-    $diretorios = array('libs/');
+    $diretorios = array(__DIR__ . '/libs/', 'libs/');
     foreach ($diretorios as $valor) {
         if (file_exists($valor . $Class . '.class.php')) {
             require_once $valor . $Class . '.class.php';
+            break;
         }
     }
 }
