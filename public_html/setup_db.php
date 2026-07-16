@@ -95,11 +95,21 @@ if (!$cliSucesso) {
     $erros = 0;
 
     foreach ($queries as $query) {
-        $query = trim($query);
-        if (empty($query) || substr($query, 0, 2) === '--' || substr($query, 0, 2) === '/*') {
+        // Remover linhas que são apenas comentários (-- ou #) para não ignorar comandos reais que vêm na linha seguinte (ex: DROP TABLE IF EXISTS)
+        $lines = preg_split("/\r?\n/", $query);
+        $cleanLines = array();
+        foreach ($lines as $line) {
+            $tLine = trim($line);
+            if (substr($tLine, 0, 2) === '--' || substr($tLine, 0, 1) === '#' || (substr($tLine, 0, 2) === '/*' && strpos($tLine, '/*!') !== 0)) {
+                continue;
+            }
+            $cleanLines[] = $line;
+        }
+        $cleanQuery = trim(implode("\n", $cleanLines));
+        if (empty($cleanQuery)) {
             continue;
         }
-        if ($mysqli->query($query)) {
+        if ($mysqli->query($cleanQuery)) {
             $tabelasCriadas++;
         } else {
             // Ignorar avisos irrelevantes ou registrar erro apenas se for relevante
