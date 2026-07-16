@@ -13,8 +13,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd mysqli pdo_mysql mbstring zip opcache
 
-# Habilita o módulo mod_rewrite do Apache para funcionamento das URLs amigáveis (index.php?url=$1)
-RUN a2enmod rewrite headers
+# Habilita o módulo mod_rewrite do Apache e define ServerName para suprimir o aviso AH00558
+RUN a2enmod rewrite headers \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Altera o DocumentRoot do Apache para a pasta /var/www/html/public_html
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public_html
