@@ -36,6 +36,7 @@ WORKDIR /var/www/html/public_html
 
 # Copia todos os arquivos do site e painel administrativo para a imagem
 COPY ./public_html /var/www/html/public_html
+COPY ./init-db /var/www/html/init-db
 
 # Concede permissões nas pastas de cache do Smarty e sessões do PHP
 RUN mkdir -p /var/www/html/public_html/templates_c /var/www/html/public_html/cache /tmp/sessions \
