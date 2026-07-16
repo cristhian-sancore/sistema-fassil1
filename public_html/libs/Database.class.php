@@ -14,14 +14,25 @@ class Database{
      * Retorna um objeto MYSQLI!
      */
     public function Database() {
-        $this->sqli = new mysqli(HOST, USER, PASS, DBSA);
+        // Tenta conectar até 3 vezes caso o MySQL ainda esteja subindo/importando as tabelas no Docker
+        for ($tentativa = 1; $tentativa <= 3; $tentativa++) {
+            $this->sqli = @new mysqli(HOST, USER, PASS, DBSA);
+            if (!$this->sqli->connect_error) {
+                break;
+            }
+            if ($tentativa < 3) {
+                sleep(1);
+            }
+        }
 
-        if ($this->sqli->connect_error and $_SERVER['SERVER_NAME']=='localhost') {
-            trigger_error('Database sqli failed: '  . $this->sqli->connect_error, E_USER_ERROR);
+        if ($this->sqli->connect_error) {
+            die("<div style='font-family: Arial, sans-serif; padding: 20px; text-align: center;'><h2>⏳ Aguardando Banco de Dados...</h2><p>O servidor MySQL está finalizando a inicialização e importando as tabelas. Por favor, <b>atualize a página (F5)</b> em cerca de 10 a 20 segundos.</p><p><small style='color: #666;'>Detalhes: (" . $this->sqli->connect_errno . ") " . $this->sqli->connect_error . "</small></p></div>");
         }
 
         $tm = $this->sqli->prepare("SET TIME_ZONE = '-04:00'");
-        $tm->execute();
+        if ($tm) {
+            $tm->execute();
+        }
 
         return $this->sqli;
     }
