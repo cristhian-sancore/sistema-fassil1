@@ -25,7 +25,7 @@ services:
     image: mysql:5.7
     container_name: grupofas_db
     restart: always
-    command: --sql-mode="" --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    command: --sql-mode="" --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --max-allowed-packet=64M
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword # Senha de root interna do MySQL
       MYSQL_DATABASE: grupofas_sistema
