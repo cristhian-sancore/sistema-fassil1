@@ -31,6 +31,7 @@ $data1 = (isset($_REQUEST['d1']))?$_REQUEST['d1']:null;
 $data2 = (isset($_REQUEST['d2']))?$_REQUEST['d2']:null;
 
 
+$pg = (isset($_REQUEST['pg'])) ? $_REQUEST['pg'] : 1;
 $_REQUEST['pg'] = $pg;
 $_REQUEST['c'] = $cidade;
 $_REQUEST['u'] = $usuario;
@@ -115,12 +116,12 @@ $rodape = "
 
 
 $mpdf->SetHTMLFooter($rodape);
-$arquivo = 'Relatório '.date("d-m-Y").'.pdf';
-$mpdf->Output($arquivo,'I');
-//D - download
+$arquivo = 'Relatorio_Diarios_'.date("d-m-Y").'.pdf';
 
-/*ABRE PDF NO NAVEGADOR*/
-header("Content-Type: application/pdf");
-header('Content-Disposition: inline; "'.$arquivo.'"');
+// Limpar e fechar todos os buffers abertos antes de enviar os bytes binários do PDF
+while (ob_get_level()) {
+    @ob_end_clean();
+}
 
+$mpdf->Output($arquivo, 'I');
 exit;

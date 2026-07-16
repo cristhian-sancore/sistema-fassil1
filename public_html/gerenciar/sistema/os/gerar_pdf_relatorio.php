@@ -203,11 +203,12 @@ if($msg) {
 }
 $mpdf->AddPage();
 $mpdf->WriteHTML($assinaturas);
-$arquivo = $dc['CE_Nome']." ".date("d-m-Y").'.pdf';
-$mpdf->Output($arquivo,'I');
-//D - download
+$arquivo = "Relatorio_Atendimento_".date("d-m-Y").'.pdf';
 
-header("Content-Type: application/pdf");
-header('Content-Disposition: inline; "'.$arquivo.'"');
+// Limpar e fechar todos os buffers abertos antes de enviar os bytes binários do PDF
+while (ob_get_level()) {
+    @ob_end_clean();
+}
 
+$mpdf->Output($arquivo, 'I');
 exit;
