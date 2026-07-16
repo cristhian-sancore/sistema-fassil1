@@ -28,9 +28,11 @@ if ($check && $check->num_rows > 0) {
     $total = $rowCheck ? $rowCheck->fetch_assoc()['total'] : 0;
     if ($total > 0 && !isset($_GET['force'])) {
         echo "<p style='color: green; font-size: 16px;'><b>O banco de dados já está importado e funcional!</b> (Tabela <i>conteudo</i> encontrada com $total registros).</p>";
+        echo "<p style='margin: 20px 0; padding: 15px; background: #fff3cd; border-left: 5px solid #ffc107; border-radius: 4px;'><b>Atenção:</b> Se você notou escritas estranhas ou erros de acentuação (ex: <i>SÃ£o JosÃ©</i>, <i>ORGÃƒOS</i>), o arquivo original possuía dupla codificação. Nós já limpamos e reparamos todo o arquivo SQL! Clique no botão amarelo abaixo para atualizar as tabelas agora:</p>";
+        echo "<p style='margin: 20px 0;'><a href='setup_db.php?force=1' style='display: inline-block; padding: 14px 28px; background: #ffc107; color: #000; text-decoration: none; font-weight: bold; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.15); font-size: 16px;'>🔄 RE-IMPORTAR BANCO COM ESCRITAS E ACENTOS CORRIGIDOS (UTF-8)</a></p>";
+        echo "<hr style='margin: 20px 0;'>";
         echo "<p><a href='index.php' style='display: inline-block; padding: 10px 20px; background: #28a745; color: white; text-decoration: none; border-radius: 4px;'>Ir para o Site Principal</a> ";
         echo "<a href='gerenciar/' style='display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; margin-left: 10px;'>Ir para o Painel Administrativo</a></p>";
-        echo "<p><small>Se desejar forçar a re-importação do dump SQL do zero, acesse <a href='setup_db.php?force=1'>setup_db.php?force=1</a>.</small></p>";
         echo "</div>";
         exit;
     }
