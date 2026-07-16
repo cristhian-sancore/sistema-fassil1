@@ -78,6 +78,7 @@ class Database{
                     return $rows[0];
                 }
                 return $rows;
+            }else echo "Erro ao executar query: $query - " . $this->sqli->error;
         }else echo "Prepare mysqli - Erro (" . $this->sqli->errno . "): " . $this->sqli->error . "<br><b>Query:</b> $query";
     }
 
