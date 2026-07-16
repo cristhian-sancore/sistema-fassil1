@@ -78,8 +78,7 @@ class Database{
                     return $rows[0];
                 }
                 return $rows;
-            }else "Erro ao executar";
-        }else echo "Prepare mysqli - Tabela inexistente: $query";
+        }else echo "Prepare mysqli - Erro (" . $this->sqli->errno . "): " . $this->sqli->error . "<br><b>Query:</b> $query";
     }
 
     public function paramsMount(&$st,&$vars=''){
