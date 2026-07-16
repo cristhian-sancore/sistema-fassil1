@@ -9,6 +9,8 @@ session_save_path("/tmp/sessions");
 
 //------------------- SETA FORMATO HORARIO
 date_default_timezone_set('America/Cuiaba');
+header("Content-Type: text/html; charset=utf-8");
+if (function_exists('mb_internal_encoding')) { mb_internal_encoding("UTF-8"); }
 
 //------------------- INFO SISTEMA
 $Info = array(

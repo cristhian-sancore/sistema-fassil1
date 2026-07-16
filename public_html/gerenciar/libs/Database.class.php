@@ -31,6 +31,8 @@ class Database{
 
         $this->sqli->query("SET TIME_ZONE = '-04:00'");
         $this->sqli->query("SET SESSION sql_mode = ''");
+        $this->sqli->set_charset("utf8");
+        $this->sqli->query("SET NAMES 'utf8'");
 
         return $this->sqli;
     }
