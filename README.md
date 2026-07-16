@@ -25,8 +25,8 @@ Este diretório contém toda a estrutura dockerizada e pronta para execução do
 3. Aguarde alguns segundos para que o MySQL inicialize e importe o arquivo SQL pela primeira vez.
 
 4. Acesse no seu navegador:
-   * **Site Principal**: [http://localhost:8080/](http://localhost:8080/)
-   * **Sistema / Painel**: [http://localhost:8080/gerenciar](http://localhost:8080/gerenciar)
+   * **Site Principal**: [http://localhost:8055/](http://localhost:8055/)
+   * **Sistema / Painel**: [http://localhost:8055/gerenciar](http://localhost:8055/gerenciar)
 
 ---
 

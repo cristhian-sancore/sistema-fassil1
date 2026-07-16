@@ -8,7 +8,7 @@ services:
     container_name: grupofas_app
     restart: always
     ports:
-      - "8080:80"
+      - "8055:80"
     volumes:
       # Apenas as pastas de anexos históricos são montadas no host/volume para persistência contínua
       - ./public_html/gerenciar/midias:/var/www/html/public_html/gerenciar/midias
