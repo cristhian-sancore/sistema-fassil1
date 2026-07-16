@@ -1126,6 +1126,7 @@ function _mergeBorders(&$b, &$a) {	// Merges $a['BORDER-TOP-STYLE'] to $b['BORDE
 
 
 function MergeCSS($inherit,$tag,$attr) {
+	if (!is_array($attr)) { $attr = array(); }
 	$p = array();
 	$zp = array(); 
 

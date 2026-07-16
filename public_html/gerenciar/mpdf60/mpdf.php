@@ -812,6 +812,9 @@ var $innerblocktags;
 
 function mPDF($mode='',$format='A4',$default_font_size=0,$default_font='',$mgl=15,$mgr=15,$mgt=16,$mgb=16,$mgh=9,$mgf=9, $orientation='P') {
 
+	// Compatibilidade mPDF 6.0 no PHP 7.4+: desativar avisos estritos de offsets de string e notices
+	error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_USER_NOTICE & ~E_USER_WARNING);
+
 /*-- BACKGROUNDS --*/
 		if (!class_exists('grad', false)) { include(_MPDF_PATH.'classes/grad.php'); }
 		if (empty($this->grad)) { $this->grad = new grad($this); }
