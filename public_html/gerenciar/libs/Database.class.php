@@ -93,25 +93,22 @@ class Database{
         }else echo "Prepare mysqli - Erro (" . $this->sqli->errno . "): " . $this->sqli->error . "<br><b>Query:</b> $query";
     }
 
-    public function paramsMount(&$st,&$vars=''){
-        $param='';
-        $strType='';
-        foreach($vars as $vr){
-            $chrType = substr((string)gettype($vr),0,1);
-            $strType .= (!in_array($chrType,array("i","d","s"))) ? "b" : $chrType;
-            $params[]=$vr;//$this->sqli->real_escape_string(
+    public function paramsMount(&$st, &$vars=''){
+        $strType = '';
+        $params = array();
+        foreach ($vars as $key => $vr) {
+            $chrType = substr((string)gettype($vr), 0, 1);
+            $strType .= (!in_array($chrType, array("i", "d", "s"))) ? "b" : $chrType;
+            $params[$key] = $vr;
         }
-        call_user_func_array('mysqli_stmt_bind_param', array_merge(array($st, $strType),$this->refValues($params)));
-    }
 
-    function refValues($arr){
-        if (strnatcmp(phpversion(),'5.3') >= 0) //Reference is required for PHP 5.3+
-        {
-            $refs = array();
-            foreach($arr as $key => $value)
-                    $refs[$key] = &$arr[$key];
-            return $refs;
+        $bindParams = array();
+        $bindParams[] = $st;
+        $bindParams[] = $strType;
+        foreach ($params as $key => $value) {
+            $bindParams[] = &$params[$key];
         }
-        return $arr;
+
+        call_user_func_array('mysqli_stmt_bind_param', $bindParams);
     }
 }
